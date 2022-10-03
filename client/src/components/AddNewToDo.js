@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { v4 as uuid } from "uuid";
 
-function AddNewToDo({todos}) {
-
+function AddNewToDo({ todos, edits }) {
   const [todo, setTodos] = todos;
   const [input, setInput] = useState("");
 
@@ -10,7 +9,6 @@ function AddNewToDo({todos}) {
     setInput(e.target.value);
   };
 
-  
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -22,17 +20,15 @@ function AddNewToDo({todos}) {
       id: uuid(),
       value: input,
     });
-    setInput("")
+    setInput("");
   };
 
-//   Adding TODO
+  //   Adding TODO
   const AddToDo = (newtodo) => {
-
-    const newToDo = [newtodo, ...todo]
-    setTodos(newToDo)
-    console.log(todo)
-      
-    };
+    const newToDo = [newtodo, ...todo];
+    setTodos(newToDo);
+    console.log(todo);
+  };
 
   return (
     <>
@@ -44,7 +40,9 @@ function AddNewToDo({todos}) {
           onChange={inputHandler}
           className="todo-input"
         />
-        <button className="todo-button">Add ToDo</button>
+        <button disabled={edits[0]} className="todo-button">
+          Add ToDo
+        </button>
       </form>
     </>
   );
