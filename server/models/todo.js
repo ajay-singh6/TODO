@@ -8,6 +8,9 @@ const todoSchema = new mongoose.Schema({
   description: {
     type: "String",
   },
+  isComplete: {
+    type: "boolean",
+  },
 });
 
 const todoModel = mongoose.model("todo", todoSchema);
