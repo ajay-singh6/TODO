@@ -1,18 +1,26 @@
 import React, { useState } from "react";
+import axios from "axios";
+
 import AddNewToDo from "./AddNewToDo";
 import TodoList from "./TodoList";
 
 function Todo() {
-  const [todos, setTodos] = useState([]);
-  const [edit, setEdit] = useState(false);
+  const [todo, setTodo] = useState([]);
+  const [hideFlag, setHideFlag] = useState(false);
+
+  const handleDelete = (_id) => {
+    axios.delete(`http://localhost:8000/api/todo/${_id}`);
+  };
 
   return (
     <>
       <div className="todo">
-        {!edit && (
-          <AddNewToDo todos={[todos, setTodos]} edits={[edit, setEdit]} />
-        )}
-        <TodoList todos={[todos, setTodos]} edits={[edit, setEdit]} />
+        {!hideFlag && <AddNewToDo flag={[hideFlag, setHideFlag]} />}
+        <TodoList
+          todo={[todo, setTodo]}
+          handleDelete={handleDelete}
+          flag={setHideFlag}
+        />
       </div>
     </>
   );

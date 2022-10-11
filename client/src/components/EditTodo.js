@@ -1,24 +1,33 @@
 import React, { useState } from "react";
+import axios from "axios";
 
-function EditTodo({ currentTodo, list, setEdit, edits }) {
-  const [update, setUpdate] = useState(currentTodo.value);
+function EditTodo({ currentTodo, setEdit, flag }) {
+  const [update, setUpdate] = useState({
+    title: currentTodo.title,
+    description: currentTodo.description,
+  });
 
   const inputHandler = (e) => {
-    setUpdate(e.target.value);
+    setUpdate((update) => ({ ...update, [e.target.name]: e.target.value }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateTodo(currentTodo);
-    setUpdate("");
-    const [editing, setEditing] = edits;
-    setEditing(false);
-  };
 
-  const updateTodo = (currentTodo) => {
-    const updatetodo = list.filter((e) => e.id === currentTodo.id);
-    updatetodo[0]["value"] = update;
-    setEdit(false);
+    axios
+      .put(`http://localhost:8000/api/todo/${currentTodo._id}`, update)
+      .then((res) => {
+        setEdit(false);
+        setUpdate({
+          title: "",
+          description: "",
+        });
+      })
+      .catch((err) => {
+        console.log("Failed to update the ToDo");
+        console.log(err.message);
+      });
+    flag(false);
   };
 
   return (
@@ -27,7 +36,15 @@ function EditTodo({ currentTodo, list, setEdit, edits }) {
         <input
           className="todo-input"
           type="text"
-          value={update}
+          name="title"
+          value={update.title}
+          onChange={inputHandler}
+        />
+        <input
+          className="todo-input"
+          type="text"
+          name="description"
+          value={update.description}
           onChange={inputHandler}
         />
         <button className="todo-button">Update ToDo</button>

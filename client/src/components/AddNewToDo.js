@@ -1,33 +1,29 @@
 import React, { useState } from "react";
-import { v4 as uuid } from "uuid";
+import axios from "axios";
 
-function AddNewToDo({ todos, edits }) {
-  const [todo, setTodos] = todos;
-  const [input, setInput] = useState("");
+function AddNewToDo({ flag }) {
+  const [data, setData] = useState({
+    title: "",
+    description: "",
+    isComplete: false,
+  });
 
   const inputHandler = (e) => {
-    setInput(e.target.value);
+    setData((data) => ({ ...data, [e.target.name]: e.target.value }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!input || /^\s*$/.test(input)) {
-      return;
-    }
-
-    AddToDo({
-      id: uuid(),
-      value: input,
-    });
-    setInput("");
-  };
-
-  //   Adding TODO
-  const AddToDo = (newtodo) => {
-    const newToDo = [newtodo, ...todo];
-    setTodos(newToDo);
-    console.log(todo);
+    axios
+      .post("http://localhost:8000/api/todo", data)
+      .then((res) => {
+        setData({ title: "", description: "", isComplete: false });
+      })
+      .catch((err) => {
+        console.log("Error couldn't create TODO");
+        console.log(err.message);
+      });
   };
 
   return (
@@ -35,12 +31,22 @@ function AddNewToDo({ todos, edits }) {
       <form onSubmit={handleSubmit} className="todo-form">
         <input
           type="text"
-          placeholder="Enter ToDo"
-          value={input}
+          name="title"
+          placeholder="Enter ToDo Title"
+          value={data.title}
           onChange={inputHandler}
           className="todo-input"
         />
-        <button disabled={edits[0]} className="todo-button">
+        <input
+          type="text"
+          name="description"
+          placeholder="Enter ToDo Descrption"
+          value={data.description}
+          onChange={inputHandler}
+          className="todo-input"
+        />
+        <br />
+        <button disabled={flag[0]} className="todo-button">
           Add ToDo
         </button>
       </form>
