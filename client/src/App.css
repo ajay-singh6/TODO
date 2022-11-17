@@ -6,12 +6,16 @@
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
-body {
+
+
+
+
+/* body {
   background: #7f7fd5;
   background: -webkit-linear-gradient(to right, #91eae4, #86a8e7, #7f7fd5);
   background: linear-gradient(to right, #91eae4, #86a8e7, #7f7fd5);
   
-}
+} */
 
 .todo-app{
   width: 60vw;
