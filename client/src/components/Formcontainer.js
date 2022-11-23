@@ -1,16 +1,8 @@
 import { React, useState } from "react";
-import {
-  Box,
-  Button,
-  Paper,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Paper, Typography } from "@mui/material";
 import Signinform from "./Signinform";
 import Signupform from "./Signupform";
-
-import '../assets/Formcontainer.css'
-
-
+import "../assets/Formcontainer.css";
 
 
 function Formcontainer() {
@@ -47,25 +39,26 @@ function Formcontainer() {
               align="center"
               sx={{ color: "#fff", fontWeight: "bold" }}
             >
-              {move ?"Welcome Back !":"New Here ?" }
+              {move ? "Welcome Back !" : "New Here ?"}
             </Typography>
             <Typography
               paragraph
               align="center"
               sx={{ color: "#fff", mt: 2, padding: "0 30px" }}
             >
-            {move ?"To keep connected with us please login with your personal info.": " Signup and discover a completly new way of managing your tasks."}
+              {move
+                ? "To keep connected with us please login with your personal info."
+                : " Signup and discover a completly new way of managing your tasks."}
             </Typography>
 
             <Button
-            style={style.Button}
+              style={style.Button}
               variant="outlined"
               onClick={() => {
                 move ? setMove("") : setMove("reverse");
 
                 console.log(move);
               }}
-              
               sx={{
                 color: "#fff",
                 borderColor: "#fff",
@@ -77,7 +70,7 @@ function Formcontainer() {
                 },
               }}
             >
-              {move ? 'Sign In': 'Sign Up'}
+              {move ? "Sign In" : "Sign Up"}
             </Button>
           </Box>
         </Paper>
