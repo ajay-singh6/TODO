@@ -33,7 +33,7 @@ function Formcontainer() {
             height: "80vh",
             width: "70vw",
             display: "flex",
-            transition: "all 2s ease-in",
+            transition: "all 0.2s ease-in",
           }}
           className={move}
           elevation={3}
@@ -41,7 +41,7 @@ function Formcontainer() {
           {/* form container */}
           {move ? <Signupform /> : <Signinform />}
           {/* right side container */}
-          <Box style={style.Box}>
+          <Box style={style.Box} className="hide">
             <Typography
               variant="h4"
               align="center"

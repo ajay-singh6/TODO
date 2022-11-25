@@ -28,7 +28,7 @@ function TodoList({ todo, handleDelete, flag }) {
               setTasks={setTasks}
               flag={flag}
               handleDelete={handleDelete}
-              color="red"
+              color="blue"
             />
           ))
         : ""}

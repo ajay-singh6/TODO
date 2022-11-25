@@ -27,7 +27,7 @@ function Signinform() {
   return (
     <>
       <Box sx={{ heigh: "100vh", width: "60%", padding: "20px 4rem" }}>
-        <Typography variant="h3" sx={{ fontWeight: "bold", marginTop: "4rem" }}>
+        <Typography variant="h3" className="login" sx={{ fontWeight: "bold", marginTop: "4rem" }}>
           Login to Your Account
         </Typography>
         {/* Login form */}
