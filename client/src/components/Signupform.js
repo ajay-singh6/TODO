@@ -108,17 +108,17 @@ function Signupform() {
 
 const style = {
   Button: {
-    margin: "0.8rem 0",
-    borderRadius: "2rem",
-    padding: "1rem 0.8rem",
-    width: "15rem",
+    margin: "0.8em 0",
+    borderRadius: "2em",
+    padding: "1em 0.8em",
+    width: "15em",
     textTransform: "none",
   },
   button: {
-    margin: "0.8rem 0",
-    borderRadius: "2rem",
-    padding: "1rem 0.8rem",
-    width: "15rem",
+    margin: "0.8em 0",
+    borderRadius: "2em",
+    padding: "1rem 0.8em",
+    width: "15em",
     textTransform: "none",
   },
 };

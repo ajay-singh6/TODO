@@ -2,11 +2,65 @@
     border-radius: 30px;
   }
 
-
-
 .reverse {
   flex-direction: row-reverse;
+}
+
+.login {
+  /* background: red; */
+  font-size: 50px !important;
+}
+
+
+@media screen and (max-width: 1351px) {
+  body {
+    /* background: coral; */
+    font-size: 10px !important;
+  }
   
+  .login {
+    font-size: 2.4em !important;
+  }
+  form button {
+    width: 13em !important;
+  }
+}
+
+
+@media screen and (max-width: 1024px){
+  body {
+    /* background: green; */
+    font-size: 13px !important;
+  }
+  
+  .login {
+    
+    margin-top: 1em !important;
+    font-size: 2.4em !important;
+  }
+
+  .TextField-without-border-radius {
+    /* background-color: aqua; */
+    /* margin: 0.1em ; */
+  }
+
+  form button {
+    width: 13em !important;
+  }
 
 }
 
+@media screen and (max-width: 951px) {
+  body {
+    /* background: #5d0cff; */
+    font-size: 10px !important;
+  }
+
+  .login {
+    font-size: 2.4em !important;
+  }
+
+  .TextField-without-border-radius {
+    /* width: 4em; */
+  }
+}
