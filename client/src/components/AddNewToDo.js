@@ -52,7 +52,7 @@ function AddNewToDo({ flag }) {
       </div>
       <div className="task-container">
 
-        {/* <form onSubmit={handleSubmit} className="todo-form">
+        <form onSubmit={handleSubmit} className="todo-form">
           <input
             type="text"
             name="title"
@@ -73,7 +73,7 @@ function AddNewToDo({ flag }) {
           <button disabled={flag[0]} className="todo-button">
             Add ToDo
           </button>
-        </form> */}
+        </form>
       </div>
         {/* <CreateTodoPopUp toggle={toggle} modal={modal} save = {savetask} /> */}
     </>
