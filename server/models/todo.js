@@ -11,6 +11,9 @@ const todoSchema = new mongoose.Schema({
   isComplete: {
     type: "boolean",
   },
+  userId: {
+    type: mongoose.Schema.Types.ObjectId, ref: "user", required: true,
+  }
 });
 
 const todoModel = mongoose.model("todo", todoSchema);

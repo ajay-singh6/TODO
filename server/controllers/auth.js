@@ -111,6 +111,10 @@ const verify = (req, res) => {
             });
           }
         });
+      } else {
+        return res.status(401).json({
+          msg: "Wrong OTP",
+        });
       }
     }
   });
@@ -130,7 +134,7 @@ const signIn = (req, res) => {
   }
 
   User.findOne({ email }, (err, user) => {
-    if (err || !user) {
+    if (err || !user || !user.active) {
       console.log(err, user, "hello");
       return res.status(400).json({
         msg: "Email address doesn't exist",
