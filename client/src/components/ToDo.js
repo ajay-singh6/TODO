@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 
 import AddNewToDo from "./AddNewToDo";
-import TodoList from "./TodoList";
+import TodoList from "./TodoList1";
 
 function Todo() {
   const [todo, setTodo] = useState([]);
