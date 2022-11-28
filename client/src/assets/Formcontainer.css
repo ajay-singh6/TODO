@@ -50,17 +50,25 @@
 
 }
 
-@media screen and (max-width: 951px) {
-  body {
-    /* background: #5d0cff; */
-    font-size: 10px !important;
-  }
-
-  .login {
-    font-size: 2.4em !important;
-  }
-
-  .TextField-without-border-radius {
-    /* width: 4em; */
-  }
+.todo-card-text{
+    
+  font: inherit;
+  letter-spacing: inherit;
+  color: currentColor;
+  padding: 4px 0 5px;
+  
+  box-sizing: content-box;
+  
+  height: 1.4375em;
+  
+  -webkit-tap-highlight-color: transparent;
+  display: block;
+  min-width: 0;
+  width: 100%;
+  -webkit-animation-name: mui-auto-fill-cancel;
+  animation-name: mui-auto-fill-cancel;
+  -webkit-animation-duration: 10ms;
+  animation-duration: 10ms;
+  padding: 16.5px 14px;
+  text-transform: capitalize;
 }

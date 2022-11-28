@@ -1,39 +1,45 @@
-import React, { useEffect } from "react";
-import axios from "axios";
+import { Container, Grid } from "@mui/material";
+import { Box } from "@mui/system";
+import React from "react";
+import AddTodo from "./AddTodo";
+import TodoCard from "./TodoCard";
 
-import ToDoCard from "./ToDoCard";
-
-function TodoList({ todo, handleDelete, flag }) {
-  const [tasks, setTasks] = todo;
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:8000/api/todo")
-      .then((res) => {
-        setTasks(res.data);
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
-  });
+function Todolist() {
+  const todo = [
+    {
+      title: "complete todo",
+      discription: "Need to complete todo application",
+      prio: 1,
+    },
+  ];
 
   return (
     <>
-      {tasks
-        ? tasks.map((currentTask) => (
-            <ToDoCard
-              key={currentTask._id}
-              currentTask={currentTask}
-              tasks={tasks}
-              setTasks={setTasks}
-              flag={flag}
-              handleDelete={handleDelete}
-              color="blue"
-            />
-          ))
-        : ""}
+      <Box style={{ height: "calc(100vh - 68.5px)" }}>
+        <Grid
+          container
+          spacing={4}
+          sx={{
+            height: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "start",
+            padding: "0 5rem",
+          }}
+        >
+          <Grid item lg={3} width>
+            <AddTodo />
+          </Grid>
+
+          {todo.map((t) => (
+            <Grid item lg={3}>
+              <TodoCard title={t.title} discription={t.discription} color={t.color}/>
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
     </>
   );
 }
 
-export default TodoList;
+export default Todolist;
