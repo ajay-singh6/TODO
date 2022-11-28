@@ -3,7 +3,7 @@ import axios from "axios";
 
 import ToDoCard from "./ToDoCard1";
 
-function TodoList({ todo, handleDelete, flag }) {
+function TodoList1({ todo, handleDelete, flag }) {
   const [tasks, setTasks] = todo;
 
   useEffect(() => {
@@ -36,4 +36,4 @@ function TodoList({ todo, handleDelete, flag }) {
   );
 }
 
-export default TodoList;
+export default TodoList1;

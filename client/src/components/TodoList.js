@@ -2,9 +2,10 @@ import { Container, Grid } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
 import AddTodo from "./AddTodo";
-import TodoCard from "./TodoCard";
+import TodoCard from "./ToDoCard";
+import "../assets/Formcontainer.css";
 
-function Todolist() {
+function TodoList() {
   const todo = [
     {
       title: "complete todo",
@@ -14,7 +15,7 @@ function Todolist() {
   ];
 
   return (
-    <>
+    <div className="todo-container">
       <Box style={{ height: "calc(100vh - 68.5px)" }}>
         <Grid
           container
@@ -33,13 +34,13 @@ function Todolist() {
 
           {todo.map((t) => (
             <Grid item lg={3}>
-              <TodoCard title={t.title} discription={t.discription} color={t.color}/>
+              <TodoCard title={t.title} discription={t.discription} color={t.color} />
             </Grid>
           ))}
         </Grid>
       </Box>
-    </>
+    </div>
   );
 }
 
-export default Todolist;
+export default TodoList;

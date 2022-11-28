@@ -1,15 +1,27 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Cardactions from "./Cardactions";
 import { TextField } from "@mui/material";
 import "../assets/Formcontainer.css"
 
 export default function TodoCard({ title, discription, color }) {
+
+  const [styleCondition, setStyleCondition] = React.useState(true)
+  const [ state, setState] = React.useState({title: "React", discription: "Learn hooks, MUI documentation from 5 to 6 pm."});
+
+  const handleToggle = () => {
+    setStyleCondition(!styleCondition)
+    console.log(styleCondition)
+  }
+
+  const inputHandler = (e) => {
+    setState({...state,[e.target.name]: e.target.value});
+    console.log(state.title + " : " + state.discription) 
+  }
+
   return (
     <Card
       sx={{
@@ -26,16 +38,40 @@ export default function TodoCard({ title, discription, color }) {
     >
       <CardContent>
         {/* Todo title */}
-        <Typography className="todo-card-text" variant="h5" sx={{ height: "1.5em" }}>
-          {" "}
-          {title}
-        </Typography>
 
         {/* Todo description */}
-        <Typography className="todo-card-text" variant="p">{discription}</Typography>
+
+        {styleCondition ?
+          <>
+            <Typography className="todo-card-title" variant="h5" sx={{ height: "1.5em" }}> {state.title ? state.title : "Enter title here"} </Typography>
+            <Typography className="todo-card-text" variant="p">{state.discription ? state.discription : "Enter todo description"}</Typography>
+          </> 
+          : 
+          <>
+            <TextField 
+              sx={{"& fieldset": { border: "none" }}} 
+              className="todo-card-title" 
+              onChange={inputHandler} 
+              name="title" 
+              value={state.title}
+              placeholder="Todo - Title"
+            >
+            </TextField>
+            <br />
+            <TextField 
+              sx={{"& fieldset": { border: "none" } }} 
+              className="todo-card-text" 
+              onChange={inputHandler} 
+              name="discription" 
+              value={state.discription}
+              placeholder="Description"></TextField>
+          </>
+        }
+
       </CardContent>
       <CardActions>
-        <Cardactions  addTodo={false}/>
+        <Cardactions  addTodo={false} handleToggle = {handleToggle}/>
+        
       </CardActions>
     </Card>
   );

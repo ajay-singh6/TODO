@@ -3,7 +3,7 @@ import { TiEdit } from "react-icons/ti";
 import { RiCloseCircleLine, RiCheckboxCircleLine } from "react-icons/ri";
 import EditTodo from "./EditTodo";
 
-function ToDoCard({ currentTask, tasks, setTasks, flag, handleDelete }) {
+function ToDoCard1({ currentTask, tasks, setTasks, flag, handleDelete }) {
   const { _id, title, description } = currentTask;
   const [edit, setEdit] = useState(false);
 
@@ -60,4 +60,4 @@ function ToDoCard({ currentTask, tasks, setTasks, flag, handleDelete }) {
   );
 }
 
-export default ToDoCard;
+export default ToDoCard1;

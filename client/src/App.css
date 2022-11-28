@@ -8,10 +8,6 @@
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
-
-
-
-
 /* body {
   background: #7f7fd5;
   background: -webkit-linear-gradient(to right, #91eae4, #86a8e7, #7f7fd5);
@@ -22,14 +18,10 @@
 .todo-app{
   width: 60vw;
   margin: 8vw auto ;
-  
-
 }
 
 .todo-heading {
   text-align: center;
-  
-  
 }
 
 .todo {
@@ -75,12 +67,9 @@
   
 }
 
-
-
 .todo-input::placeholder {
   color: #e2e2e2;
 }
-
 
 .todo-input::placeholder {
   color: #e2e2e2;
@@ -120,7 +109,6 @@
   width: 90%;
 }
 
-
 .todo-text{
   flex-grow: 1;
 }
@@ -149,7 +137,6 @@
 
 }
 
-
 .edit{
   margin-top: 4px;
 }
@@ -165,7 +152,6 @@
   justify-content: center;
 
 }
-
 
 .delete-icon {
   margin-right: 5px;

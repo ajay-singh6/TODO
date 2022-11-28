@@ -4,20 +4,21 @@ import TodoList from "./components/TodoList";
 import Formcontainer from "./components/Formcontainer";
 
 import Navbar from "./components/Navbar";
-import Todolist from "./components/Todolist";
+import Todolist from "./components/TodoList";
 
 function App() {
   return (
-    <>
-    <Navbar></Navbar>
-    <Todolist/>
-    {/* <Formcontainer/> */}
-      {/* <div className="todo-app">
-        <h1 className="todo-heading"> Write Your Task Here.</h1>
+    <div className="main">
+      <Navbar />
+      <Todolist/>
+      {/* <Formcontainer/> */}
+        {/* <div className="todo-app">
+          <h1 className="todo-heading"> Write Your Task Here.</h1>
 
-        <Todo />
-      </div> */}
-    </>
+          <Todo />
+        </div> */}
+    </div>
+    
   );
 }
 

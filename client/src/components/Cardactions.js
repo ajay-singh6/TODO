@@ -3,12 +3,13 @@ import Box from "@mui/material/Box";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import CheckIcon from "@mui/icons-material/Check";
+import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CircleIcon from "@mui/icons-material/Circle";
 import { Typography } from "@mui/material";
 import "../assets/Formcontainer.css";
 
-export default function Cardactions({ addTodo }) {
+export default function Cardactions({ addTodo, handleToggle }) {
   const [value, setValue] = React.useState(0);
 
   const markComplete = () => {
@@ -51,6 +52,7 @@ export default function Cardactions({ addTodo }) {
             )
           }
         />
+        
         <BottomNavigationAction
           label={addTodo ? "Mid" : "Delete"}
           icon={
@@ -59,8 +61,18 @@ export default function Cardactions({ addTodo }) {
             ) : (
               <DeleteIcon onClick={deleteItem} />
             )
+            
           }
+
         />
+
+        {!addTodo && <BottomNavigationAction
+          label="Edit"
+          icon={
+            <EditIcon/>
+          }
+          onClick={handleToggle}
+        />}
         {addTodo && (
           <BottomNavigationAction
             label="Low"
