@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { endpoint } from "../endpoints";
+//import { endpoint } from "../endpoints";
 import {
   Box,
   Button,
@@ -89,7 +89,7 @@ function Signinform() {
 
       console.log(data);
       axios
-        .post(`${endpoint.baseUrl}${endpoint.signIn}`, {
+        .post(/*`${endpoint.baseUrl}${endpoint.signIn}`*/"localhost:8000/api/signin", {
           email: data.email.value,
           password: data.password.value,
         })
