@@ -25,7 +25,7 @@ export default function TodoCard({ title, discription, color }) {
   return (
     <Card
       sx={{
-        minWidth: 300,
+        minWidth: 100,
         minHeight: 358,
         display: "flex",
         justifyContent: "space-between",
@@ -40,21 +40,23 @@ export default function TodoCard({ title, discription, color }) {
         {/* Todo title */}
 
         {/* Todo description */}
+        
 
         {styleCondition ?
           <>
-            <Typography className="todo-card-title" variant="h5" sx={{ height: "1.5em" }}> {state.title ? state.title : "Enter title here"} </Typography>
+            <Typography className="todo-card-title" variant="h5" > {state.title ? state.title : "Enter title here"} </Typography>
             <Typography className="todo-card-text" variant="p">{state.discription ? state.discription : "Enter todo description"}</Typography>
           </> 
           : 
           <>
             <TextField 
-              sx={{"& fieldset": { border: "none" }}} 
+              sx={{"& hover, fieldset": { border: "none", borderBottom: "2px solid silver" }}} 
               className="todo-card-title" 
               onChange={inputHandler} 
               name="title" 
               value={state.title}
               placeholder="Todo - Title"
+              fullWidth
             >
             </TextField>
             <br />
@@ -64,6 +66,7 @@ export default function TodoCard({ title, discription, color }) {
               onChange={inputHandler} 
               name="discription" 
               value={state.discription}
+              fullWidth
               placeholder="Description"></TextField>
           </>
         }

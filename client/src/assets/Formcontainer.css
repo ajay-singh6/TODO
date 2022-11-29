@@ -18,7 +18,7 @@
   display: none;
 }
 
-.todo-card-text {
+.todo-card-text, .todo-card-title {
     
   font: inherit;
   letter-spacing: inherit;
@@ -27,7 +27,7 @@
   
   box-sizing: content-box;
   
-  height: 1.4375em;
+  height: max(1.4375em, max-content);
   
   -webkit-tap-highlight-color: transparent;
   display: block;
@@ -47,5 +47,7 @@
   background-color: #e8e8e8;
   height: calc(100vh - 50px);
 }
+
+
 
 
