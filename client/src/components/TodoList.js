@@ -12,11 +12,31 @@ function TodoList() {
       discription: "Need to complete todo application",
       prio: 1,
     },
+    {
+      title: "complete todo",
+      discription: "Need to complete todo application",
+      prio: 3,
+    },
+    {
+      title: "complete todo",
+      discription: "Need to complete todo application",
+      prio: 1,
+    },
+    {
+      title: "complete todo",
+      discription: "Need to complete todo application",
+      prio: 1,
+    },
+    {
+      title: "complete todo",
+      discription: "Need to complete todo application",
+      prio: 1,
+    },
   ];
 
   return (
     <div className="todo-container">
-      <Box style={{ height: "calc(100vh - 68.5px)" }}>
+      {/* <Box style={{ height: "calc(100vh - 68.5px)" }}> */}
         <Grid
           container
           spacing={4}
@@ -38,7 +58,7 @@ function TodoList() {
             </Grid>
           ))}
         </Grid>
-      </Box>
+      {/* </Box> */}
     </div>
   );
 }

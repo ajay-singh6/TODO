@@ -25,7 +25,7 @@ export default function TodoCard({ title, discription, color }) {
   return (
     <Card
       sx={{
-        minWidth: 100,
+        minWidth: 250,
         minHeight: 358,
         display: "flex",
         justifyContent: "space-between",
@@ -59,7 +59,7 @@ export default function TodoCard({ title, discription, color }) {
               fullWidth
             >
             </TextField>
-            <br />
+            {/* <br /> */}
             <TextField 
               sx={{"& fieldset": { border: "none" } }} 
               className="todo-card-text" 
