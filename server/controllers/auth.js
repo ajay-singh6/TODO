@@ -4,7 +4,7 @@ const { validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
 const { expressjwt: expressJwt } = require("express-jwt");
 
-const sendOtp = require("./nodemailer");
+const sendOtp = require("../utils/nodemailer");
 
 // hasing the plain password
 const hasedPassword = (plainPassword) => {
@@ -29,8 +29,8 @@ const signUp = (req, res) => {
 
   const { name, email, password } = req.body;
   const hasedPass = hasedPassword(password);
-  const otp = Math.floor((Math.random() * 10000) + 1000).toString();
-  const user = new User({ name, email, password: hasedPass, active: false, otp });
+  const generatedOTP = Math.floor((Math.random() * 10000) + 1000).toString();
+  const user = new User({ name, email, password: hasedPass, active: false, otp: generatedOTP });
 
   // User.findOne({ email }, (err, user) => {
   //   if (user && user.active == false) {
@@ -40,28 +40,27 @@ const signUp = (req, res) => {
 
   return User.findOne({ email }, (err, savedUser) => {
     if (savedUser && !savedUser.active) {
-      sendOtp(email, otp);
+      sendOtp(email, generatedOTP);
 
-      savedUser.name = user.name;
-      savedUser.email = user.email;
-      savedUser.password = user.password;
-      savedUser.otp = user.otp;
+      const updatedUser = {
+        name: req.body.name,
+        email: req.body.email,
+        password: hasedPass,
+        active: false,
+        otp: generatedOTP,
+      };
 
-      console.log(savedUser.name);
-
-      return savedUser.update((err, user) => {
-        if (!err) {
-          return res.status(201).json({
-            name: user.name,
-            email: user.email,
-            id: user._id,
-          });
-        } else {
-          console.log(err);
-          return res.status(500).json({
-            msg: "Internal Error from update",
-          });
-        }
+      return User.findByIdAndUpdate(savedUser._id, updatedUser).then(user => {
+        return res.status(201).json({
+          name: updatedUser.name,
+          email: updatedUser.email,
+          id: updatedUser._id,
+        });
+      }).catch(err => {
+        console.log(err);
+        return res.status(500).json({
+          msg: "Internal Server Error",
+        });
       });
     } else if (!savedUser) {
       return user.save((err, user) => {
@@ -73,7 +72,7 @@ const signUp = (req, res) => {
           });
         } else {
           return res.status(500).json({
-            msg: "Internal Error from save",
+            msg: "Internal Server Error",
           });
         }
       });
@@ -99,6 +98,7 @@ const verify = (req, res) => {
       const otp = req.body.otp;
       if (user.otp == otp) {
         user.active = true;
+        user.otp = undefined;
         user.save((err, user) => {
           if (!err) {
             return res.status(201).json({
@@ -106,6 +106,7 @@ const verify = (req, res) => {
               active: user.active,
             });
           } else {
+            console.log(err);
             return res.status(500).json({
               msg: "Internal Error",
             });
@@ -123,7 +124,7 @@ const verify = (req, res) => {
 // signin controller
 const signIn = (req, res) => {
   const { email, password } = req.body;
-  console.log(req.body);
+  //console.log(req.body);
 
   const error = validationResult(req);
   if (!error.isEmpty()) {
