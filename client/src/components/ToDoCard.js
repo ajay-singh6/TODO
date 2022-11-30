@@ -10,27 +10,24 @@ import "../assets/Formcontainer.css"
 export default function TodoCard({ title, discription, color }) {
 
   const [styleCondition, setStyleCondition] = React.useState(true)
-  const [ state, setState] = React.useState({title: "React", discription: "Learn hooks, MUI documentation from 5 to 6 pm."});
+  const [ state, setState] = React.useState({title: "React", discription: "Description."});
 
   const handleToggle = () => {
     setStyleCondition(!styleCondition)
-    console.log(styleCondition)
   }
 
   const inputHandler = (e) => {
     setState({...state,[e.target.name]: e.target.value});
-    console.log(state.title + " : " + state.discription) 
   }
 
   return (
     <Card
       sx={{
-        minWidth: 250,
+        minWidth: 100,
         minHeight: 358,
         display: "flex",
         justifyContent: "space-between",
         flexDirection: "column",
-        width: "100%",
         borderTop:`10px solid ${color}`
       }}
       
@@ -55,13 +52,13 @@ export default function TodoCard({ title, discription, color }) {
               onChange={inputHandler} 
               name="title" 
               value={state.title}
-              placeholder="Todo - Title"
               fullWidth
+              placeholder="Todo - Title"
             >
             </TextField>
             {/* <br /> */}
             <TextField 
-              sx={{"& fieldset": { border: "none" } }} 
+              sx={{"& hover, fieldset": { border: "none", borderBottom: "2px solid silver" }}} 
               className="todo-card-text" 
               onChange={inputHandler} 
               name="discription" 

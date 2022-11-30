@@ -9,7 +9,7 @@ function TodoList() {
   const todo = [
     {
       title: "complete todo",
-      discription: "Need to complete todo application",
+      discription: "Description",
       prio: 1,
     },
     {
@@ -35,8 +35,8 @@ function TodoList() {
   ];
 
   return (
-    <div className="todo-container">
-      {/* <Box style={{ height: "calc(100vh - 68.5px)" }}> */}
+      <div className = "todo-container" >
+        {/* <Box className="todo-box"> */}
         <Grid
           container
           spacing={4}
@@ -52,14 +52,14 @@ function TodoList() {
             <AddTodo />
           </Grid>
 
-          {todo.map((t) => (
-            <Grid item lg={3}>
-              <TodoCard title={t.title} discription={t.discription} color={t.color} />
-            </Grid>
-          ))}
+            {todo.map((t) => (
+              <Grid item lg={3}>
+                <TodoCard title={t.title} discription={t.discription} color={t.color} />
+              </Grid>
+            ))}
         </Grid>
-      {/* </Box> */}
-    </div>
+        {/* </Box> */}
+      </div>
   );
 }
 
