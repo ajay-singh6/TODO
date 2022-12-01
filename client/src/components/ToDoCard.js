@@ -6,10 +6,42 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Cardactions from "./Cardactions";
-import { TextField } from "@mui/material";
-import "../assets/Formcontainer.css"
+import {
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  Radio,
+  RadioGroup,
+  TextField,
+} from "@mui/material";
+import "../assets/Formcontainer.css";
 
 export default function TodoCard({ title, discription, color }) {
+  const [update, setUpdate] = React.useState({
+    title: title,
+    discription: discription,
+    color: color,
+  });
+  const [edit, setEdit] = React.useState(false);
+
+  const handleChange = (e) => {
+   
+    setUpdate({
+      ...update,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleUpdate = (e) => {
+    setEdit(false);
+    console.log(update)
+  };
+
+  const editItem = (e) => {
+    setEdit(true);
+    setUpdate((pre) => ({ ...pre, [e.target.name]: e.target.value }));
+  };
+
   return (
     <Card
       sx={{
@@ -19,25 +51,106 @@ export default function TodoCard({ title, discription, color }) {
         justifyContent: "space-between",
         flexDirection: "column",
         width: "100%",
-        borderTop:`10px solid ${color}`
+        borderTop: `10px solid ${color}`,
       }}
-      
       raised
     >
-      <CardContent>
-        {/* Todo title */}
-        <Typography className="todo-card-text" variant="h5" sx={{ height: "1.5em" }}>
-          {" "}
-          {title}
-        </Typography>
+      {edit ? (
+        <>
+          <CardContent>
+            <Box component="form">
+              <TextField
+                sx={{
+                  "& fieldset": { border: "none" },
+                }}
+                placeholder="Title"
+                name="title"
+                fullWidth
+                value={update.title}
+                onChange={handleChange}
+              />
+              <TextField
+                sx={{
+                  "& fieldset": { border: "none" },
+                }}
+                placeholder="Discription"
+                name="discription"
+                fullWidth
+                margin="dense"
+                rows={4}
+                id="outlined-multiline-static"
+                multiline
+                value={update.discription}
+                onChange={handleChange}
+              />
+            </Box>
+          </CardContent>
+          <CardActions sx={{ padding: "0.8em 8px" }}>
+            <FormControl sx={{ width: "100%" }}>
+              <FormLabel
+                sx={{ paddingLeft: "1.4em", color: "grey", opacity: "0.7" }}
+              >
+                Priority
+              </FormLabel>
+              <RadioGroup
+                row
+                name="color"
+                value={update.color}
+                onChange={handleChange}
+                sx={{ justifyContent: "space-around", padding: "0 1.4em" }}
+              >
+                <FormControlLabel
+                  value="red"
+                  control={<Radio color="error" />}
+                  label="High"
+                />
+                <FormControlLabel
+                  value="orange"
+                  control={<Radio color="warning" />}
+                  label="Mid"
+                />
+                <FormControlLabel
+                  value="green"
+                  control={<Radio color="success" />}
+                  label="Low"
+                />
+              </RadioGroup>
+            </FormControl>
+          </CardActions>
+          <Button
+            color="primary"
+            variant="contained"
+            size="medium"
+            onClick={handleUpdate}
+          >
+            Done
+          </Button>
+        </>
+      ) : (
+        <>
+          <CardContent>
+            <Box>
+              {/* Todo title */}
+              <Typography
+                className="todo-card-text"
+                variant="h5"
+                sx={{ height: "1.5em" }}
+              >
+                {" "}
+                {title}
+              </Typography>
 
-        {/* Todo description */}
-        <Typography className="todo-card-text" variant="p">{discription}</Typography>
-      </CardContent>
-      <CardActions>
-        <Cardactions  addTodo={false}/>
-      </CardActions>
+              {/* Todo description */}
+              <Typography className="todo-card-text" variant="p">
+                {discription}
+              </Typography>
+            </Box>
+          </CardContent>
+          <CardActions>
+            <Cardactions addTodo={false} editItem={editItem} />
+          </CardActions>
+        </>
+      )}
     </Card>
   );
 }
-
