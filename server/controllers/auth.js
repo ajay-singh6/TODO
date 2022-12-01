@@ -4,12 +4,25 @@ const { validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
 const { expressjwt: expressJwt } = require("express-jwt");
 
+
 // hasing the plain password
 const hasedPassword = (plainPassword) => {
   return bcrypt.hashSync(plainPassword, 10);
 };
 
-// comparing the password hashes.
+
+
+
+
+
+// signup controller
+const signUp = (req, res) => {
+  const error = validationResult(req);
+  console.log(error)
+  if (!error.isEmpty()) {
+    return res.status(422).json({
+      msg: error.array()[0].msg,
+=======
 const comparePassword = (plainPassword, hash) => {
   return bcrypt.compareSync(plainPassword, hash);
 };
@@ -22,6 +35,7 @@ const signUp = (req, res) => {
     return res.status(422).json({
       msg: error.array()[0].msg,
       param: error.array()[0].param,
+
     });
   }
 
@@ -30,12 +44,15 @@ const signUp = (req, res) => {
   const user = new User({ name, email, password: hasedPass });
   user.save((err, user) => {
     if (!err) {
+
       return res.status(201).json({
+
         name: user.name,
         email: user.email,
         id: user._id,
       });
     } else {
+
       if (err.code == "11000") {
         return res.status(400).json({
           msg: "email already exists.",
@@ -50,6 +67,11 @@ const signUp = (req, res) => {
 
 // signin controller
 const signIn = (req, res) => {
+
+
+
+
+
   const { email, password } = req.body;
   console.log(req.body);
 
@@ -88,10 +110,14 @@ const signIn = (req, res) => {
   });
 };
 
+
 const isSignedIn = expressJwt({
   secret: process.env.SECRET,
   requestProperty: "auth",
   algorithms: ["HS256"],
-});
+
+})
+
+
 
 module.exports = { signIn, signUp, isSignedIn };
