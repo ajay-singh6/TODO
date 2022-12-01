@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Box, Button, TextField, Typography } from "@mui/material";
-import { endpoint } from "../endpoints";
+//import { endpoint } from "../endpoints";
 import axios from "axios";
 import "../assets/Formcontainer.css";
 
@@ -84,7 +84,7 @@ function Signupform() {
       }));
     } else {
       axios
-        .post(`${endpoint.baseUrl}${endpoint.signUp}`, {
+        .post(/*`${endpoint.baseUrl}${endpoint.signUp}`*/"localhost:8000/api/signup", {
           name: data.name.value,
           email: data.email.value,
           password: data.password.value,

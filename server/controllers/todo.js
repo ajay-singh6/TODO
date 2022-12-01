@@ -1,8 +1,9 @@
 const todo = require("../models/todo");
+const User = require("../models/user");
 
 exports.getAllTodo = (req, res) => {
   todo
-    .find()
+    .find({ "userId": req.body.userId })
     .then((todo) => res.json(todo))
     .catch((err) =>
       res.status(404).json({ message: "Todo not found", error: err.message })
