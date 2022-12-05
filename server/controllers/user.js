@@ -42,4 +42,4 @@ const postUserDetails = (req, res) => {
     });
 }
 
-module.exports = { getUserDetails, postUserDetails, comparePass };
+module.exports = { getUserDetails, postUserDetails };

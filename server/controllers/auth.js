@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const bcrypt = require("bcryptjs");
 const User = require("../models/user");
 const { validationResult } = require("express-validator");
@@ -63,6 +65,7 @@ const signUp = (req, res) => {
         });
       });
     } else if (!savedUser) {
+      sendOtp(email, generatedOTP);
       return user.save((err, user) => {
         if (!err) {
           return res.status(201).json({
@@ -151,7 +154,9 @@ const signIn = (req, res) => {
       });
     }
 
-    const token = jwt.sign({ email: user.email }, /*process.env.SECRET*/"Test");
+    //console.log(user);
+
+    const token = jwt.sign({ email: user.email, id: user._id }, process.env.ACCESS_TOKEN_SECRET);
 
     res.status(200).json({
       token,
@@ -161,10 +166,29 @@ const signIn = (req, res) => {
   });
 };
 
+const authenticateToken = (req, res, next) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+  if (token == null) return res.status(401).json({
+    msg: "Token not found"
+  });
+
+  return jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+    if (err) {
+      console.log(err);
+      return res.status(403).json({
+        msg: "Invalid Token"
+      });
+    }
+    req.body.userId = user.id;
+    next();
+  });
+}
+
 const isSignedIn = expressJwt({
-  secret: /*process.env.SECRET*/"Test",
+  secret: process.env.ACCESS_TOKEN_SECRET,
   requestProperty: "auth",
   algorithms: ["HS256"],
 });
 
-module.exports = { signIn, signUp, isSignedIn, verify };
+module.exports = { signIn, signUp, verify, authenticateToken, isSignedIn };

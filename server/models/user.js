@@ -5,7 +5,6 @@ const userSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
-
     },
     email: {
         type: String,
@@ -25,6 +24,14 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: false,
     },
+    todo: {
+        todos: [
+            {
+                todoId: { type: mongoose.Schema.Types.ObjectId, ref: "todo", required: true },
+                required: false
+            }
+        ]
+    }
 });
 
 

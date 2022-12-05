@@ -12,7 +12,9 @@ const todoSchema = new mongoose.Schema({
     type: "boolean",
   },
   userId: {
-    type: mongoose.Schema.Types.ObjectId, ref: "user", required: true,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "user", 
+    required: true,
   }
 });
 
