@@ -2,7 +2,24 @@ const bcrypt = require("bcryptjs");
 
 const User = require("../models/user");
 
+
+const getUserById = (req, res, next, id) => {
+    User.findById(id).exec((err, user) => {
+      if (err || !user) {
+        return res.status(400).json({
+          err: err,
+          error: "No user was found in DB"
+        });
+      }
+      req.profile = user;
+      next();
+    });
+  };
+  
+
 const getUserDetails = (req, res) => {
+
+    // const {_id , name, email } = req.profile;
     User.findById(req.body._id, (err, user) => {
         if (err) {
             console.log(err);
@@ -42,4 +59,4 @@ const postUserDetails = (req, res) => {
     });
 }
 
-module.exports = { getUserDetails, postUserDetails, comparePass };
+module.exports = { getUserDetails, postUserDetails, getUserById };

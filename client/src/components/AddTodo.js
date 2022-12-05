@@ -14,16 +14,19 @@ import {
   RadioGroup,
   TextField,
 } from "@mui/material";
-import { AppContext } from "../App";
+import { AppContext } from "./TodoList";
 import { v4 as uuid } from "uuid";
+import { addTodo } from "./ops";
+import { UserContext } from "../App";
 
 const Data = React.createContext(null);
 
 export default function AddTodo() {
+  const { user } = React.useContext(UserContext);
   const { todo, setTodo } = React.useContext(AppContext);
   const [input, setInput] = React.useState({
     title: "",
-    discription: "",
+    description: "",
     color: "",
   });
 
@@ -32,11 +35,14 @@ export default function AddTodo() {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
 
-  const addTodo = (e) => {
-    const genId = uuid();
-    setInput({ ...input, id: genId });
-    setTodo((pre) => [...pre, input]);
-    console.log(input)
+  const addTodoCb = (e) => {
+    console.log(user)
+    addTodo(todo, input, setTodo, user.id);
+    setInput({
+      title: "",
+      description: "",
+      color: "",
+    });
   };
 
   return (
@@ -70,14 +76,14 @@ export default function AddTodo() {
             sx={{
               "& fieldset": { border: "none" },
             }}
-            placeholder="Discription"
-            name="discription"
+            placeholder="Description"
+            name="description"
             fullWidth
             margin="dense"
             rows={4}
             id="outlined-multiline-static"
             multiline
-            value={input.discription}
+            value={input.description}
             onChange={inputHandler}
           />
         </Box>
@@ -115,7 +121,7 @@ export default function AddTodo() {
           </RadioGroup>
         </FormControl>
       </CardActions>
-      <Button size="mid" variant="contained" onClick={addTodo}>
+      <Button size="mid" variant="contained" onClick={addTodoCb}>
         Create
       </Button>
     </Card>

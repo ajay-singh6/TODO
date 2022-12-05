@@ -8,14 +8,17 @@ const todoSchema = new mongoose.Schema({
   description: {
     type: "String",
   },
+  color: "String",
   isComplete: {
     type: "boolean",
   },
   userId: {
-    type: mongoose.Schema.Types.ObjectId, ref: "user", required: true,
-  }
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
 });
 
-const todoModel = mongoose.model("todo", todoSchema);
+const todoModel = mongoose.model("Todo", todoSchema);
 
 module.exports = todoModel;

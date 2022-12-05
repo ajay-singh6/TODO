@@ -9,9 +9,10 @@ import { Typography } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import "../assets/Formcontainer.css";
 import { Data } from "./AddTodo";
-import { AppContext } from "../App";
+import { AppContext } from "./TodoList";
+import { removeTodo } from "./ops";
 
-export default function Cardactions({ addTodo, editItem, input, setInput }) {
+export default function Cardactions({ addTodo, editItem, input, setInput, id }) {
   const { todo, setTodo } = useContext(AppContext);
   const [value, setValue] = useState(0);
 
@@ -19,8 +20,9 @@ export default function Cardactions({ addTodo, editItem, input, setInput }) {
     console.log("Complete");
   };
 
-  const deleteItem = () => {
-    console.log("delete");
+  const deleteItem = (e) => {
+    
+    removeTodo(todo, setTodo, id);
   };
 
   return (
@@ -38,6 +40,7 @@ export default function Cardactions({ addTodo, editItem, input, setInput }) {
         showLabels
         value={value}
         onChange={(event, newValue) => {
+          // console.log(event.target.data)
           setValue(newValue);
         }}
       >

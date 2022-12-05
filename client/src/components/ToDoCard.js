@@ -15,17 +15,19 @@ import {
   TextField,
 } from "@mui/material";
 import "../assets/Formcontainer.css";
+import { AppContext } from "./TodoList";
+import { editTodo } from "./ops";
 
-export default function TodoCard({ title, discription, color }) {
+export default function TodoCard({ title, description, color, id }) {
+  const { todo, setTodo } = React.useContext(AppContext);
   const [update, setUpdate] = React.useState({
     title: title,
-    discription: discription,
+    description: description,
     color: color,
   });
   const [edit, setEdit] = React.useState(false);
 
   const handleChange = (e) => {
-   
     setUpdate({
       ...update,
       [e.target.name]: e.target.value,
@@ -34,12 +36,12 @@ export default function TodoCard({ title, discription, color }) {
 
   const handleUpdate = (e) => {
     setEdit(false);
-    console.log(update)
+
+    editTodo(todo, setTodo, id, update);
   };
 
   const editItem = (e) => {
     setEdit(true);
-    setUpdate((pre) => ({ ...pre, [e.target.name]: e.target.value }));
   };
 
   return (
@@ -74,13 +76,13 @@ export default function TodoCard({ title, discription, color }) {
                   "& fieldset": { border: "none" },
                 }}
                 placeholder="Discription"
-                name="discription"
+                name="description"
                 fullWidth
                 margin="dense"
                 rows={4}
                 id="outlined-multiline-static"
                 multiline
-                value={update.discription}
+                value={update.description}
                 onChange={handleChange}
               />
             </Box>
@@ -142,12 +144,12 @@ export default function TodoCard({ title, discription, color }) {
 
               {/* Todo description */}
               <Typography className="todo-card-text" variant="p">
-                {discription}
+                {description}
               </Typography>
             </Box>
           </CardContent>
           <CardActions>
-            <Cardactions addTodo={false} editItem={editItem} />
+            <Cardactions addTodo={false} editItem={editItem} id={id} />
           </CardActions>
         </>
       )}

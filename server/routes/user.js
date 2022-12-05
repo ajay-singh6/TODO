@@ -1,14 +1,16 @@
 const express = require("express");
-const { getUserDetails, postUserDetails, comparePass } = require("../controllers/user")
+const { getUserDetails, postUserDetails, getUserById } = require("../controllers/user")
 
 const router = express.Router();
+
+router.param("userId", getUserById)
 
 /*
  * @route GET api/user
  * @description get details of user
  * @access loggedIn user  
 */
-router.get("/", getUserDetails);
+router.get("/:userId", getUserDetails);
 
 /*
  * @route POST api/user
