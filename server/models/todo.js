@@ -13,11 +13,11 @@ const todoSchema = new mongoose.Schema({
   },
   userId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "user", 
+    ref: "User", 
     required: true,
   }
 });
 
-const todoModel = mongoose.model("todo", todoSchema);
+const todoModel = mongoose.model("Todo", todoSchema);
 
 module.exports = todoModel;

@@ -156,7 +156,7 @@ const signIn = (req, res) => {
 
     //console.log(user);
 
-    const token = jwt.sign({ email: user.email, id: user._id }, process.env.ACCESS_TOKEN_SECRET);
+    const token = jwt.sign({ id: user._id }, process.env.SECRET);
 
     res.status(200).json({
       token,
@@ -173,20 +173,20 @@ const authenticateToken = (req, res, next) => {
     msg: "Token not found"
   });
 
-  return jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+  return jwt.verify(token, process.env.SECRET, (err, user) => {
     if (err) {
       console.log(err);
       return res.status(403).json({
         msg: "Invalid Token"
       });
     }
-    req.body.userId = user.id;
+    req.body.id = user.id;
     next();
   });
 }
 
 const isSignedIn = expressJwt({
-  secret: process.env.ACCESS_TOKEN_SECRET,
+  secret: process.env.SECRET,
   requestProperty: "auth",
   algorithms: ["HS256"],
 });

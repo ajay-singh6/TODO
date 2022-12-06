@@ -1,6 +1,6 @@
 const express = require("express");
-const { getUserDetails, postUserDetails, comparePass } = require("../controllers/user")
-
+const { getUserDetails, updateUser } = require("../controllers/user")
+const { authenticateToken } = require("../controllers/auth");
 const router = express.Router();
 
 /*
@@ -8,13 +8,13 @@ const router = express.Router();
  * @description get details of user
  * @access loggedIn user  
 */
-router.get("/", getUserDetails);
+router.get("/", authenticateToken, getUserDetails);
 
 /*
- * @route POST api/user
+ * @route PUT api/user
  * @description update details of user
  * @access loggedIn user  
 */
-router.post("/", postUserDetails);
+router.put("/", authenticateToken, updateUser);
 
 module.exports = router;

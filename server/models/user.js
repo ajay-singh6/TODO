@@ -23,14 +23,6 @@ const userSchema = new mongoose.Schema({
     otp: {
         type: String,
         required: false,
-    },
-    todo: {
-        todos: [
-            {
-                todoId: { type: mongoose.Schema.Types.ObjectId, ref: "todo", required: true },
-                required: false
-            }
-        ]
     }
 });
 
