@@ -19,21 +19,26 @@ const getUserById = (req, res, next, id) => {
 
 const getUserDetails = (req, res) => {
 
-    // const {_id , name, email } = req.profile;
-    User.findById(req.body._id, (err, user) => {
-        if (err) {
-            console.log(err);
-            return res.status(500).json({
-                msg: "Internal Server Error",
-            });
-        } else {
-            return res.status(200).json({
-                name: user.name,
-                email: user.email,
-                isActive: true
+    const {_id , name, email } = req.profile;
+    // User.findById(req.body._id, (err, user) => {
+        // if (err) {
+        //     console.log(err);
+        //     return res.status(500).json({
+        //         msg: "Internal Server Error",
+        //     });
+        // } else {
+           
+        
+        return res.status(200).json({
+                // name: user.name,
+                // email: user.email,
+                // isActive: true
+                name, email
             })
-        }
-    });
+
+            
+        // }
+    // });
 }
 
 const postUserDetails = (req, res) => {
