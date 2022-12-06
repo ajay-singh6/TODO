@@ -27,7 +27,6 @@ const addTodo = (todos, newTodo, setTodo) => {
         .then((response) => {
           const { title, description, color, _id } = response.data;
           setTodo((pre) => [{ title, description, color, _id }, ...pre]);
-
         })
         .catch((err) => {
           console.log(err);
@@ -39,14 +38,19 @@ const addTodo = (todos, newTodo, setTodo) => {
 };
 
 const removeTodo = (todos, setTodo, id) => {
-  const updatedTodo = todos.filter((t) => t.id !== id);
+  const updatedTodo = todos.filter((t) => t._id !== id);
   console.log(todos);
   setTodo(updatedTodo);
 };
 
 const editTodo = (todos, setTodo, id, newValues) => {
-  const newTodos = todos.map((t) => (t.id !== id ? t : { id, ...newValues }));
-  setTodo(newTodos);
+
+// console.log(newValues)
+  // axios
+  const newTodos = todos.map((t) => (t._id !== id ? t : { id, ...newValues }));
+  // console.log(newTodos)
+  setTodo(newTodos)
+  // console.log(todos)
 };
 
 export { addTodo, removeTodo, editTodo };

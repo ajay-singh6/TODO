@@ -21,6 +21,7 @@ import { editTodo } from "./ops";
 export default function TodoCard({ title, description, color, id }) {
   const { todo, setTodo } = React.useContext(AppContext);
   const [update, setUpdate] = React.useState({
+    id: id,
     title: title,
     description: description,
     color: color,
@@ -75,7 +76,7 @@ export default function TodoCard({ title, description, color, id }) {
                 sx={{
                   "& fieldset": { border: "none" },
                 }}
-                placeholder="Discription"
+                placeholder="Description"
                 name="description"
                 fullWidth
                 margin="dense"

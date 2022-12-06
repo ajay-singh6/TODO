@@ -50,15 +50,15 @@ function Todolist() {
             </Grid>
 
             {todo.map((t) => {
-              console.log(t);
+              {/* console.log(t); */}
               return (
                 <>
-                  <Grid item lg={3} key={t.id}>
+                  <Grid item lg={3} key={t._id}>
                     <TodoCard
                       title={t.title}
                       description={t.description}
                       color={t.color}
-                      id={t.id}
+                      id={t._id}
                     />
                   </Grid>
                 </>
