@@ -37,20 +37,51 @@ const addTodo = (todos, newTodo, setTodo) => {
   }
 };
 
-const removeTodo = (todos, setTodo, id) => {
-  const updatedTodo = todos.filter((t) => t._id !== id);
-  console.log(todos);
-  setTodo(updatedTodo);
+const removeTodo = (todos, setTodo, TodoId) => {
+  const { id, token } = JSON.parse(localStorage.getItem("user"));
+  axios
+  .delete(
+    `${endpoint.baseUrl}${endpoint.todo}/${id}/${TodoId}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  )
+  .then((res) => {
+    const updatedTodo = todos.filter((t) => t._id !== TodoId);
+    // console.log(newTodos);
+    setTodo(updatedTodo);
+  })
+  .catch((err) => console.log(err));
+  // const updatedTodo = todos.filter((t) => t._id !== TodoId);
+  // console.log(todos);
+  // setTodo(updatedTodo);
 };
 
-const editTodo = (todos, setTodo, id, newValues) => {
+const editTodo = (todos, setTodo, TodoId, newValues) => {
+  const { id, token } = JSON.parse(localStorage.getItem("user"));
 
-// console.log(newValues)
-  // axios
-  const newTodos = todos.map((t) => (t._id !== id ? t : { id, ...newValues }));
-  // console.log(newTodos)
-  setTodo(newTodos)
-  // console.log(todos)
+  axios
+    .put(
+      `${endpoint.baseUrl}${endpoint.todo}/${id}/${TodoId}`,
+      { newValues },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+    .then((res) => {
+      const newTodos = todos.map((t) =>
+        t._id !== TodoId ? t : { TodoId, ...res.data.data }
+      );
+      // console.log(newTodos);
+      setTodo(newTodos);
+    })
+    .catch((err) => console.log(err));
+
+  
 };
 
 export { addTodo, removeTodo, editTodo };

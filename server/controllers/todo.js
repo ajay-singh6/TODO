@@ -30,7 +30,9 @@ exports.createTodo = (req, res) => {
 };
 
 exports.updateTodo = (req, res) => {
-  Todo.findByIdAndUpdate(req.params.id, req.body)
+  console.log(req.body)
+  Todo
+    .findOneAndUpdate({ "_id": req.params.id, },{$set: req.body.newValues},{new: true})
     .then((data) => res.json({ message: "updated successfully", data }))
     .catch((err) =>
       res
@@ -41,10 +43,21 @@ exports.updateTodo = (req, res) => {
 
 
 
+
 exports.deleteTodo = (req, res) => {
-  Todo.findByIdAndRemove(req.params.id, req.body)
-    .then((data) => res.json({ message: "todo deleted successfully", data }))
-    .catch((err) =>
-      res.status(404).json({ message: "book not found", error: err.message })
+
+  console.log(req.body.id);
+  console.log(req.params.id);
+
+  Todo
+    .findOneAndDelete({ "_id": req.params.id})
+    .then((data) => {
+     
+      //if (data.deletedCount == 1)
+        res.status(201).json({ message: "todo deleted successfully",  ...data.newvalues });
+      //else
+        //res.status(404).json({ message: "todo not found" });
+    }).catch((err) =>
+      res.status(404).json({ message: "todo not found", error: err.message })
     );
 };
