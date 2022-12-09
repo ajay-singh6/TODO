@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import axios from "axios";
-import CreateTodoPopUp from "./CreateTodoPopUp";
 import { Typography } from "@mui/material";
 
 function AddNewToDo({ flag }) {
@@ -11,18 +10,6 @@ function AddNewToDo({ flag }) {
   });
 
   const [modal, setModal] = useState(false);
-
-  const saveTask = (taskObj) => {
-      // let tempList = taskList
-      // tempList.push(taskObj)
-
-      // localStorage.setItem("taskList", JSON.stringify(tempList))
-      // setTaskList(tempList)
-      // setModal(false)
-  }
-  const toggle = () => {
-      setModal(!modal);
-  }
 
   const inputHandler = (e) => {
       setData((data) => ({ ...data, [e.target.name]: e.target.value }));
@@ -75,7 +62,6 @@ function AddNewToDo({ flag }) {
           </button>
         </form>
       </div>
-        {/* <CreateTodoPopUp toggle={toggle} modal={modal} save = {savetask} /> */}
     </>
   );
 }

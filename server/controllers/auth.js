@@ -4,25 +4,11 @@ const { validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
 const { expressjwt: expressJwt } = require("express-jwt");
 
-
 // hasing the plain password
 const hasedPassword = (plainPassword) => {
   return bcrypt.hashSync(plainPassword, 10);
 };
 
-
-
-
-
-
-// signup controller
-const signUp = (req, res) => {
-  const error = validationResult(req);
-  console.log(error)
-  if (!error.isEmpty()) {
-    return res.status(422).json({
-      msg: error.array()[0].msg,
-=======
 const comparePassword = (plainPassword, hash) => {
   return bcrypt.compareSync(plainPassword, hash);
 };
@@ -67,10 +53,6 @@ const signUp = (req, res) => {
 
 // signin controller
 const signIn = (req, res) => {
-
-
-
-
 
   const { email, password } = req.body;
   console.log(req.body);
