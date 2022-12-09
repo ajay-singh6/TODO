@@ -6,9 +6,45 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Cardactions from "./Cardactions";
-import { TextField } from "@mui/material";
+import {
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  Radio,
+  RadioGroup,
+  TextField,
+} from "@mui/material";
+import { AppContext } from "./TodoList";
+import { v4 as uuid } from "uuid";
+import { addTodo } from "./ops";
+import { UserContext } from "../App";
+
+const Data = React.createContext(null);
 
 export default function AddTodo() {
+  const { user } = React.useContext(UserContext);
+  const { todo, setTodo } = React.useContext(AppContext);
+  const [input, setInput] = React.useState({
+    title: "",
+    description: "",
+    color: "",
+  });
+
+  // Handler Function
+  const inputHandler = (e) => {
+    setInput({ ...input, [e.target.name]: e.target.value });
+  };
+
+  const addTodoCb = (e) => {
+    console.log(user)
+    addTodo(todo, input, setTodo, user.id);
+    setInput({
+      title: "",
+      description: "",
+      color: "",
+    });
+  };
+
   return (
     <Card
       sx={{
@@ -23,32 +59,73 @@ export default function AddTodo() {
     >
       <CardContent>
         {/* Todo title */}
-        <TextField
-          sx={{
-            "& fieldset": { border: "none" },
-          }}
-          placeholder="Title"
-          name="title"
-          fullWidth
-        />
+        <Box component="form">
+          <TextField
+            sx={{
+              "& fieldset": { border: "none" },
+            }}
+            placeholder="Title"
+            name="title"
+            fullWidth
+            value={input.title}
+            onChange={inputHandler}
+          />
 
-        {/* Todo description */}
-        <TextField
-          sx={{
-            "& fieldset": { border: "none" },
-          }}
-          placeholder="Discription"
-          name="discription"
-          fullWidth
-          margin="dense"
-          rows={4}
-          id="outlined-multiline-static"
-          multiline
-        />
+          {/* Todo description */}
+          <TextField
+            sx={{
+              "& fieldset": { border: "none" },
+            }}
+            placeholder="Description"
+            name="description"
+            fullWidth
+            margin="dense"
+            rows={4}
+            id="outlined-multiline-static"
+            multiline
+            value={input.description}
+            onChange={inputHandler}
+          />
+        </Box>
       </CardContent>
       <CardActions>
-        <Cardactions addTodo={true} />
+        {/* <Cardactions addTodo={true}  input={input} setInput={setInput} /> */}
+        <FormControl sx={{ width: "100%" }}>
+          <FormLabel
+            sx={{ paddingLeft: "1.4em", color: "grey", opacity: "0.7" }}
+          >
+            Priority
+          </FormLabel>
+          <RadioGroup
+            row
+            name="color"
+            value={input.color}
+            onChange={inputHandler}
+            sx={{ justifyContent: "space-around", padding: "0 1.4em" }}
+          >
+            <FormControlLabel
+              value="red"
+              control={<Radio color="error" />}
+              label="High"
+            />
+            <FormControlLabel
+              value="orange"
+              control={<Radio color="warning" />}
+              label="Mid"
+            />
+            <FormControlLabel
+              value="green"
+              control={<Radio color="success" />}
+              label="Low"
+            />
+          </RadioGroup>
+        </FormControl>
       </CardActions>
+      <Button size="mid" variant="contained" onClick={addTodoCb}>
+        Create
+      </Button>
     </Card>
   );
 }
+
+export { Data };

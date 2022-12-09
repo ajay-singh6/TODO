@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useContext, useState } from "react";
 import Box from "@mui/material/Box";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
@@ -8,20 +8,21 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import CircleIcon from "@mui/icons-material/Circle";
 import { Typography } from "@mui/material";
 import "../assets/Formcontainer.css";
+import { AppContext } from "./TodoList";
+import { removeTodo } from "./ops";
 
-export default function Cardactions({ addTodo, handleToggle }) {
-  const [value, setValue] = React.useState(0);
+
+export default function Cardactions({ addTodo, editItem, input, setInput, id }) {
+  const { todo, setTodo } = useContext(AppContext);
+  const [value, setValue] = useState(0);
 
   const markComplete = () => {
     console.log("Complete");
   };
 
-  const deleteItem = () => {
-    console.log("delete");
-  };
-
-  const setPriority = (e) => {
-    console.log(e);
+  const deleteItem = (e) => {
+    
+    removeTodo(todo, setTodo, id);
   };
 
   return (
@@ -39,6 +40,7 @@ export default function Cardactions({ addTodo, handleToggle }) {
         showLabels
         value={value}
         onChange={(event, newValue) => {
+          // console.log(event.target.data)
           setValue(newValue);
         }}
       >
@@ -46,7 +48,14 @@ export default function Cardactions({ addTodo, handleToggle }) {
           label={addTodo ? "High" : "Complete"}
           icon={
             addTodo ? (
-              <CircleIcon color="error" onClick={setPriority} />
+              <CircleIcon
+                color="error"
+                onClick={() => {
+                  setInput((pre) => ({ ...pre, "color": "red" }));
+                  console.log(input);
+                  setTodo((p) => [...p, input]);
+                }}
+              />
             ) : (
               <CheckIcon onClick={markComplete} />
             )
@@ -57,7 +66,13 @@ export default function Cardactions({ addTodo, handleToggle }) {
           label={addTodo ? "Mid" : "Delete"}
           icon={
             addTodo ? (
-              <CircleIcon color="warning" onClick={setPriority} />
+              <CircleIcon
+                color="warning"
+                onClick={() => {
+                  setInput((pre) => ({ ...pre, "color": "orange" }));
+                  setTodo((p) => [...p, input]);
+                }}
+              />
             ) : (
               <DeleteIcon onClick={deleteItem} />
             )
@@ -66,17 +81,24 @@ export default function Cardactions({ addTodo, handleToggle }) {
 
         />
 
-        {!addTodo && <BottomNavigationAction
-          label="Edit"
-          icon={
-            <EditIcon/>
-          }
-          onClick={handleToggle}
-        />}
+        {!addTodo && (
+          <BottomNavigationAction
+            label="Edit"
+            icon={<EditIcon onClick={editItem} />}
+          />
+        )}
         {addTodo && (
           <BottomNavigationAction
             label="Low"
-            icon={<CircleIcon color="success" onClick={setPriority} />}
+            icon={
+              <CircleIcon
+                color="success"
+                onClick={() => {
+                  setInput((pre) => ({ ...pre, "color": "green" }));
+                  setTodo((p) => [...p, input]);
+                }}
+              />
+            }
           />
         )}
       </BottomNavigation>

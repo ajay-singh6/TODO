@@ -1,13 +1,16 @@
 require("dotenv").config();
 const express = require("express");
+const cors = require("cors")
 const connectDB = require("./config/db");
 const todoRoutes = require("./routes/todo");
-const authRoutes = require("./routes/auth")
+const authRoutes = require("./routes/auth");
+const userRoutes = require("./routes/user");
 
 const app = express();
 connectDB();
 
 app.use(express.json({ extended: false }));
+app.use(cors())
 app.get("/", (req, res) => {
   res.send("Server is up and running.");
 });
@@ -27,7 +30,8 @@ app.use(function (req, res, next) {
 });
 
 app.use("/api/todo", todoRoutes);
-app.use("/api", authRoutes)
+app.use("/api/user", userRoutes);
+app.use("/api", authRoutes);
 
 app.set("PORT", process.env.PORT || 8000);
 const PORT = app.get("PORT");
