@@ -1,5 +1,5 @@
 const express = require("express");
-const { getUserDetails, updateUser } = require("../controllers/user")
+const { getUserDetails, updateUser, uploadImage } = require("../controllers/user")
 const { authenticateToken } = require("../controllers/auth");
 const router = express.Router();
 
@@ -16,5 +16,7 @@ router.get("/", authenticateToken, getUserDetails);
  * @access loggedIn user  
 */
 router.put("/", authenticateToken, updateUser);
+
+router.post("/upload", authenticateToken, uploadImage);
 
 module.exports = router;

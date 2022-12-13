@@ -23,6 +23,10 @@ const userSchema = new mongoose.Schema({
     otp: {
         type: String,
         required: false,
+    },
+    image: {
+        data: Buffer,
+        contentType: String
     }
 });
 
