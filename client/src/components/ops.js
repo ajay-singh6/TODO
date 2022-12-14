@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Navigate, useNavigate } from "react-router-dom";
+// import { Navigate, useNavigate } from 'react-router-dom';
 import { endpoint } from "../endpoints";
 
 const addTodo = (todos, newTodo, setTodo) => {

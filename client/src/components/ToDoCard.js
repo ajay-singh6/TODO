@@ -53,9 +53,6 @@ export default function TodoCard({ title, description, color, id }) {
     setStyleCondition(!styleCondition)
   }
 
-  const inputHandler = (e) => {
-    setState({...state,[e.target.name]: e.target.value});
-  }
 
   return (
 

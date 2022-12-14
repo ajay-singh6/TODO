@@ -33,6 +33,7 @@ function App() {
 
     <div className="main">
       <Navbar />
+      <Todo />
       {/* <BrowserRouter>
         <Routes>
           <Route path="/" element={<Todolist />}>
