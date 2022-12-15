@@ -1,6 +1,7 @@
 const express = require("express");
-const { getUserDetails, postUserDetails, getUserById } = require("../controllers/user")
 
+const { getUserDetails, updateUser, uploadImage } = require("../controllers/user")
+const { authenticateToken } = require("../controllers/auth");
 const router = express.Router();
 
 router.param("userId", getUserById)
@@ -10,13 +11,16 @@ router.param("userId", getUserById)
  * @description get details of user
  * @access loggedIn user  
 */
-router.get("/:userId", getUserDetails);
+
+router.get("/", authenticateToken, getUserDetails);
 
 /*
- * @route POST api/user
+ * @route PUT api/user
  * @description update details of user
  * @access loggedIn user  
 */
-router.post("/", postUserDetails);
+router.put("/", authenticateToken, updateUser);
+
+router.post("/upload", authenticateToken, uploadImage);
 
 module.exports = router;

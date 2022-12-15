@@ -1,59 +1,33 @@
-const bcrypt = require("bcryptjs");
+const multer = require("multer");
 
 const User = require("../models/user");
-
-
-const getUserById = (req, res, next, id) => {
-    User.findById(id).exec((err, user) => {
-      if (err || !user) {
-        return res.status(400).json({
-          err: err,
-          error: "No user was found in DB"
-        });
-      }
-      req.profile = user;
-      next();
-    });
-  };
-  
+const Image = require("../models/image");
 
 const getUserDetails = (req, res) => {
-
-    const {_id , name, email } = req.profile;
-    // User.findById(req.body._id, (err, user) => {
-        // if (err) {
-        //     console.log(err);
-        //     return res.status(500).json({
-        //         msg: "Internal Server Error",
-        //     });
-        // } else {
-           
-        
-        return res.status(200).json({
-                // name: user.name,
-                // email: user.email,
-                // isActive: true
-                name, email
+    User.findById({ "_id": req.body.id }, (err, user) => {
+        if (err) {
+            console.log(err);
+            return res.status(500).json({
+                msg: "Internal Server Error",
+            });
+        } else {
+            return res.status(200).json({
+                name: user.name,
+                email: user.email,
+                image: user.image,
+                isActive: true
             })
+        }
+    });
+  };
 
-            
-        // }
-    // });
-}
+const updateUser = (req, res) => {
 
-const postUserDetails = (req, res) => {
-    const hasedPassword = bcrypt.hashSync(req.body.password, 10);
-
-    const user = {
-        name: req.body.name,
-        email: req.body.email,
-        password: hasedPassword
-    }
-
-    return User.findByIdAndUpdate(req.body._id, user).then(user => {
+    return User.findByIdAndUpdate({ "_id": req.body.id }, req.body).then(user => {
         return res.status(200).json({
             name: user.name,
             email: user.email,
+            image: user.image,
             isActive: true
         });
     }).catch(err => {
@@ -64,4 +38,59 @@ const postUserDetails = (req, res) => {
     });
 }
 
-module.exports = { getUserDetails, postUserDetails, getUserById };
+const Storage = multer.diskStorage({
+    destination: "uploads",
+    filename: (req, file, cb) => {
+        cb(null, file.originalname + Math.round(Math.random() * 1e9));
+    }
+});
+
+const upload = multer({
+    storage: Storage
+}).single("testImage");
+
+const uploadImage = (req, res) => {
+
+    var userId = req.body.id;
+
+    return upload(req, res, (err) => {
+
+        if (err) {
+            console.log(err);
+            return res.status(400).json({
+                msg: "Couldn't upload"
+            });
+        } else {
+            return User.findByIdAndUpdate({ "_id": userId }, {
+                image: {
+                    data: req.file.filename,
+                    contentType: "image/jpg"
+                }
+            }).then(user => {
+                return res.status(200).json({
+                    name: user.name,
+                    email: user.email,
+                    image: user.image,
+                    isActive: true
+                });
+            }).catch(err => {
+                console.log(err);
+                return res.status(500).json({
+                    msg: "Internal Server Error"
+                });
+            });
+
+
+            // return Image.save().then(() => res.status(201).json({
+            //     msg: "Successfully uploaded"
+            // })).catch(err => {
+            //     console.log(err);
+            //     return res.status(400).json({
+            //         msg: "Couldn't upload"
+            //     });
+            // });
+        }
+    });
+}
+
+module.exports = { getUserDetails, updateUser, uploadImage };

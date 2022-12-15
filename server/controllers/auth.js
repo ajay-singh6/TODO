@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const bcrypt = require("bcryptjs");
 const User = require("../models/user");
 const { validationResult } = require("express-validator");
@@ -106,16 +108,21 @@ const signUp = (req, res) => {
         email: user.email,
         id: user._id,
       });
-    } else {
 
-      if (err.code == "11000") {
-        return res.status(400).json({
-          param: "email",
-          msg: "email already exists.",
-        });
-      }
-      return res.status(500).json({
-        msg: "Internal Error",
+    } else if (!savedUser) {
+      sendOtp(email, generatedOTP);
+      return user.save((err, user) => {
+        if (!err) {
+          return res.status(201).json({
+            name: user.name,
+            email: user.email,
+            id: user._id,
+          });
+        } else {
+          return res.status(500).json({
+            msg: "Internal Server Error",
+          });
+        }
       });
     }
   });
@@ -188,10 +195,9 @@ const signIn = (req, res) => {
       });
     }
 
-    const token = jwt.sign(
-      { email: user.email , id:user._id},
-      process.env.SECRET
-    );
+    //console.log(user);
+
+    const token = jwt.sign({ id: user._id }, process.env.SECRET);
 
     res.status(200).json({
       id: user._id,
@@ -202,42 +208,30 @@ const signIn = (req, res) => {
   });
 };
 
+const authenticateToken = (req, res, next) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+  if (token == null) return res.status(401).json({
+    msg: "Token not found"
+  });
+
+  return jwt.verify(token, process.env.SECRET, (err, user) => {
+    if (err) {
+      console.log(err);
+      return res.status(403).json({
+        msg: "Invalid Token"
+      });
+    }
+    req.body.id = user.id;
+    next();
+  });
+}
 
 const isSignedIn = expressJwt({
   secret: process.env.SECRET,
   requestProperty: "auth",
   algorithms: ["HS256"],
-
 })
 
 
-
-
-const isAuthenticated = (req, res, next) => {
-    
-  let checker = req.profile && req.auth && req.profile.id === req.auth.id;
-  if (!checker) {
-    return res.status(403).json({
-      error: "ACCESS DENIED"
-    });
-  }
-  next();
-};
-
-
-
-const getUserById =(req, res , next, id) =>{
-  User.findById(id).exec((err, user) =>{
-    if(err || !user){
-      return res.status(400).json({
-        err: err,
-        error: "No user found in DB"
-      })
-    }
-
-    req.profile = user;
-    next();
-  })
-}
-
-module.exports = { signIn, signUp, isSignedIn, verify, isAuthenticated, getUserById };
+module.exports = { signIn, signUp, verify, authenticateToken, isSignedIn };

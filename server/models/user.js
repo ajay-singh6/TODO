@@ -5,7 +5,6 @@ const userSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
-
     },
     email: {
         type: String,
@@ -21,7 +20,14 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
-   
+    otp: {
+        type: String,
+        required: false,
+    },
+    image: {
+        data: Buffer,
+        contentType: String
+    }
 });
 
 

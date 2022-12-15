@@ -1,5 +1,8 @@
 const express = require("express");
 const router = express.Router();
+
+const { authenticateToken, isSignedIn } = require("../controllers/auth");
+
 const {
   getAllTodo,
   createTodo,
@@ -16,27 +19,29 @@ router.param("userId", getUserById)
  * @description get all todo
  * @access private
  */
-router.get("/:userId", getAllTodo);
+
+router.get("/", authenticateToken, getAllTodo);
 
 /**
  * @route POST api/todo
  * @description add a new todo
  * @access private
  */
-router.post("/:userId", isSignedIn, isAuthenticated,  createTodo);
+router.post("/", authenticateToken, createTodo);
 
 /**
  * @route PUT api/todo/:id
  * @description update todo
  * @access private
  */
-router.put("/:userId/:id", isSignedIn, isAuthenticated, updateTodo);
+router.put("/:id", authenticateToken, updateTodo);
 
 /**
  * @route DELETE api/todo/:id
  * @description delete todo
  * @access private
  */
-router.delete("/:userId/:id",isSignedIn, isAuthenticated, deleteTodo);
+
+router.delete("/:id", authenticateToken, deleteTodo);
 
 module.exports = router;
