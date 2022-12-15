@@ -89,6 +89,7 @@ function Signup() {
           name: data.name.value,
           email: data.email.value,
           password: data.password.value,
+          
         })
         .then((res) => {
           // Todo : routing

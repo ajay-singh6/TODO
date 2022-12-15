@@ -2,25 +2,27 @@ import axios from "axios";
 import { Navigate, useNavigate } from "react-router-dom";
 import { endpoint } from "../endpoints";
 
-const addTodo = (todos, newTodo, setTodo) => {
+const addTodo = (todos, newTodo, setTodo, userId, setOpen) => {
   // newTodo.id = uuid();
-  const { id, token } = JSON.parse(localStorage.getItem("user"));
+
+  const localUser = JSON.parse(localStorage.getItem("user"));
 
   // console.log(userId)
-  if (
-    newTodo.title !== null &&
-    newTodo.discription !== null &&
-    newTodo.color !== null
-  ) {
-    if (id) {
-      console.log(id);
+  if (localUser.id && userId) {
+    if (
+      newTodo.title !== null &&
+      newTodo.discription !== null &&
+      newTodo.color !== null
+    ) {
+      console.log(localUser.id);
+      const {id} = localUser
       axios
         .post(
           `${endpoint.baseUrl}${endpoint.todo}/${id}`,
           { ...newTodo, id },
           {
             headers: {
-              Authorization: `Bearer ${token}`,
+              Authorization: `Bearer ${localUser.token}`,
             },
           }
         )
@@ -31,29 +33,27 @@ const addTodo = (todos, newTodo, setTodo) => {
         .catch((err) => {
           console.log(err);
         });
-    } else {
-      alert("Please login to create a ToDo");
-    }
+    } 
+  }else {
+    console.log("hello");
+    setOpen(true);
   }
 };
 
 const removeTodo = (todos, setTodo, TodoId) => {
   const { id, token } = JSON.parse(localStorage.getItem("user"));
   axios
-  .delete(
-    `${endpoint.baseUrl}${endpoint.todo}/${id}/${TodoId}`,
-    {
+    .delete(`${endpoint.baseUrl}${endpoint.todo}/${id}/${TodoId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-    }
-  )
-  .then((res) => {
-    const updatedTodo = todos.filter((t) => t._id !== TodoId);
-    // console.log(newTodos);
-    setTodo(updatedTodo);
-  })
-  .catch((err) => console.log(err));
+    })
+    .then((res) => {
+      const updatedTodo = todos.filter((t) => t._id !== TodoId);
+      // console.log(newTodos);
+      setTodo(updatedTodo);
+    })
+    .catch((err) => console.log(err));
   // const updatedTodo = todos.filter((t) => t._id !== TodoId);
   // console.log(todos);
   // setTodo(updatedTodo);
@@ -80,8 +80,6 @@ const editTodo = (todos, setTodo, TodoId, newValues) => {
       setTodo(newTodos);
     })
     .catch((err) => console.log(err));
-
-  
 };
 
 export { addTodo, removeTodo, editTodo };
