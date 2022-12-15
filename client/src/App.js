@@ -2,7 +2,6 @@ import "./App.css";
 import Todo from "./components/ToDo";
 
 import Navbar from "./components/Navbar";
-import Formcontainer from "./components/Formcontainer";
 import Todolist from "./components/TodoList";
 import { createContext, useState } from "react";
 import {
@@ -33,9 +32,9 @@ function App() {
   return (
 
     <div className="main">
-      {/* <Navbar />
-      <Todo /> */}
-      <BrowserRouter>
+      <Navbar />
+      <Todo />
+      {/* <BrowserRouter>
         <Routes>
           <Route path="/" element={<Todolist />}>
             {" "}
@@ -47,7 +46,7 @@ function App() {
             {" "}
           </Route>
         </Routes>
-      </BrowserRouter>
+      </BrowserRouter> */}
       <UserContext.Provider value={{user,setUser}}>
 
       <RouterProvider router={router}></RouterProvider>
