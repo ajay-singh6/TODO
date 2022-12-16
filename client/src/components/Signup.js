@@ -88,8 +88,7 @@ function Signup() {
         .post(`${endpoint.baseUrl}${endpoint.signUp}`, {
           name: data.name.value,
           email: data.email.value,
-          password: data.password.value,
-          
+          password: data.password.value
         })
         .then((res) => {
           // Todo : routing

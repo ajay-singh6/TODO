@@ -9,10 +9,10 @@ const {
   deleteTodo,
   pushTodoInUserArray,
 } = require("../controllers/todo");
-const { getUserById, isSignedIn, authenticateToken } = require("../controllers/auth");
+const {authenticateToken } = require("../controllers/auth");
 
 
-router.param("userId", getUserById)
+// router.param("userId", getUserById)
 /**
  * @route GET api/todo
  * @description get all todo
