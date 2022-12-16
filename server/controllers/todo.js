@@ -40,6 +40,9 @@ exports.updateTodo = (req, res) => {
     );
 };
 
+
+
+
 exports.deleteTodo = (req, res) => {
 
   console.log(req.body.id);

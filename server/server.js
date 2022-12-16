@@ -1,5 +1,6 @@
 require("dotenv").config();
 const express = require("express");
+const cors = require("cors")
 const connectDB = require("./config/db");
 const todoRoutes = require("./routes/todo");
 const authRoutes = require("./routes/auth");
@@ -9,6 +10,7 @@ const app = express();
 connectDB();
 
 app.use(express.json({ extended: false }));
+app.use(cors())
 app.get("/", (req, res) => {
   res.send("Server is up and running.");
 });

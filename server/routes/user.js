@@ -10,7 +10,7 @@ router.use(authenticateToken);
  * @description get details of user
  * @access loggedIn user  
 */
-router.get("/", getUserDetails);
+router.get("/:userId", getUserDetails);
 
 /*
  * @route PUT api/user
