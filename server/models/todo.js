@@ -14,15 +14,9 @@ const todoSchema = new mongoose.Schema({
   },
   userId: {
     type: mongoose.Schema.Types.ObjectId,
-<<<<<<< HEAD
     ref: "User", 
     required: true,
   }
-=======
-    ref: "User",
-    required: true,
-  },
->>>>>>> devlopment
 });
 
 const todoModel = mongoose.model("Todo", todoSchema);

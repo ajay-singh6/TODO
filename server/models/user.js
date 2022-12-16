@@ -20,7 +20,6 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
-<<<<<<< HEAD
     otp: {
         type: String,
         required: false,
@@ -29,9 +28,6 @@ const userSchema = new mongoose.Schema({
         data: Buffer,
         contentType: String
     }
-=======
-   
->>>>>>> devlopment
 });
 
 
