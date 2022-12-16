@@ -3,12 +3,14 @@ const { getUserDetails, updateUser, uploadImage } = require("../controllers/user
 const { authenticateToken } = require("../controllers/auth");
 const router = express.Router();
 
+router.use(authenticateToken);
+
 /*
  * @route GET api/user
  * @description get details of user
  * @access loggedIn user  
 */
-router.get("/", authenticateToken, getUserDetails);
+router.get("/", getUserDetails);
 
 /*
  * @route PUT api/user

@@ -10,32 +10,34 @@ const {
   deleteTodo,
 } = require("../controllers/todo");
 
+router.use(authenticateToken);
+
 /**
  * @route GET api/todo
  * @description get all todo
  * @access public
  */
-router.get("/", authenticateToken, getAllTodo);
+router.get("/", getAllTodo);
 
 /**
  * @route POST api/todo
  * @description add a new todo
  * @access public
  */
-router.post("/", authenticateToken, createTodo);
+router.post("/", createTodo);
 
 /**
  * @route PUT api/todo/:id
  * @description update todo
  * @access public
  */
-router.put("/:id", authenticateToken, updateTodo);
+router.put("/:id", updateTodo);
 
 /**
  * @route DELETE api/todo/:id
  * @description delete todo
  * @access public
  */
-router.delete("/:id", authenticateToken, deleteTodo);
+router.delete("/:id", deleteTodo);
 
 module.exports = router;

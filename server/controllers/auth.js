@@ -70,8 +70,7 @@ const signUp = (req, res) => {
         if (!err) {
           return res.status(201).json({
             name: user.name,
-            email: user.email,
-            id: user._id,
+            email: user.email
           });
         } else {
           return res.status(500).json({
@@ -156,10 +155,11 @@ const signIn = (req, res) => {
 
     //console.log(user);
 
-    const token = jwt.sign({ id: user._id }, process.env.SECRET);
+    const token = jwt.sign({ id: user._id }, process.env.SECRET, { expiresIn: "1d" });
+
+    res.cookie("jwt", token, { maxAge: 1000 * 60 * 60 * 24 });
 
     res.status(200).json({
-      token,
       email: user.email,
       name: user.name,
     });
