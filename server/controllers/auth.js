@@ -13,7 +13,6 @@ const hasedPassword = (plainPassword) => {
   return bcrypt.hashSync(plainPassword, 10);
 };
 
-// comparing the password hashes.
 const comparePassword = (plainPassword, hash) => {
   return bcrypt.compareSync(plainPassword, hash);
 };
@@ -162,6 +161,7 @@ const verify = (req, res) => {
 
 // signin controller
 const signIn = (req, res) => {
+
   const { email, password } = req.body;
   //console.log(req.body);
 
@@ -225,6 +225,7 @@ const isSignedIn = expressJwt({
   secret: process.env.SECRET,
   requestProperty: "auth",
   algorithms: ["HS256"],
-});
+})
+
 
 module.exports = { signIn, signUp, verify, authenticateToken, isSignedIn };

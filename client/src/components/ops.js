@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Navigate, useNavigate } from "react-router-dom";
+// import { Navigate, useNavigate } from 'react-router-dom';
 import { endpoint } from "../endpoints";
 
 const addTodo = (todos, newTodo, setTodo, userId, setOpen) => {
@@ -18,7 +18,8 @@ const addTodo = (todos, newTodo, setTodo, userId, setOpen) => {
       const {id} = localUser
       axios
         .post(
-          `${endpoint.baseUrl}${endpoint.todo}/${id}`,
+          
+          `${endpoint.baseUrl}${endpoint.todo}`,
           { ...newTodo, id },
           {
             headers: {

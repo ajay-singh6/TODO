@@ -1,6 +1,8 @@
 import "./App.css";
+
 import Navbar from "./components/Navbar";
 import Todolist from "./components/TodoList";
+import Formcontainer from "./components/Formcontainer";
 import { createContext, useState } from "react";
 import {
   createBrowserRouter,
@@ -13,6 +15,7 @@ import Signup from "./components/Signup";
 import Login from "./components/Login";
 import Profile from "./components/Profile";
 import PrivateRoute from "./utils/PrivateRoute";
+import Signinform from "./components/Signinform";
 const UserContext = createContext(null);
 
 function App() {
@@ -33,7 +36,10 @@ function App() {
   ]);
 
   return (
-    <>
+
+    <div className="main">
+      {/* <Navbar /> */}
+      {/* <Todo /> */}
       {/* <BrowserRouter>
         <Routes>
           <Route path="/" element={<Todolist />}>
@@ -50,14 +56,17 @@ function App() {
       <UserContext.Provider value={{ user, setUser }}>
         <RouterProvider router={router}></RouterProvider>
       </UserContext.Provider>
+      {/* <Signinform /> */}
 
       {/* <Formcontainer/> */}
       {/* <div className="todo-app">
         <h1 className="todo-heading"> Write Your Task Here.</h1>
 
-        <Todo />
-      </div> */}
-    </>
+          <Todo />
+        </div> */}
+      {/* <Profile /> */}
+    </div> 
+    
   );
 }
 

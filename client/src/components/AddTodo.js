@@ -64,7 +64,7 @@ export default function AddTodo() {
   return (
     <Card
       sx={{
-        minWidth: 300,
+        minWidth: "fit-content",
         width: "100%",
         minHeight: 358,
         display: "flex",

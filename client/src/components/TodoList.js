@@ -3,11 +3,14 @@ import { Box } from "@mui/system";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import AddTodo from "./AddTodo";
 import TodoCard from "./ToDoCard";
+
 import Navbar from "./Navbar";
 import axios from "axios";
+import { endpoint } from "../endpoints";
 import { UserContext } from "../App";
 
 const AppContext = createContext(null);
+// const localUser = JSON.parse(localStorage.getItem("user"));
 
 function Todolist() {
   const { user, setUser } = useContext(UserContext);
@@ -16,19 +19,27 @@ function Todolist() {
 
   useEffect(() => {
     if (user?.id) {
-    const {id} = JSON.parse(localStorage.getItem("user"));
+    const localUser = JSON.parse(localStorage.getItem("user"));
 
       axios
-        .get(`http://localhost:8000/api/todo/${id}`)
+        .get(
+          `${endpoint.baseUrl}${endpoint.todo}`,
+          {
+            headers: {
+              Authorization: `Bearer ${localUser.token}`,
+            },
+          }
+          )
         .then((response) => {
-          // console.log(response.data);
+          console.log(response.body);
           setTodo([...response.data]);
         })
         .catch((err) => {
           console.log(err);
         });
+        
     }
-  }, []);
+  }, [user]);
 
   return (
     <>
@@ -52,7 +63,6 @@ function Todolist() {
             </Grid>
 
             {todo.map((t) => {
-              {/* console.log(t); */}
               return (
                 <>
                   <Grid item lg={3} key={t._id}>

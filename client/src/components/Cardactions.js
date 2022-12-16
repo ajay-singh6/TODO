@@ -1,16 +1,17 @@
-import react, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import Box from "@mui/material/Box";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import CheckIcon from "@mui/icons-material/Check";
+import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CircleIcon from "@mui/icons-material/Circle";
 import { Typography } from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
 import "../assets/css/Formcontainer.css";
 import { Data } from "./AddTodo";
 import { AppContext } from "./TodoList";
 import { removeTodo } from "./ops";
+
 
 export default function Cardactions({ addTodo, editItem, input, setInput, id }) {
   const { todo, setTodo } = useContext(AppContext);
@@ -61,6 +62,7 @@ export default function Cardactions({ addTodo, editItem, input, setInput, id }) 
             )
           }
         />
+        
         <BottomNavigationAction
           label={addTodo ? "Mid" : "Delete"}
           icon={
@@ -68,15 +70,18 @@ export default function Cardactions({ addTodo, editItem, input, setInput, id }) 
               <CircleIcon
                 color="warning"
                 onClick={() => {
-                  setInput((pre) => ({ ...pre, ["color"]: "orange" }));
+                  setInput((pre) => ({ ...pre, "color": "orange" }));
                   setTodo((p) => [...p, input]);
                 }}
               />
             ) : (
               <DeleteIcon onClick={deleteItem} />
             )
+            
           }
+
         />
+
         {!addTodo && (
           <BottomNavigationAction
             label="Edit"
@@ -90,7 +95,7 @@ export default function Cardactions({ addTodo, editItem, input, setInput, id }) 
               <CircleIcon
                 color="success"
                 onClick={() => {
-                  setInput((pre) => ({ ...pre, ["color"]: "green" }));
+                  setInput((pre) => ({ ...pre, "color": "green" }));
                   setTodo((p) => [...p, input]);
                 }}
               />

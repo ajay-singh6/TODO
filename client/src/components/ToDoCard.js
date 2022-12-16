@@ -1,12 +1,12 @@
+
 import * as React from "react";
-import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Cardactions from "./Cardactions";
 import {
+  Box,
   FormControl,
   FormControlLabel,
   FormLabel,
@@ -17,6 +17,7 @@ import {
 import "../assets/css/Formcontainer.css";
 import { AppContext } from "./TodoList";
 import { editTodo } from "./ops";
+import { Button } from "bootstrap";
 
 export default function TodoCard({ title, description, color, id }) {
   const { todo, setTodo } = React.useContext(AppContext);
@@ -45,16 +46,26 @@ export default function TodoCard({ title, description, color, id }) {
     setEdit(true);
   };
 
+  const [styleCondition, setStyleCondition] = React.useState(true)
+  const [ state, setState] = React.useState({title: "React", discription: "Description."});
+
+  const handleToggle = () => {
+    setStyleCondition(!styleCondition)
+  }
+
+
   return (
+
     <Card
       sx={{
-        minWidth: 300,
+        minWidth: 100,
         minHeight: 358,
         display: "flex",
         justifyContent: "space-between",
         flexDirection: "column",
+
         width: "100%",
-        borderTop: `10px solid ${color}`,
+        borderTop: `10px solid ${color}`
       }}
       raised
     >
