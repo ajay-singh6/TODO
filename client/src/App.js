@@ -1,8 +1,8 @@
 import "./App.css";
-import Todo from "./components/ToDo";
 
 import Navbar from "./components/Navbar";
 import Todolist from "./components/TodoList";
+import Formcontainer from "./components/Formcontainer";
 import { createContext, useState } from "react";
 import {
   createBrowserRouter,
@@ -13,10 +13,13 @@ import {
 } from "react-router-dom";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
-const UserContext = createContext(null)
+import Profile from "./components/Profile";
+import PrivateRoute from "./utils/PrivateRoute";
+import Signinform from "./components/Signinform";
+const UserContext = createContext(null);
 
 function App() {
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState({});
   const router = createBrowserRouter([
     {
       path: "/",
@@ -27,14 +30,17 @@ function App() {
       element: <Login />,
     },
     { path: "/signup", element: <Signup /> },
+    { path: "/user", element: <PrivateRoute />, children:[{
+      path: "/user", element: <Profile/>
+    }] },
   ]);
 
   return (
 
     <div className="main">
-      <Navbar />
-      <Todo />
-      {/* <BrowserRouter>
+      {/* <Navbar /> */}
+      {/* <Todo /> */}
+      <BrowserRouter>
         <Routes>
           <Route path="/" element={<Todolist />}>
             {" "}
@@ -46,11 +52,11 @@ function App() {
             {" "}
           </Route>
         </Routes>
-      </BrowserRouter> */}
-      <UserContext.Provider value={{user,setUser}}>
-
-      <RouterProvider router={router}></RouterProvider>
+      </BrowserRouter>
+      <UserContext.Provider value={{ user, setUser }}>
+        <RouterProvider router={router}></RouterProvider>
       </UserContext.Provider>
+      {/* <Signinform /> */}
 
       {/* <Formcontainer/> */}
       {/* <div className="todo-app">
@@ -65,4 +71,4 @@ function App() {
 }
 
 export default App;
-export {UserContext};
+export { UserContext };

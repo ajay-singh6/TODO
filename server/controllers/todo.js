@@ -30,7 +30,6 @@ exports.createTodo = (req, res) => {
 };
 
 exports.updateTodo = (req, res) => {
-
   Todo
     .findOneAndUpdate({ "_id": req.params.id, "userId": req.body.id }, req.body)
     .then((data) => res.json({ message: "updated successfully", data }))

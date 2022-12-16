@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import AddTodo from "./AddTodo";
@@ -13,10 +13,12 @@ const AppContext = createContext(null);
 function Todolist() {
   const { user, setUser } = useContext(UserContext);
   const [todo, setTodo] = useState([]);
+ 
 
   useEffect(() => {
-    const { id } = JSON.parse(localStorage.getItem("user"));
-    if (user) {
+    if (user?.id) {
+    const {id} = JSON.parse(localStorage.getItem("user"));
+
       axios
         .get(`http://localhost:8000/api/todo/${id}`)
         .then((response) => {
@@ -31,9 +33,9 @@ function Todolist() {
   return (
     <>
       <AppContext.Provider value={{ todo, setTodo }}>
-        <Navbar></Navbar>
+        <Navbar user={user}></Navbar>
 
-        <Box style={{ height: "calc(100vh - 68.5px)", marginTop: "6rem" }}>
+        <Box style={{ height: "calc(100vh - 68.5px)" }}>
           <Grid
             container
             spacing={4}
@@ -65,6 +67,7 @@ function Todolist() {
             })}
           </Grid>
         </Box>
+        
       </AppContext.Provider>
     </>
   );

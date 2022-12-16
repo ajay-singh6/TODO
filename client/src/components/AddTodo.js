@@ -7,6 +7,11 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Cardactions from "./Cardactions";
 import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   FormControl,
   FormControlLabel,
   FormLabel,
@@ -18,10 +23,12 @@ import { AppContext } from "./TodoList";
 import { v4 as uuid } from "uuid";
 import { addTodo } from "./ops";
 import { UserContext } from "../App";
+import { useNavigate } from "react-router-dom";
 
 const Data = React.createContext(null);
 
 export default function AddTodo() {
+  const navigate = useNavigate()
   const { user } = React.useContext(UserContext);
   const { todo, setTodo } = React.useContext(AppContext);
   const [input, setInput] = React.useState({
@@ -30,6 +37,15 @@ export default function AddTodo() {
     color: "",
   });
 
+  const [open, setOpen] = React.useState(false);
+
+ 
+
+  const handleClose = () => {
+   navigate("/signin")
+    setOpen(false);
+  };
+
   // Handler Function
   const inputHandler = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
@@ -37,7 +53,7 @@ export default function AddTodo() {
 
   const addTodoCb = (e) => {
     console.log(user)
-    addTodo(todo, input, setTodo, user.id);
+    addTodo(todo, input, setTodo, user.id, setOpen);
     setInput({
       title: "",
       description: "",
@@ -124,6 +140,25 @@ export default function AddTodo() {
       <Button size="mid" variant="contained" onClick={addTodoCb}>
         Create
       </Button>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Want to create a Todo?"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+          Please signin to create a ToDo.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button variant="contained" onClick={handleClose} autoFocus>Sign In</Button>
+          
+        </DialogActions>
+      </Dialog>
     </Card>
   );
 }

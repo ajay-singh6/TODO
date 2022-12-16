@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 
-const { authenticateToken, isSignedIn } = require("../controllers/auth");
 
 const {
   getAllTodo,
@@ -10,7 +9,7 @@ const {
   deleteTodo,
   pushTodoInUserArray,
 } = require("../controllers/todo");
-const { getUserById, isSignedIn, isAuthenticated } = require("../controllers/auth");
+const { getUserById, isSignedIn, authenticateToken } = require("../controllers/auth");
 
 
 router.param("userId", getUserById)
