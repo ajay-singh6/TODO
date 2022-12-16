@@ -40,7 +40,7 @@ function App() {
     <div className="main">
       {/* <Navbar /> */}
       {/* <Todo /> */}
-      <BrowserRouter>
+      {/* <BrowserRouter>
         <Routes>
           <Route path="/" element={<Todolist />}>
             {" "}
@@ -52,7 +52,7 @@ function App() {
             {" "}
           </Route>
         </Routes>
-      </BrowserRouter>
+      </BrowserRouter> */}
       <UserContext.Provider value={{ user, setUser }}>
         <RouterProvider router={router}></RouterProvider>
       </UserContext.Provider>

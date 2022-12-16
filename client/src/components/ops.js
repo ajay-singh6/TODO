@@ -18,7 +18,8 @@ const addTodo = (todos, newTodo, setTodo, userId, setOpen) => {
       const {id} = localUser
       axios
         .post(
-          `${endpoint.baseUrl}${endpoint.todo}/${id}`,
+          
+          `${endpoint.baseUrl}${endpoint.todo}`,
           { ...newTodo, id },
           {
             headers: {
