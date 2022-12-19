@@ -46,7 +46,7 @@ function Todolist() {
       <AppContext.Provider value={{ todo, setTodo }}>
         <Navbar user={user}></Navbar>
 
-        <Box style={{ height: "calc(100vh - 68.5px)" }}>
+        <Box className="todo-container" style={{ height: "calc(100vh - 68.5px)" }}>
           <Grid
             container
             spacing={4}

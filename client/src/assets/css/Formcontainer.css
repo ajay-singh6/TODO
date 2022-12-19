@@ -1,6 +1,10 @@
 .TextField-without-border-radius fieldset {
-    border-radius: 30px;
-  }
+  border-radius: 30px;
+}
+
+body {
+  background-color: #e8e8e8;
+}
 
 .reverse {
   flex-direction: row-reverse;
@@ -43,10 +47,10 @@
 .todo-container {
   margin-top: 60px;
   width: 100%;
-  min-height: 100vh;
+  height: 100% !important;
   padding-top: 70px;
-  padding-bottom: 20px;
-  background-color: #e8e8e8;
+  padding-bottom: 40px;
+  /* overflow: auto; */
 }
 
 

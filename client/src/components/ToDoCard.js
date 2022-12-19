@@ -17,7 +17,7 @@ import {
 import "../assets/css/Formcontainer.css";
 import { AppContext } from "./TodoList";
 import { editTodo } from "./ops";
-import { Button } from "bootstrap";
+import { Button } from "react-bootstrap";
 
 export default function TodoCard({ title, description, color, id }) {
   const { todo, setTodo } = React.useContext(AppContext);
