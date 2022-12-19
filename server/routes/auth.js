@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { check } = require("express-validator");
-const { signIn, signUp, verify } = require("../controllers/auth");
+const { signIn, signUp, verify, authenticateToken, isSignedIn } = require("../controllers/auth");
 
 router.post(
   "/signup",
@@ -30,5 +30,7 @@ router.post(
   ],
   signIn
 );
+
+router.post("/auto_login", authenticateToken, isSignedIn);
 
 module.exports = router;

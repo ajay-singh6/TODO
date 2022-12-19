@@ -221,11 +221,21 @@ const authenticateToken = (req, res, next) => {
   });
 }
 
-const isSignedIn = expressJwt({
-  secret: process.env.SECRET,
-  requestProperty: "auth",
-  algorithms: ["HS256"],
-})
+const isSignedIn = (req, res) => {
+
+  return User.findById({ _id: req.body.id }, (err, user) => {
+    if (err) {
+      return res.status(401).json({
+        msg: "User not found"
+      });
+    }
+
+    return res.status(200).json({
+      email: user.email,
+      name: user.name,
+    });
+  });
+}
 
 
 module.exports = { signIn, signUp, verify, authenticateToken, isSignedIn };
