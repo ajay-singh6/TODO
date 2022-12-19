@@ -12,13 +12,13 @@ import { UserContext } from "../App";
 const AppContext = createContext(null);
 // const localUser = JSON.parse(localStorage.getItem("user"));
 
-function Todolist() {
+function Todolist( {isAuthenticated} ) {
   const { user, setUser } = useContext(UserContext);
   const [todo, setTodo] = useState([]);
  
 
   useEffect(() => {
-    if (user?.id) {
+    if (isAuthenticated) {
     const localUser = JSON.parse(localStorage.getItem("user"));
 
       axios
@@ -39,12 +39,12 @@ function Todolist() {
         });
         
     }
-  }, [user]);
+  }, []);
 
   return (
     <>
       <AppContext.Provider value={{ todo, setTodo }}>
-        <Navbar user={user}></Navbar>
+        <Navbar user={user} isAuthenticated={isAuthenticated}></Navbar>
 
         <Box className="todo-container" style={{ height: "calc(100vh - 68.5px)" }}>
           <Grid

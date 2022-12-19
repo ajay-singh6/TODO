@@ -16,7 +16,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 const settings = ["Profile", "Logout"];
 
-function Navbar({ user }) {
+function Navbar({ user, isAuthenticated }) {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const navigate = useNavigate();
   const handleOpenUserMenu = (event) => {
@@ -74,7 +74,7 @@ function Navbar({ user }) {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            {user?.name ? (
+            {isAuthenticated ? (
               <>
                 <Tooltip title="Open settings">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>

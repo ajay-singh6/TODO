@@ -2,7 +2,7 @@ import "./App.css";
 
 import Navbar from "./components/Navbar";
 import Todolist from "./components/TodoList";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import {
   createBrowserRouter,
   RouterProvider,
@@ -20,17 +20,40 @@ const UserContext = createContext(null);
 function App() {
   const [user, setUser] = useState({});
   
+  const [data, setData] = useState( {
+    email: {
+      value: "",
+      err: false,
+      errMsg: "",
+    },
+  
+    password: {
+      value: "",
+      err: false,
+      errMsg: "",
+    }
+  });
+  
   //search for token
-
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  useEffect(()=> {
+    if(localStorage.getItem("user")) {
+      setIsAuthenticated(true)
+    } else setIsAuthenticated(false)
+  }, []);
 
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Todolist />,
+      element: isAuthenticated ? <Todolist isAuthenticated/> : <Login data={data} setData={setData}/>,
+    },
+    {
+      path: "/todo",
+      element:  <Todolist />,
     },
     {
       path: "/signin",
-      element: <Login />,
+      element: <Login data={data} setData={setData}/>,
     },
     { path: "/signup", element: <Signup /> },
     { path: "/user", element: <PrivateRoute />, children:[{
