@@ -75,7 +75,7 @@ function Navbar({ user, isAuthenticated, setIsAuthenticated }) {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            {user?.name ? (
+            {isAuthenticated ? (
               <>
                 <Tooltip title="Open settings">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
