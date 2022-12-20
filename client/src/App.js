@@ -45,11 +45,11 @@ function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: isAuthenticated ? <Todolist isAuthenticated/> : <Login data={data} setData={setData}/>,
+      element: isAuthenticated ? <Todolist isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated}/> : <Login data={data} setData={setData}/>,
     },
     {
       path: "/todo",
-      element:  <Todolist />,
+      element:  <Todolist isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />,
     },
     {
       path: "/signin",

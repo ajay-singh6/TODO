@@ -16,7 +16,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 const settings = ["Profile", "Logout"];
 
-function Navbar({ user, isAuthenticated }) {
+function Navbar({ user, isAuthenticated, setIsAuthenticated }) {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const navigate = useNavigate();
   const handleOpenUserMenu = (event) => {
