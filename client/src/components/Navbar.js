@@ -16,7 +16,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 const settings = ["Profile", "Logout"];
 
-function Navbar({ user, isAuthenticated, setIsAuthenticated }) {
+function Navbar({ user, isAuthenticated }) {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const navigate = useNavigate();
   const handleOpenUserMenu = (event) => {
@@ -31,7 +31,6 @@ function Navbar({ user, isAuthenticated, setIsAuthenticated }) {
     console.log(e.target.innerHTML)
     switch (e.target.innerHTML) {
       case "Logout":
-        setIsAuthenticated(false);
         localStorage.removeItem("user");
         navigate("/signin");
         break;

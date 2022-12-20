@@ -12,7 +12,7 @@ import { UserContext } from "../App";
 const AppContext = createContext(null);
 // const localUser = JSON.parse(localStorage.getItem("user"));
 
-function Todolist( {isAuthenticated, setIsAuthenticated} ) {
+function Todolist( {isAuthenticated} ) {
   const { user, setUser } = useContext(UserContext);
   const [todo, setTodo] = useState([]);
  
@@ -44,7 +44,7 @@ function Todolist( {isAuthenticated, setIsAuthenticated} ) {
   return (
     <>
       <AppContext.Provider value={{ todo, setTodo }}>
-        <Navbar user={user} isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated}></Navbar>
+        <Navbar user={user} isAuthenticated={isAuthenticated}></Navbar>
 
         <Box className="todo-container" style={{ height: "calc(100vh - 68.5px)" }}>
           <Grid
