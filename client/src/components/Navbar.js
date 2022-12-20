@@ -16,7 +16,11 @@ import { Link, useNavigate } from "react-router-dom";
 
 const settings = ["Profile", "Logout"];
 
+<<<<<<< HEAD
 function Navbar({ user, isAuthenticated, setIsAuthenticated }) {
+=======
+function Navbar({ user }) {
+>>>>>>> parent of 9be3cb8 (Page Reload issue fixed)
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const navigate = useNavigate();
   const handleOpenUserMenu = (event) => {
@@ -75,7 +79,7 @@ function Navbar({ user, isAuthenticated, setIsAuthenticated }) {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            {isAuthenticated ? (
+            {user?.name ? (
               <>
                 <Tooltip title="Open settings">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>

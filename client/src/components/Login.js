@@ -1,60 +1,29 @@
 import { Button, Grid, Paper, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../App";
 import { endpoint } from "../endpoints";
 
-function Login( {isAuthenticated, setIsAuthenticated, data, setData} ) {
+function Login() {
   const navigate = useNavigate();
   const { user, setUser } = useContext(UserContext);
-  
-  // const [data, setData] = useState({
-  //   email: {
-  //     value: "",
-  //     err: false,
-  //     errMsg: "",
-  //   },
-  //   password: {
-  //     value: "",
-  //     err: false,
-  //     errMsg: "",
-  //   },
-  // });
+  const [data, setData] = useState({
+    email: {
+      value: "",
+      err: false,
+      errMsg: "",
+    },
+    password: {
+      value: "",
+      err: false,
+      errMsg: "",
+    },
+  });
 
   const emailRegx = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
   const passwordRegx = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]/;
-
-  useEffect(()=> {
-    if(isAuthenticated) {
-      setData({ ...data });
-
-      console.log(data);
-      axios
-        .post(`${endpoint.baseUrl}${endpoint.signIn}`, {
-          email: data.email.value,
-          password: data.password.value,
-        })
-        .then((res) => {
-          console.log(res.data);
-          setUser({ ...res.data });
-          setIsAuthenticated(true);
-          localStorage.setItem("user", JSON.stringify(res.data));
-          navigate("/todo");
-        })
-        .catch((err) => {
-          setData((preData) => ({
-            ...preData,
-            [err.response.data.param]: {
-              ...data[err.response.data.param],
-              err: true,
-              errMsg: err.response.data.msg,
-            },
-          }));
-        });
-    }
-  }, isAuthenticated);
 
   const inputHandler = (e) => {
     setData({
@@ -122,9 +91,8 @@ function Login( {isAuthenticated, setIsAuthenticated, data, setData} ) {
         .then((res) => {
           console.log(res.data);
           setUser({ ...res.data });
-          setIsAuthenticated(true);
-          localStorage.setItem("user", JSON.stringify(res.data));
-          navigate("/todo");
+          localStorage.setItem("user", JSON.stringify(res.data))
+          navigate("/");
         })
         .catch((err) => {
           setData((preData) => ({

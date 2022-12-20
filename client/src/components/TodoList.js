@@ -18,7 +18,7 @@ function Todolist( {isAuthenticated, setIsAuthenticated} ) {
  
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (user?.id) {
     const localUser = JSON.parse(localStorage.getItem("user"));
 
       axios
@@ -39,7 +39,7 @@ function Todolist( {isAuthenticated, setIsAuthenticated} ) {
         });
         
     }
-  }, []);
+  }, [user]);
 
   return (
     <>
