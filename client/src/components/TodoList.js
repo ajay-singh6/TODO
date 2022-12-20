@@ -16,11 +16,11 @@ function Todolist( {isAuthenticated} ) {
   const { user, setUser } = useContext(UserContext);
   const [todo, setTodo] = useState([]);
  
-
+  console.log("Todo page rendered"+isAuthenticated);
   useEffect(() => {
     if (isAuthenticated) {
     const localUser = JSON.parse(localStorage.getItem("user"));
-
+    console.log("TodoList : "+ isAuthenticated)
       axios
         .get(
           `${endpoint.baseUrl}${endpoint.todo}`,
@@ -39,7 +39,7 @@ function Todolist( {isAuthenticated} ) {
         });
         
     }
-  }, []);
+  }, [ isAuthenticated ]);
 
   return (
     <>
@@ -62,11 +62,11 @@ function Todolist( {isAuthenticated} ) {
               <AddTodo />
             </Grid>
 
-            {todo.map((t) => {
+            {todo.map((t, idx) => {
               return (
                 <>
                   <Grid item lg={3} key={t._id}>
-                    <TodoCard
+                    <TodoCard key={t._id +" " + idx}
                       title={t.title}
                       description={t.description}
                       color={t.color}

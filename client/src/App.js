@@ -12,6 +12,7 @@ import {
 } from "react-router-dom";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
+import Home from "./components/Home";
 import Profile from "./components/Profile";
 import PrivateRoute from "./utils/PrivateRoute";
 import Signinform from "./components/Signinform";
@@ -36,16 +37,18 @@ function App() {
   
   //search for token
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+
   useEffect(()=> {
     if(localStorage.getItem("user")) {
       setIsAuthenticated(true)
     } else setIsAuthenticated(false)
+
   }, []);
 
   const router = createBrowserRouter([
     {
       path: "/",
-      element: isAuthenticated ? <Todolist isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated}/> : <Login data={data} setData={setData}/>,
+      element: <Home isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated}/>,
     },
     {
       path: "/todo",
@@ -53,11 +56,11 @@ function App() {
     },
     {
       path: "/signin",
-      element: <Login data={data} setData={setData}/>,
+      element: <Login isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} data={data} setData={setData}/>,
     },
     { path: "/signup", element: <Signup /> },
-    { path: "/user", element: <PrivateRoute />, children:[{
-      path: "/user", element: <Profile/>
+    { path: "/user", element: <PrivateRoute isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated}/>, children:[{
+      path: "/user", element: <Profile isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated}/>
     }] },
   ]);
 

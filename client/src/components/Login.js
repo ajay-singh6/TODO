@@ -31,6 +31,7 @@ function Login( {isAuthenticated, setIsAuthenticated, data, setData} ) {
       setData({ ...data });
 
       console.log(data);
+
       axios
         .post(`${endpoint.baseUrl}${endpoint.signIn}`, {
           email: data.email.value,
@@ -54,7 +55,7 @@ function Login( {isAuthenticated, setIsAuthenticated, data, setData} ) {
           }));
         });
     }
-  }, isAuthenticated);
+  }, [ isAuthenticated ]);
 
   const inputHandler = (e) => {
     setData({

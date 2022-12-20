@@ -10,7 +10,7 @@ import { UserContext } from '../App';
 import axios from 'axios';
 
 
-const Profile = () => {
+const Profile = ( {isAuthenticated, setIsAuthenticated} ) => {
 
     const {id} = useContext(UserContext)
     const [data, setData] = useState({
