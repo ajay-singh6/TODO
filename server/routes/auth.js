@@ -3,6 +3,12 @@ const router = express.Router();
 const { check } = require("express-validator");
 const { signIn, signUp, verify, authenticateToken, isSignedIn } = require("../controllers/auth");
 
+
+/*
+ * @route POST api/signup
+ * @description Register user in database
+ * @access public
+*/
 router.post(
   "/signup",
   [
@@ -20,8 +26,18 @@ router.post(
   signUp
 );
 
+/*
+ * @route POST api/verify
+ * @description verif user OTP
+ * @access public  
+*/
 router.post("/verify", verify);
 
+/*
+ * @route POST api/signin
+ * @description Login user
+ * @access public  
+*/
 router.post(
   "/signin",
   [
@@ -30,7 +46,5 @@ router.post(
   ],
   signIn
 );
-
-router.post("/auto_login", authenticateToken, isSignedIn);
 
 module.exports = router;

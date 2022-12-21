@@ -68,8 +68,7 @@ const signUp = (req, res) => {
         if (!err) {
           return res.status(201).json({
             name: user.name,
-            email: user.email,
-            id: user._id,
+            email: user.email
           });
         } else {
           return res.status(500).json({
@@ -84,43 +83,6 @@ const signUp = (req, res) => {
     });
   });
 };
-
-// const signUp = (req, res) => {
-//   const error = validationResult(req);
-//   console.log(error);
-//   if (!error.isEmpty()) {
-//     return res.status(422).json({
-//       msg: error.array()[0].msg,
-//     });
-//   }
-
-//   const { name, email, password } = req.body;
-//   const hasedPass = hasedPassword(password);
-//   const user = new User({ name, email, password: hasedPass });
-//   user.save((err, user) => {
-//     if (!err) {
-//      return res.status(201).json({
-//         name: user.name,
-//         email: user.email,
-//         id: user._id,
-//       });
-//     } else if (!savedUser) {
-//       sendOtp(email, generatedOTP);
-//       return user.save((err, user) => {
-//         if (!err) {
-//           return res.status(201).json({
-//             name: user.name,
-//             email: user.email
-//           });
-//         } else {
-//           return res.status(500).json({
-//             msg: "Internal Server Error",
-//           });
-//         }
-//       });
-//     }
-//   });
-// };
 
 //Verify OTP
 const verify = (req, res) => {
@@ -194,11 +156,10 @@ const signIn = (req, res) => {
     const token = jwt.sign({ id: user._id }, process.env.SECRET, { expiresIn: "1d" });
 
     res.cookie("jwt", token, { maxAge: 1000 * 60 * 60 * 24 });
+    res.cookie("email", user.email, { maxAge: 1000 * 60 * 60 * 24 });
+    res.cookie("name", user.name, { maxAge: 1000 * 60 * 60 * 24 });
 
-    res.status(200).json({
-      email: user.email,
-      name: user.name,
-    });
+    res.sendStatus(200);
   });
 };
 
@@ -221,21 +182,4 @@ const authenticateToken = (req, res, next) => {
   });
 }
 
-const isSignedIn = (req, res) => {
-
-  return User.findById({ _id: req.body.id }, (err, user) => {
-    if (err) {
-      return res.status(401).json({
-        msg: "User not found"
-      });
-    }
-
-    return res.status(200).json({
-      email: user.email,
-      name: user.name,
-    });
-  });
-}
-
-
-module.exports = { signIn, signUp, verify, authenticateToken, isSignedIn };
+module.exports = { signIn, signUp, verify, authenticateToken };

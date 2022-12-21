@@ -1,11 +1,10 @@
 const multer = require("multer");
 
 const User = require("../models/user");
-const Image = require("../models/image");
 
 const getUserDetails = (req, res) => {
     User.findById({ "_id": req.body.id }, (err, user) => {
-        if (err) {
+        if (err || !user) {
             console.log(err);
             return res.status(500).json({
                 msg: "Internal Server Error",
@@ -79,16 +78,6 @@ const uploadImage = (req, res) => {
                     msg: "Internal Server Error"
                 });
             });
-
-
-            // return Image.save().then(() => res.status(201).json({
-            //     msg: "Successfully uploaded"
-            // })).catch(err => {
-            //     console.log(err);
-            //     return res.status(400).json({
-            //         msg: "Couldn't upload"
-            //     });
-            // });
         }
     });
 }

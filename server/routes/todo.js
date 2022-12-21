@@ -31,13 +31,13 @@ router.post("/", createTodo);
  * @description update todo
  * @access private
  */
-router.put("/", updateTodo);
+router.put("/:id", updateTodo);
 
 /**
  * @route DELETE api/todo/:id
  * @description delete todo
  * @access private
  */
-router.delete("/", deleteTodo);
+router.delete("/:id", deleteTodo);
 
 module.exports = router;
