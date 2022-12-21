@@ -30,30 +30,31 @@ function Login( {isAuthenticated, setIsAuthenticated, data, setData} ) {
     if(isAuthenticated) {
       setData({ ...data });
 
-      console.log(data);
+      console.log("useEffect : " + data);
+      navigate("/todo");
 
-      axios
-        .post(`${endpoint.baseUrl}${endpoint.signIn}`, {
-          email: data.email.value,
-          password: data.password.value,
-        })
-        .then((res) => {
-          console.log(res.data);
-          setUser({ ...res.data });
-          setIsAuthenticated(true);
-          localStorage.setItem("user", JSON.stringify(res.data));
-          navigate("/todo");
-        })
-        .catch((err) => {
-          setData((preData) => ({
-            ...preData,
-            [err.response.data.param]: {
-              ...data[err.response.data.param],
-              err: true,
-              errMsg: err.response.data.msg,
-            },
-          }));
-        });
+      // axios
+      //   .post(`${endpoint.baseUrl}${endpoint.signIn}`, {
+      //     email: data.email.value,
+      //     password: data.password.value,
+      //   })
+      //   .then((res) => {
+      //     console.log(res.data);
+      //     setUser({ ...res.data });
+      //     setIsAuthenticated(true);
+      //     localStorage.setItem("user", JSON.stringify(res.data));
+      //     navigate("/todo");
+      //   })
+      //   .catch((err) => {
+      //     setData((preData) => ({
+      //       ...preData,
+      //       [err.response.data.param]: {
+      //         ...data[err.response.data.param],
+      //         err: true,
+      //         errMsg: err.response.data.msg,
+      //       },
+      //     }));
+      //   });
     }
   }, [ isAuthenticated ]);
 
@@ -114,7 +115,7 @@ function Login( {isAuthenticated, setIsAuthenticated, data, setData} ) {
     } else {
       setData({ ...data });
 
-      console.log(data);
+      console.log("Login (data): " + data);
       axios
         .post(`${endpoint.baseUrl}${endpoint.signIn}`, {
           email: data.email.value,

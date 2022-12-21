@@ -16,7 +16,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 const settings = ["Profile", "Logout"];
 
-function Navbar({ user, isAuthenticated, setIsAuthenticated }) {
+function Navbar({ user, setUser, isAuthenticated, setIsAuthenticated }) {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const navigate = useNavigate();
   const handleOpenUserMenu = (event) => {
@@ -29,12 +29,16 @@ function Navbar({ user, isAuthenticated, setIsAuthenticated }) {
   };
   const handleMenuItem = (e) => {
     console.log(e.target.innerHTML)
+    console.log("User (authtd)" + isAuthenticated)
     switch (e.target.innerHTML) {
       case "Logout":
         localStorage.removeItem("user");
+        setIsAuthenticated(false);
+        // setUser({});
         navigate("/signin");
         break;
       case "Profile":
+
         navigate("/user");
         break;
       default:
@@ -74,7 +78,7 @@ function Navbar({ user, isAuthenticated, setIsAuthenticated }) {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            {isAuthenticated ? (
+            {user?.id ? (
               <>
                 <Tooltip title="Open settings">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>

@@ -39,9 +39,10 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(()=> {
-    if(localStorage.getItem("user")) {
-      setIsAuthenticated(true)
-    } else setIsAuthenticated(false)
+    const localUser = JSON.parse(localStorage.getItem("user"));
+    if(localUser?.token) {
+      setIsAuthenticated(true);
+    } else setIsAuthenticated(false);
 
   }, []);
 
@@ -59,7 +60,7 @@ function App() {
       element: <Login isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} data={data} setData={setData}/>,
     },
     { path: "/signup", element: <Signup /> },
-    { path: "/user", element: <PrivateRoute isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated}/>, children:[{
+    { path: "/user", element: <PrivateRoute isAuthenticated={isAuthenticated} />, children:[{
       path: "/user", element: <Profile isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated}/>
     }] },
   ]);
