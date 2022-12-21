@@ -1,4 +1,4 @@
-import { Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import AddTodo from "./AddTodo";
@@ -12,15 +12,15 @@ import { UserContext } from "../App";
 const AppContext = createContext(null);
 // const localUser = JSON.parse(localStorage.getItem("user"));
 
-function Todolist() {
+function Todolist( {isAuthenticated, setIsAuthenticated} ) {
   const { user, setUser } = useContext(UserContext);
   const [todo, setTodo] = useState([]);
  
-
+  console.log("Todo page rendered"+isAuthenticated);
   useEffect(() => {
-    if (user?.id) {
+    if (isAuthenticated) {
     const localUser = JSON.parse(localStorage.getItem("user"));
-
+    console.log("TodoList (authtd): "+ isAuthenticated)
       axios
         .get(
           `${endpoint.baseUrl}${endpoint.todo}`,
@@ -39,14 +39,14 @@ function Todolist() {
         });
         
     }
-  }, [user]);
+  }, [ isAuthenticated ]);
 
   return (
     <>
       <AppContext.Provider value={{ todo, setTodo }}>
-        <Navbar user={user}></Navbar>
+        <Navbar user={user} isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />
 
-        <Box style={{ height: "calc(100vh - 68.5px)" }}>
+        <Box className="todo-container" style={{ height: "calc(100vh - 68.5px)" }}>
           <Grid
             container
             spacing={4}
@@ -62,18 +62,16 @@ function Todolist() {
               <AddTodo />
             </Grid>
 
-            {todo.map((t) => {
+            {todo.map((t, idx) => {
               return (
-                <>
                   <Grid item lg={3} key={t._id}>
-                    <TodoCard
+                    <TodoCard key={t._id +" " + idx}
                       title={t.title}
                       description={t.description}
                       color={t.color}
                       id={t._id}
                     />
                   </Grid>
-                </>
               );
             })}
           </Grid>
