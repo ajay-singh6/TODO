@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
@@ -21,10 +21,13 @@ export default function Cardactions({ addTodo, editItem, input, setInput, id }) 
     console.log("Complete");
   };
 
-  const deleteItem = (e) => {
-    
+  const deleteItem = () => {
     removeTodo(todo, setTodo, id);
   };
+
+  useEffect(() => {
+    // console.log("Cardactions (todo): " + JSON.stringify(todo));
+  }, []);
 
   return (
     <Box sx={{ width: "100%" }}>
@@ -88,7 +91,7 @@ export default function Cardactions({ addTodo, editItem, input, setInput, id }) 
             icon={<EditIcon onClick={editItem} />}
           />
         )}
-        {addTodo && (
+        {/* {addTodo && (
           <BottomNavigationAction
             label="Low"
             icon={
@@ -101,7 +104,7 @@ export default function Cardactions({ addTodo, editItem, input, setInput, id }) 
               />
             }
           />
-        )}
+        )} */}
       </BottomNavigation>
     </Box>
   );

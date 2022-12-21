@@ -44,7 +44,7 @@ function Todolist( {isAuthenticated, setIsAuthenticated} ) {
   return (
     <>
       <AppContext.Provider value={{ todo, setTodo }}>
-        <Navbar user={user} isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated}></Navbar>
+        <Navbar user={user} isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />
 
         <Box className="todo-container" style={{ height: "calc(100vh - 68.5px)" }}>
           <Grid
@@ -64,7 +64,6 @@ function Todolist( {isAuthenticated, setIsAuthenticated} ) {
 
             {todo.map((t, idx) => {
               return (
-                <>
                   <Grid item lg={3} key={t._id}>
                     <TodoCard key={t._id +" " + idx}
                       title={t.title}
@@ -73,7 +72,6 @@ function Todolist( {isAuthenticated, setIsAuthenticated} ) {
                       id={t._id}
                     />
                   </Grid>
-                </>
               );
             })}
           </Grid>

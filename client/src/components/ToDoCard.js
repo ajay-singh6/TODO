@@ -1,5 +1,6 @@
 
 import * as React from "react";
+import { createContext, useEffect, useState, useContext } from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -20,14 +21,14 @@ import { editTodo } from "./ops";
 import { Button } from "react-bootstrap";
 
 export default function TodoCard({ title, description, color, id }) {
-  const { todo, setTodo } = React.useContext(AppContext);
-  const [update, setUpdate] = React.useState({
+  const { todo, setTodo } = useContext(AppContext);
+  const [update, setUpdate] = useState({
     id: id,
     title: title,
     description: description,
     color: color,
   });
-  const [edit, setEdit] = React.useState(false);
+  const [ edit, setEdit ] = useState(false);
 
   const handleChange = (e) => {
     setUpdate({
@@ -42,17 +43,10 @@ export default function TodoCard({ title, description, color, id }) {
     editTodo(todo, setTodo, id, update);
   };
 
-  const editItem = (e) => {
+  const editItem = () => {
+    console.log(`Edit btn clicked of ${id} - ${edit}`);
     setEdit(true);
   };
-
-  const [styleCondition, setStyleCondition] = React.useState(true)
-  const [ state, setState] = React.useState({title: "React", discription: "Description."});
-
-  const handleToggle = () => {
-    setStyleCondition(!styleCondition)
-  }
-
 
   return (
 

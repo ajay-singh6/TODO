@@ -42,9 +42,9 @@ const addTodo = (todos, newTodo, setTodo, userId, setOpen) => {
 };
 
 const removeTodo = (todos, setTodo, TodoId) => {
-  const { id, token } = JSON.parse(localStorage.getItem("user"));
+  const { token } = JSON.parse(localStorage.getItem("user"));
   axios
-    .delete(`${endpoint.baseUrl}${endpoint.todo}/${id}/${TodoId}`, {
+    .delete(`${endpoint.baseUrl}${endpoint.todo}/${TodoId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -61,11 +61,11 @@ const removeTodo = (todos, setTodo, TodoId) => {
 };
 
 const editTodo = (todos, setTodo, TodoId, newValues) => {
-  const { id, token } = JSON.parse(localStorage.getItem("user"));
+  const { token } = JSON.parse(localStorage.getItem("user"));
 
   axios
     .put(
-      `${endpoint.baseUrl}${endpoint.todo}/${id}/${TodoId}`,
+      `${endpoint.baseUrl}${endpoint.todo}/${TodoId}`,
       { newValues },
       {
         headers: {

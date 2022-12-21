@@ -12,6 +12,7 @@ import axios from 'axios';
 
 const Profile = ( {isAuthenticated, setIsAuthenticated} ) => {
 
+    const { user, setUser } = useContext(UserContext);
     const {id} = useContext(UserContext)
     const [data, setData] = useState({
         name: "",
@@ -20,7 +21,6 @@ const Profile = ( {isAuthenticated, setIsAuthenticated} ) => {
     });
     
     useEffect(()=>{
-        // console.log("Profile (authtd): "+isAuthenticated);
         if(isAuthenticated) {
             const localUser = JSON.parse(localStorage.getItem("user"));
             setData({...data, name: localUser.name, email: localUser.email})
@@ -45,7 +45,7 @@ const Profile = ( {isAuthenticated, setIsAuthenticated} ) => {
 
   return (
     <>
-    <Navbar isAuthenticated={isAuthenticated}/>
+    <Navbar user={user} isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />
     <Box  className='profile-container' >
             <Box className='profile-sidebar' >
                 <Box className='profile-image-set'>
