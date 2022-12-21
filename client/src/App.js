@@ -60,9 +60,10 @@ function App() {
       element: <Login isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} data={data} setData={setData}/>,
     },
     { path: "/signup", element: <Signup /> },
-    { path: "/user", element: <PrivateRoute isAuthenticated={isAuthenticated} />, children:[{
-      path: "/user", element: <Profile isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated}/>
-    }] },
+    // { path: "/user", element: <PrivateRoute isAuthenticated={isAuthenticated} />, children:[{
+    //   path: "/user", element: <Profile isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated}/>
+    // }] },
+    { path: "/user", element: <Profile isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />}
   ]);
 
   return (

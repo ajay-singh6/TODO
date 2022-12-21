@@ -31,15 +31,14 @@ function Navbar({ user, setUser, isAuthenticated, setIsAuthenticated }) {
     console.log(e.target.innerHTML)
     console.log("User (authtd)" + isAuthenticated)
     switch (e.target.innerHTML) {
+      case "Profile":
+        navigate("/user");
+        break;
       case "Logout":
         localStorage.removeItem("user");
         setIsAuthenticated(false);
         // setUser({});
         navigate("/signin");
-        break;
-      case "Profile":
-
-        navigate("/user");
         break;
       default:
         navigate("/signin");

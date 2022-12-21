@@ -20,14 +20,11 @@ const Profile = ( {isAuthenticated, setIsAuthenticated} ) => {
     });
     
     useEffect(()=>{
-        console.log("Profile (authtd): "+isAuthenticated);
+        // console.log("Profile (authtd): "+isAuthenticated);
         if(isAuthenticated) {
             const localUser = JSON.parse(localStorage.getItem("user"));
             setData({...data, name: localUser.name, email: localUser.email})
         }
-        // axios.get(`${endpoint.baseUrl}${endpoint.user}${id}`).then(res =>{
-        //    console.log("Profile.js : "+ JSON.parse(res)) 
-        // })
     },[])
 
     
@@ -48,7 +45,7 @@ const Profile = ( {isAuthenticated, setIsAuthenticated} ) => {
 
   return (
     <>
-    <Navbar/>
+    <Navbar isAuthenticated={isAuthenticated}/>
     <Box  className='profile-container' >
             <Box className='profile-sidebar' >
                 <Box className='profile-image-set'>
