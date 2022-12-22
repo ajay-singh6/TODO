@@ -19,7 +19,6 @@ function Home({ isAuthenticated, setIsAuthenticated}) {
   console.log("Home page rendered");
   return (
     <>
-        {/* {isAuthenticated ? navigate("/todo")  : navigate("/signin") } */}
     </>
   )
 }
