@@ -1,18 +1,16 @@
 const express = require("express");
-
 const { getUserDetails, updateUser, uploadImage } = require("../controllers/user")
 const { authenticateToken } = require("../controllers/auth");
 const router = express.Router();
 
-// router.param("userId", getUserById)
+router.use(authenticateToken);
 
 /*
  * @route GET api/user
  * @description get details of user
  * @access loggedIn user  
 */
-
-router.get("/", authenticateToken, getUserDetails);
+router.get("/:userId", getUserDetails);
 
 /*
  * @route PUT api/user

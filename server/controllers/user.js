@@ -19,7 +19,7 @@ const getUserDetails = (req, res) => {
             })
         }
     });
-  };
+}
 
 const updateUser = (req, res) => {
 
