@@ -43,7 +43,6 @@ function App() {
     if(localUser?.token) {
       setIsAuthenticated(true);
     } else setIsAuthenticated(false);
-
   }, []);
 
   const router = createBrowserRouter([
@@ -59,43 +58,24 @@ function App() {
       path: "/signin",
       element: <Login isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} data={data} setData={setData}/>,
     },
-    { path: "/signup", element: <Signup /> },
-    // { path: "/user", element: <PrivateRoute isAuthenticated={isAuthenticated} />, children:[{
-    //   path: "/user", element: <Profile isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated}/>
-    // }] },
-    { path: "/user", element: <Profile isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />}
+    { 
+      path: "/signup", element: <Signup /> 
+    },
+    { 
+      path: "/user", element: <PrivateRoute isAuthenticated={isAuthenticated} />, 
+        children:[{
+          path: "/user", element: <Profile isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />
+        }] 
+    }
+    
   ]);
 
   return (
 
     <div className="main">
-      {/* <Navbar /> */}
-      {/* <Todo /> */}
-      {/* <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Todolist />}>
-            {" "}
-          </Route>
-          <Route path="/signin" element={<Formcontainer login={""} />}>
-            {" "}
-          </Route>
-          <Route path="/signup" element={<Formcontainer login={"reverse"} />}>
-            {" "}
-          </Route>
-        </Routes>
-      </BrowserRouter> */}
       <UserContext.Provider value={{ user, setUser }}>
         <RouterProvider router={router}></RouterProvider>
       </UserContext.Provider>
-      {/* <Signinform /> */}
-
-      {/* <Formcontainer/> */}
-      {/* <div className="todo-app">
-        <h1 className="todo-heading"> Write Your Task Here.</h1>
-
-          <Todo />
-        </div> */}
-      {/* <Profile /> */}
     </div> 
     
   );
