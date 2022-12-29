@@ -1,12 +1,12 @@
 require("dotenv").config();
 
 const bcrypt = require("bcryptjs");
-const User = require("../models/user");
 const { validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
 const { expressjwt: expressJwt } = require("express-jwt");
 
 const sendOtp = require("../utils/nodemailer");
+const User = require("../models/user");
 
 // hasing the plain password
 const hasedPassword = (plainPassword) => {
@@ -154,11 +154,9 @@ const signIn = (req, res) => {
     //console.log(user);
 
     const token = jwt.sign({ id: user._id }, process.env.SECRET, { expiresIn: "1d" });
-
     res.cookie("jwt", token, { maxAge: 1000 * 60 * 60 * 24 });
     res.cookie("email", user.email, { maxAge: 1000 * 60 * 60 * 24 });
     res.cookie("name", user.name, { maxAge: 1000 * 60 * 60 * 24 });
-
     res.sendStatus(200);
   });
 };

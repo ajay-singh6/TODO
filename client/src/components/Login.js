@@ -6,6 +6,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../App";
 import { endpoint } from "../endpoints";
 
+axios.defaults.withCredentials = true;
+
 function Login( {isAuthenticated, setIsAuthenticated, data, setData} ) {
   const navigate = useNavigate();
   const { user, setUser } = useContext(UserContext);
@@ -122,7 +124,6 @@ function Login( {isAuthenticated, setIsAuthenticated, data, setData} ) {
           password: data.password.value,
         })
         .then((res) => {
-          console.log(res.data);
           setUser({ ...res.data });
           setIsAuthenticated(true);
           localStorage.setItem("user", JSON.stringify(res.data));
