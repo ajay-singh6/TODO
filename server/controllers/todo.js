@@ -3,10 +3,9 @@ const User = require("../models/user");
 
 exports.getAllTodo = (req, res) => {
 
-  Todo.find({ userId: req.body.id })
-    .populate("userId", "name email")
+  Todo.find({ userId: req.body.id }).select("-userId")
+    /*.populate("userId", "name email")*/
     .then((todo) => {
-
       res.json(todo);
     })
     .catch((err) =>
@@ -19,6 +18,8 @@ exports.createTodo = (req, res) => {
   const { id, title, description, color } = req.body;
   Todo.create({ title, description, color, userId: id })
     .then((data) => {
+      data.userId = undefined;
+      delete data.userId;
       res.json(data);
     })
     .catch((err) => {
@@ -32,7 +33,17 @@ exports.createTodo = (req, res) => {
 exports.updateTodo = (req, res) => {
   Todo
     .findOneAndUpdate({ "_id": req.params.id, "userId": req.body.id }, req.body)
-    .then((data) => res.json({ message: "updated successfully", data }))
+    .then((data) => {
+      if (!data)
+        res
+          .status(400)
+          .json({ message: "Failed to update todo", error: err.message })
+      
+      data.userId = undefined;
+      delete data.userId;
+      
+      res.json({ message: "updated successfully", data })
+    })
     .catch((err) =>
       res
         .status(400)
@@ -45,17 +56,10 @@ exports.updateTodo = (req, res) => {
 
 exports.deleteTodo = (req, res) => {
 
-  console.log(req.body.id);
-  console.log(req.params.id);
-
   Todo
     .findOneAndDelete({ "_id": req.params.id, "userId": req.body.id })
     .then((data) => {
-      console.log(data);
-      //if (data.deletedCount == 1)
-        res.status(201).json({ message: "todo deleted successfully", data });
-      //else
-        //res.status(404).json({ message: "todo not found" });
+      res.status(201).json({ message: "todo deleted successfully", data });
     }).catch((err) =>
       res.status(404).json({ message: "todo not found", error: err.message })
     );
