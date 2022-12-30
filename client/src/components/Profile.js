@@ -8,10 +8,11 @@ import "../assets/css/profile.css";
 import Navbar from './Navbar';
 import { UserContext } from '../App';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 
 const Profile = ( {isAuthenticated, setIsAuthenticated} ) => {
-
+    console.log("Profile" , UserContext);
     const { user, setUser } = useContext(UserContext);
     const {id} = useContext(UserContext)
     const [data, setData] = useState({
@@ -22,8 +23,8 @@ const Profile = ( {isAuthenticated, setIsAuthenticated} ) => {
     
     useEffect(()=>{
         if(isAuthenticated) {
-            const localUser = JSON.parse(localStorage.getItem("user"));
-            setData({...data, name: localUser.name, email: localUser.email})
+            // const localUser = JSON.parse(localStorage.getItem("user"));
+            setData({...data, name: Cookies.get('name'), email: Cookies.get('email')})
         }
     },[])
 

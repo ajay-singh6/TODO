@@ -8,25 +8,27 @@ import Navbar from "./Navbar";
 import axios from "axios";
 import { endpoint } from "../endpoints";
 import { UserContext } from "../App";
+import Cookies from "js-cookie";
 
-const AppContext = createContext(null);
+const AppContext = createContext({});
 // const localUser = JSON.parse(localStorage.getItem("user"));
 
-function Todolist( {isAuthenticated, setIsAuthenticated} ) {
-  const { user, setUser } = useContext(UserContext);
-  const [todo, setTodo] = useState([]);
+function Todolist( {isAuthenticated, setIsAuthenticated, user, setUser, todo, setTodo} ) {
+  // const { user, setUser } = useContext(UserContext);
+  
  
-  console.log("Todo page rendered"+isAuthenticated);
+  console.log("Todo page rendered "+isAuthenticated);
   useEffect(() => {
     if (isAuthenticated) {
-    const localUser = JSON.parse(localStorage.getItem("user"));
+    // const localUser = JSON.parse(localStorage.getItem("user"));
+    const token = Cookies.get('jwt');
     console.log("TodoList (authtd): "+ isAuthenticated)
       axios
         .get(
           `${endpoint.baseUrl}${endpoint.todo}`,
           {
             headers: {
-              Authorization: `Bearer ${localUser.token}`,
+              Authorization: `Bearer ${token}`,
             },
           }
           )
@@ -43,7 +45,7 @@ function Todolist( {isAuthenticated, setIsAuthenticated} ) {
 
   return (
     <>
-      <AppContext.Provider value={{ todo, setTodo }}>
+      
         <Navbar user={user} isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />
 
         <Box className="todo-container" style={{ height: "calc(100vh - 68.5px)" }}>
@@ -77,7 +79,7 @@ function Todolist( {isAuthenticated, setIsAuthenticated} ) {
           </Grid>
         </Box>
         
-      </AppContext.Provider>
+      
     </>
   );
 }

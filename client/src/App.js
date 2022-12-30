@@ -1,7 +1,7 @@
 import "./App.css";
 
 import Navbar from "./components/Navbar";
-import Todolist from "./components/TodoList";
+import Todolist, { AppContext } from "./components/TodoList";
 import { createContext, useEffect, useState } from "react";
 import {
   createBrowserRouter,
@@ -16,10 +16,12 @@ import Home from "./components/Home";
 import Profile from "./components/Profile";
 import PrivateRoute from "./utils/PrivateRoute";
 import Signinform from "./components/Signinform";
-const UserContext = createContext(null);
+import { getCookie } from "./Cookies/getCookies";
+const UserContext = createContext({});
 
 function App() {
   const [user, setUser] = useState({});
+  const [todo, setTodo] = useState([]);
   
   const [data, setData] = useState( {
     email: {
@@ -39,8 +41,8 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(()=> {
-    const localUser = JSON.parse(localStorage.getItem("user"));
-    if(localUser?.token) {
+    const token = getCookie('jwt')
+    if(token) {
       setIsAuthenticated(true);
     } else setIsAuthenticated(false);
   }, []);
@@ -52,7 +54,7 @@ function App() {
     },
     {
       path: "/todo",
-      element:  <Todolist isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />,
+      element:  <Todolist isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} user={user} setUser={setUser} todo={todo} setTodo={setTodo} />,
     },
     {
       path: "/signin",
@@ -74,7 +76,9 @@ function App() {
 
     <div className="main">
       <UserContext.Provider value={{ user, setUser }}>
-        <RouterProvider router={router}></RouterProvider>
+        <AppContext.Provider value={{ todo, setTodo }}>
+          <RouterProvider router={router}></RouterProvider>
+          </AppContext.Provider>
       </UserContext.Provider>
     </div> 
     

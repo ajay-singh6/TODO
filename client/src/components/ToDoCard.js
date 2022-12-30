@@ -21,6 +21,7 @@ import { editTodo } from "./ops";
 import { Button } from "react-bootstrap";
 
 export default function TodoCard({ title, description, color, id }) {
+  console.log("TodoCard : ", AppContext);
   const { todo, setTodo } = useContext(AppContext);
   const [update, setUpdate] = useState({
     id: id,
@@ -43,10 +44,11 @@ export default function TodoCard({ title, description, color, id }) {
     editTodo(todo, setTodo, id, update);
   };
 
-  const editItem = () => {
-    console.log(`Edit btn clicked of ${id} - ${edit}`);
-    setEdit(true);
-  };
+  // const editItem = () => {
+  //   console.log(`Edit btn clicked of ${id} - ${edit}`);
+  //   console.log(AppContext);
+  //   setEdit(true);
+  // };
 
   return (
 
@@ -155,7 +157,7 @@ export default function TodoCard({ title, description, color, id }) {
             </Box>
           </CardContent>
           <CardActions>
-            <Cardactions addTodo={false} editItem={editItem} id={id} />
+            <Cardactions addTodo={false} setEdit={setEdit} id={id} />
           </CardActions>
         </>
       )}

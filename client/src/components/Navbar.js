@@ -13,10 +13,11 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { Link, useNavigate } from "react-router-dom";
+import { removeCookie } from "../Cookies/removeCookie";
 
 const settings = ["Profile", "Logout"];
 
-function Navbar({ user, setUser, isAuthenticated, setIsAuthenticated }) {
+function Navbar({ user, isAuthenticated, setIsAuthenticated }) {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const navigate = useNavigate();
   const handleOpenUserMenu = (event) => {
@@ -36,6 +37,11 @@ function Navbar({ user, setUser, isAuthenticated, setIsAuthenticated }) {
         break;
       case "Logout":
         localStorage.removeItem("user");
+        localStorage.removeItem("token");
+        removeCookie('jwt')
+        removeCookie('name')
+        removeCookie('email')
+
         setIsAuthenticated(false);
         // setUser({});
         navigate("/signin");

@@ -1,8 +1,8 @@
-import cookie from "js-cookie";
+import Cookies from "js-cookie";
 
 
 const getCookie = (cookieName) => {
-    cookie.get(cookieName);
+    return Cookies.get(cookieName)
 }
 
 export { getCookie };

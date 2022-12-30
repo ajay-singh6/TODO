@@ -1,29 +1,32 @@
 import axios from "axios";
+import { getCookie } from "../Cookies/getCookies";
 // import { Navigate, useNavigate } from 'react-router-dom';
 import { endpoint } from "../endpoints";
+
+const token = getCookie('jwt');
 
 const addTodo = (todos, newTodo, setTodo, userId, setOpen) => {
   // newTodo.id = uuid();
 
-  const localUser = JSON.parse(localStorage.getItem("user"));
+  // const localUser = JSON.parse(localStorage.getItem("user"));
 
   // console.log(userId)
-  if (localUser.id && userId) {
+  if (token) {
     if (
       newTodo.title !== null &&
       newTodo.discription !== null &&
       newTodo.color !== null
     ) {
-      console.log(localUser.id);
-      const {id} = localUser
+      // console.log(localUser.id);
+      // const {id} = localUser
       axios
         .post(
           
           `${endpoint.baseUrl}${endpoint.todo}`,
-          { ...newTodo, id },
+          { ...newTodo },
           {
             headers: {
-              Authorization: `Bearer ${localUser.token}`,
+              Authorization: `Bearer ${token}`,
             },
           }
         )
@@ -42,7 +45,7 @@ const addTodo = (todos, newTodo, setTodo, userId, setOpen) => {
 };
 
 const removeTodo = (todos, setTodo, TodoId) => {
-  const { token } = JSON.parse(localStorage.getItem("user"));
+  // const { token } = JSON.parse(localStorage.getItem("user"));
   axios
     .delete(`${endpoint.baseUrl}${endpoint.todo}/${TodoId}`, {
       headers: {
@@ -61,7 +64,7 @@ const removeTodo = (todos, setTodo, TodoId) => {
 };
 
 const editTodo = (todos, setTodo, TodoId, newValues) => {
-  const { token } = JSON.parse(localStorage.getItem("user"));
+  // const { token } = JSON.parse(localStorage.getItem("user"));
 
   axios
     .put(

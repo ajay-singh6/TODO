@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "bootstrap": "^5.2.3",
+    "cookie-parser": "^1.4.6",
     "js-cookie": "^3.0.1",
     "multer": "^1.4.5-lts.1",
     "react-bootstrap": "^2.7.0",

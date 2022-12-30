@@ -13,7 +13,8 @@ import { AppContext } from "./TodoList";
 import { removeTodo } from "./ops";
 
 
-export default function Cardactions({ addTodo, editItem, input, setInput, id }) {
+export default function Cardactions({ addTodo, input, setInput, setEdit, id }) {
+  console.log("CardActions : ", AppContext);
   const { todo, setTodo } = useContext(AppContext);
   const [value, setValue] = useState(0);
 
@@ -88,7 +89,7 @@ export default function Cardactions({ addTodo, editItem, input, setInput, id }) 
         {!addTodo && (
           <BottomNavigationAction
             label="Edit"
-            icon={<EditIcon onClick={editItem} />}
+            icon={<EditIcon onClick={() => setEdit(true)} />}
           />
         )}
         {/* {addTodo && (
