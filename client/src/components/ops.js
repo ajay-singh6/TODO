@@ -7,9 +7,7 @@ const token = getCookie('jwt');
 
 const addTodo = (todos, newTodo, setTodo, userId, setOpen) => {
   // newTodo.id = uuid();
-
   // const localUser = JSON.parse(localStorage.getItem("user"));
-
   // console.log(userId)
   if (token) {
     if (
@@ -77,6 +75,7 @@ const editTodo = (todos, setTodo, TodoId, newValues) => {
       }
     )
     .then((res) => {
+      console.log(res);
       const newTodos = todos.map((t) =>
         t._id !== TodoId ? t : { TodoId, ...res.data.data }
       );

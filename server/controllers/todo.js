@@ -2,7 +2,7 @@ const Todo = require("../models/todo");
 const User = require("../models/user");
 
 exports.getAllTodo = (req, res) => {
-
+  console.log(req);
   Todo.find({ userId: req.body.id }).select("-userId")
     /*.populate("userId", "name email")*/
     .then((todo) => {
@@ -31,6 +31,7 @@ exports.createTodo = (req, res) => {
 };
 
 exports.updateTodo = (req, res) => {
+  console.log(req);
   Todo
     .findOneAndUpdate({ "_id": req.params.id, "userId": req.body.id }, req.body)
     .then((data) => {
