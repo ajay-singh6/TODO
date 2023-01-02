@@ -12,7 +12,7 @@ import Cookies from 'js-cookie';
 
 
 const Profile = ( {isAuthenticated, setIsAuthenticated} ) => {
-    console.log("Profile" , UserContext);
+    // console.log("Profile" , UserContext);
     const { user, setUser } = useContext(UserContext);
     const {id} = useContext(UserContext)
     const [data, setData] = useState({

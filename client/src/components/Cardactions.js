@@ -14,7 +14,7 @@ import { removeTodo } from "./ops";
 
 
 export default function Cardactions({ addTodo, input, setInput, setEdit, id }) {
-  console.log("CardActions : ", AppContext);
+  // console.log("CardActions : ", AppContext);
   const { todo, setTodo } = useContext(AppContext);
   const [value, setValue] = useState(0);
 

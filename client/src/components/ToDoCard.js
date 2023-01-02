@@ -21,7 +21,7 @@ import { editTodo } from "./ops";
 import { Button } from "react-bootstrap";
 
 export default function TodoCard({ title, description, color, id }) {
-  console.log("TodoCard : ", AppContext);
+  // console.log("TodoCard : ", AppContext);
   const { todo, setTodo } = useContext(AppContext);
   const [update, setUpdate] = useState({
     id: id,

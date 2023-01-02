@@ -29,8 +29,8 @@ const Data = React.createContext(null);
 
 export default function AddTodo() {
   const navigate = useNavigate()
-  console.log("AddTodo (usrcntxt): ", UserContext);
-  console.log("AddTodo (appcntxt): ", AppContext);
+  // console.log("AddTodo (usrcntxt): ", UserContext);
+  // console.log("AddTodo (appcntxt): ", AppContext);
   const { user } = React.useContext(UserContext);
   const { todo, setTodo } = React.useContext(AppContext);
   const [input, setInput] = React.useState({

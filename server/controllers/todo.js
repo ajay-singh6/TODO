@@ -14,7 +14,7 @@ exports.getAllTodo = (req, res) => {
 };
 
 exports.createTodo = (req, res) => {
-
+  console.log(req.body);
   const { id, title, description, color } = req.body;
   Todo.create({ title, description, color, userId: id })
     .then((data) => {
@@ -31,7 +31,7 @@ exports.createTodo = (req, res) => {
 };
 
 exports.updateTodo = (req, res) => {
-  console.log(req);
+  console.log(req.body);
   Todo
     .findOneAndUpdate({ "_id": req.params.id, "userId": req.body.id }, req.body)
     .then((data) => {

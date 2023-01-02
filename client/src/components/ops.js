@@ -9,6 +9,8 @@ const addTodo = (todos, newTodo, setTodo, userId, setOpen) => {
   // newTodo.id = uuid();
   // const localUser = JSON.parse(localStorage.getItem("user"));
   // console.log(userId)
+
+  
   if (token) {
     if (
       newTodo.title !== null &&
@@ -29,6 +31,7 @@ const addTodo = (todos, newTodo, setTodo, userId, setOpen) => {
           }
         )
         .then((response) => {
+          console.log("Something : ", response);
           const { title, description, color, _id } = response.data;
           setTodo((pre) => [{ title, description, color, _id }, ...pre]);
         })
@@ -63,16 +66,17 @@ const removeTodo = (todos, setTodo, TodoId) => {
 
 const editTodo = (todos, setTodo, TodoId, newValues) => {
   // const { token } = JSON.parse(localStorage.getItem("user"));
+  console.log(`${endpoint.baseUrl}${endpoint.todo}/${TodoId}`);
 
   axios
     .put(
       `${endpoint.baseUrl}${endpoint.todo}/${TodoId}`,
-      { newValues },
+      { ...newValues },
       {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
     )
     .then((res) => {
       console.log(res);
