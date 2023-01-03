@@ -1,4 +1,5 @@
 const multer = require("multer");
+const bcrypt = require("bcryptjs");
 
 const User = require("../models/user");
 
@@ -82,4 +83,18 @@ const uploadImage = (req, res) => {
     });
 }
 
-module.exports = { getUserDetails, updateUser, uploadImage };
+const changePassword = (req, res) => {
+
+    const hashedPassword = bcrypt.hashSync(req.body.password, 10);
+    const password = {
+        password: hashedPassword
+    };
+
+    return User.findByIdAndUpdate({ _id: req.body.id }, password).then((user) => {
+        return res.status(201).json({ msg: "Password changed" });
+    }).catch((err) => {
+        return res.status(401).json({ msg: "Internal server error" });
+    })
+}
+
+module.exports = { getUserDetails, updateUser, uploadImage, changePassword };

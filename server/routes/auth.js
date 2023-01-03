@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { check } = require("express-validator");
-const { signIn, signUp, verify, authenticateToken, isSignedIn } = require("../controllers/auth");
+const { signIn, signUp, verify, forgotPassword, forgotPasswordVerify } = require("../controllers/auth");
 
 
 /*
@@ -46,5 +46,19 @@ router.post(
   ],
   signIn
 );
+
+/*
+ * @route POST api/forgot-password-verify
+ * @description Validate OTP generated after forgot-password
+ * @access public  
+*/
+router.post("/forgot-password-verify", forgotPasswordVerify);
+
+/*
+ * @route POST api/forgot-password
+ * @description change password using OTP authentication
+ * @access public  
+*/
+router.post("/forgot-password", forgotPassword);
 
 module.exports = router;
