@@ -30,6 +30,8 @@ function Signup() {
   };
 
   const verifyHandler = (e) => {
+    e.preventDefault();
+
       axios
         .post(`${endpoint.baseUrl}${endpoint.verify}`, {
           email: data.email.value,
@@ -38,6 +40,7 @@ function Signup() {
         .then((res) => {
           // Todo : routing 
           if (res.status >= 200 && res.status <= 210) {
+            alert("Successfully added!")
             navigate("/signin");
           }
         })
@@ -271,7 +274,7 @@ function Signup() {
             </div>
               <Button
               // type="submit"
-              onClick={() => {setVerify(false); verifyHandler()}}
+              onClick={(e) => {setVerify(false); verifyHandler(e)}}
               variant="contained"
               size="medium"
               style={style.button}
