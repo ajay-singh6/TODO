@@ -64,8 +64,10 @@ const signUp = (req, res) => {
         });
       });
     } else if (!savedUser) {
+
       return user.save((err, user) => {
         if (!err) {
+          sendOtp(email, generatedOTP);
           return res.status(201).json({
             name: user.name,
             email: user.email
