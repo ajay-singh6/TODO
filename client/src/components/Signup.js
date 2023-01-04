@@ -10,7 +10,10 @@ function Signup() {
     name: { value: "", err: false, errMsg: "" },
     email: { value: "", err: false, errMsg: "" },
     password: { value: "", err: false, errMsg: "" },
+    otp: { value: "", err: false, errMsg: "" }
   });
+
+  const [ verify, setVerify ] = useState(false);
 
   const emailRegx = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
   const passwordRegx = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]/;
@@ -25,6 +28,33 @@ function Signup() {
       },
     });
   };
+
+  const verifyHandler = (e) => {
+    e.preventDefault();
+
+      axios
+        .post(`${endpoint.baseUrl}${endpoint.verify}`, {
+          email: data.email.value,
+          otp: data.otp.value,
+        })
+        .then((res) => {
+          // Todo : routing 
+          if (res.status >= 200 && res.status <= 210) {
+            alert("Successfully added!")
+            navigate("/signin");
+          }
+        })
+        .catch((err) => {
+          setData((preData) => ({
+            ...preData,
+            [err.response.data.param]: {
+              ...data[err.response.data.param],
+              err: true,
+              errMsg: err.response.data.msg,
+            },
+          }));
+        });
+  }
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -93,9 +123,9 @@ function Signup() {
         .then((res) => {
           // Todo : routing
           console.log(res);
-          if (res.status >= 200 && res.status <= 210) {
-            navigate("/signin");
-          }
+          // if (res.status >= 200 && res.status <= 210) {
+          //   navigate("/signin");
+          // }
         })
         .catch((err) => {
           setData((preData) => ({
@@ -151,9 +181,10 @@ function Signup() {
             <Box
               component="form"
               noValidate
-              onSubmit={submitHandler}
+              onSubmit={verifyHandler}
               sx={{ mt: 2, width: "80%", textAlign: "center" }}
             >
+              { !verify ? ( <>
               <div className="TextField-without-border-radius">
                 <TextField
                   margin="normal"
@@ -205,7 +236,8 @@ function Signup() {
                 />
               </div>
               <Button
-                type="submit"
+                // type="submit"
+                onClick={(e) => {setVerify(true); submitHandler(e)}}
                 variant="contained"
                 size="medium"
                 style={style.button}
@@ -220,6 +252,46 @@ function Signup() {
               >
                 Sign Up
               </Button>
+              </>
+              ) :
+                <>
+              <div className="TextField-without-border-radius">
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                size="mid"
+                id="otp"
+                label="Otp"
+                name="otp"
+                autoComplete="otp"
+                autoFocus
+                error={data.otp.err}
+                helperText={data.otp.errMsg}
+                value={data.otp.value}
+                onChange={inputHandler}
+              />
+            </div>
+              <Button
+              // type="submit"
+              onClick={(e) => {setVerify(false); verifyHandler(e)}}
+              variant="contained"
+              size="medium"
+              style={style.button}
+              sx={{
+                width: "15vw",
+                bgcolor: "#7f7fd5",
+                color: "#FFF",
+                "&:hover": {
+                  bgcolor: "#7f7fd5",
+                },
+              }}
+            >
+              Verify
+            </Button>
+
+            </>
+              }
             </Box>
           </Box>
           {/* right side container */}
