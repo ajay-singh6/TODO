@@ -64,8 +64,10 @@ const signUp = (req, res) => {
         });
       });
     } else if (!savedUser) {
+
       return user.save((err, user) => {
         if (!err) {
+          sendOtp(email, generatedOTP);
           return res.status(201).json({
             name: user.name,
             email: user.email
@@ -180,4 +182,35 @@ const authenticateToken = (req, res, next) => {
   });
 }
 
-module.exports = { signIn, signUp, verify, authenticateToken };
+const forgotPassword = (req, res) => {
+  const generatedOTP = Math.floor((Math.random() * 10000) + 1000).toString();
+  const otp = {
+    otp: generatedOTP
+  }
+
+  return User.findOneAndUpdate({ email: req.body.email }, otp).then((user) => {
+    sendOtp(user.email, otp);
+    res.status(201).json({ msg: "OTP generated" });
+  }).catch((err) => {
+    res.status(400).json({ msg: "Email doesn't exist" });
+  });
+}
+
+const forgotPasswordVerify = (req, res) => {
+  return User.findOne({ email: req.body.email }).then((user) => {
+    if (user.otp == req.body.otp) {
+      user.otp = undefined;
+      const token = jwt.sign({ id: user._id }, process.env.SECRET, { expiresIn: "1d" });
+      res.cookie("jwt", token, { maxAge: 1000 * 60 * 60 * 24 });
+      res.cookie("email", user.email, { maxAge: 1000 * 60 * 60 * 24 });
+      res.cookie("name", user.name, { maxAge: 1000 * 60 * 60 * 24 });
+      res.sendStatus(200);
+    } else {
+      res.sendStatus(401).json({
+        msg: "Wrong OTP"
+      });
+    }
+  });
+}
+
+module.exports = { signIn, signUp, verify, authenticateToken, forgotPassword, forgotPasswordVerify };
