@@ -30,6 +30,7 @@ function Signup() {
   };
 
   const verifyHandler = (e) => {
+      // e.preventDefault();
       axios
         .post(`${endpoint.baseUrl}${endpoint.verify}`, {
           email: data.email.value,
@@ -37,11 +38,24 @@ function Signup() {
         })
         .then((res) => {
           // Todo : routing 
+          
           if (res.status >= 200 && res.status <= 210) {
+            setVerify(false); 
             navigate("/signin");
+          } else {
+            alert("Error..!");
           }
         })
         .catch((err) => {
+          console.log(err.response.data.msg);
+          setData((preData) => ({
+            ...preData,
+            otp: {
+              ...data.otp,
+              err: true,
+              errMsg: "Wrong Otp",
+            },
+          }));
           setData((preData) => ({
             ...preData,
             [err.response.data.param]: {
@@ -118,13 +132,23 @@ function Signup() {
           password: data.password.value
         })
         .then((res) => {
-          // Todo : routing
-          // console.log(res);
+          setVerify(true); 
           // if (res.status >= 200 && res.status <= 210) {
           //   navigate("/signin");
+          // } else {
+          //   console.log(res);
           // }
         })
         .catch((err) => {
+          console.log(err.response.data.msg);
+          setData((preData) => ({
+            ...preData,
+            email: {
+              ...data.email,
+              err: true,
+              errMsg: err.response.data.msg,
+            },
+          }));
           setData((preData) => ({
             ...preData,
             [err.response.data.param]: {
@@ -178,7 +202,7 @@ function Signup() {
             <Box
               component="form"
               noValidate
-              onSubmit={verifyHandler}
+              // onSubmit={verifyHandler}
               sx={{ mt: 2, width: "80%", textAlign: "center" }}
             >
               { !verify ? ( <>
@@ -234,7 +258,7 @@ function Signup() {
               </div>
               <Button
                 // type="submit"
-                onClick={(e) => {setVerify(true); submitHandler(e)}}
+                onClick={(e) => {submitHandler(e)}}
                 variant="contained"
                 size="medium"
                 style={style.button}
@@ -271,7 +295,7 @@ function Signup() {
             </div>
               <Button
               // type="submit"
-              onClick={() => {setVerify(false); verifyHandler()}}
+              onClick={() => {verifyHandler()}}
               variant="contained"
               size="medium"
               style={style.button}
