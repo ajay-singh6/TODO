@@ -14,7 +14,6 @@ import { removeTodo } from "./ops";
 
 
 export default function Cardactions({ addTodo, input, setInput, setEdit, id }) {
-  // console.log("CardActions : ", AppContext);
   const { todo, setTodo } = useContext(AppContext);
   const [value, setValue] = useState(0);
 
@@ -45,7 +44,6 @@ export default function Cardactions({ addTodo, input, setInput, setEdit, id }) {
         showLabels
         value={value}
         onChange={(event, newValue) => {
-          // console.log(event.target.data)
           setValue(newValue);
         }}
       >
@@ -57,7 +55,6 @@ export default function Cardactions({ addTodo, input, setInput, setEdit, id }) {
                 color="error"
                 onClick={() => {
                   setInput((pre) => ({ ...pre, "color": "red" }));
-                  // console.log(input);
                   setTodo((p) => [...p, input]);
                 }}
               />
@@ -92,20 +89,7 @@ export default function Cardactions({ addTodo, input, setInput, setEdit, id }) {
             icon={<EditIcon onClick={() => setEdit(true)} />}
           />
         )}
-        {/* {addTodo && (
-          <BottomNavigationAction
-            label="Low"
-            icon={
-              <CircleIcon
-                color="success"
-                onClick={() => {
-                  setInput((pre) => ({ ...pre, "color": "green" }));
-                  setTodo((p) => [...p, input]);
-                }}
-              />
-            }
-          />
-        )} */}
+        
       </BottomNavigation>
     </Box>
   );

@@ -1,16 +1,16 @@
 import axios from "axios";
-import { getCookie } from "../Cookies/getCookies";
+import Cookies from "js-cookie";
 // import { Navigate, useNavigate } from 'react-router-dom';
 import { endpoint } from "../endpoints";
 
-const token = getCookie('jwt');
 
 const addTodo = (todos, newTodo, setTodo, userId, setOpen) => {
   // newTodo.id = uuid();
   // const localUser = JSON.parse(localStorage.getItem("user"));
   // console.log(userId)
-
   
+  
+  const token = Cookies.get('jwt');
   if (token) {
     if (
       newTodo.title !== null &&
@@ -29,7 +29,7 @@ const addTodo = (todos, newTodo, setTodo, userId, setOpen) => {
               Authorization: `Bearer ${token}`,
             },
           }
-        )
+          )
         .then((response) => {
           // console.log("Something : ", response);
           const { title, description, color, _id } = response.data;
@@ -38,7 +38,7 @@ const addTodo = (todos, newTodo, setTodo, userId, setOpen) => {
         .catch((err) => {
           // console.log(err);
         });
-    } 
+      } 
   }else {
     // console.log("hello");
     setOpen(true);
@@ -47,13 +47,14 @@ const addTodo = (todos, newTodo, setTodo, userId, setOpen) => {
 
 const removeTodo = (todos, setTodo, TodoId) => {
   // const { token } = JSON.parse(localStorage.getItem("user"));
+  const token = Cookies.get('jwt');
   axios
-    .delete(`${endpoint.baseUrl}${endpoint.todo}/${TodoId}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    .then((res) => {
+  .delete(`${endpoint.baseUrl}${endpoint.todo}/${TodoId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+  .then((res) => {
       const updatedTodo = todos.filter((t) => t._id !== TodoId);
       // console.log(newTodos);
       setTodo(updatedTodo);
@@ -65,9 +66,8 @@ const removeTodo = (todos, setTodo, TodoId) => {
 };
 
 const editTodo = (todos, setTodo, TodoId, newValues) => {
-  // const { token } = JSON.parse(localStorage.getItem("user"));
-  // console.log(`${endpoint.baseUrl}${endpoint.todo}/${TodoId}`);
-
+  
+  const token = Cookies.get('jwt');
   axios
     .put(
       `${endpoint.baseUrl}${endpoint.todo}/${TodoId}`,
@@ -79,11 +79,9 @@ const editTodo = (todos, setTodo, TodoId, newValues) => {
           }
     )
     .then((res) => {
-      // console.log(res);
       const newTodos = todos.map((t) =>
         t._id !== TodoId ? t : { TodoId, ...res.data.data }
       );
-      // console.log(newTodos);
       setTodo(newTodos);
     })
     .catch((err) => console.log(err));

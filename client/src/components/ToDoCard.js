@@ -39,16 +39,11 @@ export default function TodoCard({ title, description, color, id }) {
   };
 
   const handleUpdate = (e) => {
-    setEdit(false);
-
     editTodo(todo, setTodo, id, update);
+    editTodo(todo, setTodo, id, update);
+    setEdit(false);
   };
-
-  // const editItem = () => {
-  //   console.log(`Edit btn clicked of ${id} - ${edit}`);
-  //   console.log(AppContext);
-  //   setEdit(true);
-  // };
+  
 
   return (
 

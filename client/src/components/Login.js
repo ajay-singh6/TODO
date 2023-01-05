@@ -1,10 +1,10 @@
 import { Button, Grid, Paper, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import axios from "axios";
+import Cookies from "js-cookie";
 import React, { useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../App";
-import { getCookie } from "../Cookies/getCookies";
 import { endpoint } from "../endpoints";
 
 axios.defaults.withCredentials = true;
@@ -18,8 +18,6 @@ function Login( {isAuthenticated, setIsAuthenticated, data, setData} ) {
   useEffect(()=> {
     if(isAuthenticated) {
       setData({ ...data });
-
-      // console.log("useEffect : " + data);
       navigate("/todo");
 
     }
@@ -89,10 +87,6 @@ function Login( {isAuthenticated, setIsAuthenticated, data, setData} ) {
           password: data.password.value,
         })
         .then((res) => {
-          // setUser({ ...res.data });
-          // console.log("Res.data : " + res.data);
-          // console.log("Cookie : " + getCookie('jwt'));
-
           setIsAuthenticated(true);
           localStorage.setItem("user", JSON.stringify(res.data));
           navigate("/todo");

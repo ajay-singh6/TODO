@@ -16,7 +16,7 @@ import Home from "./components/Home";
 import Profile from "./components/Profile";
 import PrivateRoute from "./utils/PrivateRoute";
 import Signinform from "./components/Signinform";
-import { getCookie } from "./Cookies/getCookies";
+import Cookies from "js-cookie";
 const UserContext = createContext({});
 
 function App() {
@@ -41,7 +41,7 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(()=> {
-    const token = getCookie('jwt')
+    const token = Cookies.get('jwt');
     if(token) {
       setIsAuthenticated(true);
     } else setIsAuthenticated(false);

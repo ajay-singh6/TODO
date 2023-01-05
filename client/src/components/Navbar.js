@@ -17,7 +17,7 @@ import { removeCookie } from "../Cookies/removeCookie";
 
 const settings = ["Profile", "Logout"];
 
-function Navbar({ user, isAuthenticated, setIsAuthenticated }) {
+function Navbar({ isAuthenticated, setIsAuthenticated }) {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const navigate = useNavigate();
   const handleOpenUserMenu = (event) => {
@@ -25,7 +25,6 @@ function Navbar({ user, isAuthenticated, setIsAuthenticated }) {
   };
 
   const handleCloseUserMenu = (e) => {
-    // console.log(e.target.children);
     setAnchorElUser(null);
   };
   const handleMenuItem = (e) => {
@@ -37,13 +36,11 @@ function Navbar({ user, isAuthenticated, setIsAuthenticated }) {
         break;
       case "Logout":
         localStorage.removeItem("user");
-        localStorage.removeItem("token");
         removeCookie('jwt')
         removeCookie('name')
         removeCookie('email')
-
         setIsAuthenticated(false);
-        // setUser({});
+      
         navigate("/signin");
         break;
       default:
