@@ -2,7 +2,7 @@ const Todo = require("../models/todo");
 const User = require("../models/user");
 
 exports.getAllTodo = (req, res) => {
-  console.log(req);
+  // console.log(req);
   Todo.find({ userId: req.body.id }).select("-userId")
     /*.populate("userId", "name email")*/
     .then((todo) => {
@@ -14,7 +14,7 @@ exports.getAllTodo = (req, res) => {
 };
 
 exports.createTodo = (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   const { id, title, description, color } = req.body;
   Todo.create({ title, description, color, userId: id })
     .then((data) => {
@@ -23,7 +23,7 @@ exports.createTodo = (req, res) => {
       res.json(data);
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
       return res
         .status(400)
         .json({ message: "Failed to add todo", error: err.message });
@@ -31,7 +31,7 @@ exports.createTodo = (req, res) => {
 };
 
 exports.updateTodo = (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   Todo
     .findOneAndUpdate({ "_id": req.params.id, "userId": req.body.id }, req.body)
     .then((data) => {

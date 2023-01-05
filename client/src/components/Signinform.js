@@ -46,7 +46,7 @@ function Signinform() {
 
     // Eamil validation
     if (!data.email.value) {
-      console.log("hello");
+      // console.log("hello");
       setData((preData) => ({
         ...preData,
         email: {
@@ -65,7 +65,7 @@ function Signinform() {
         },
       }));
     }else if (!data.password.value) {
-      console.log("hello");
+      // console.log("hello");
       setData((preData) => ({
         ...preData,
         password: {
@@ -87,14 +87,14 @@ function Signinform() {
     }else{
       setData({...data})
 
-      console.log(data);
+      // console.log(data);
       axios
         .post(`${endpoint.baseUrl}${endpoint.signIn}`, {
           email: data.email.value,
           password: data.password.value,
         })
         .then((res) => {
-          console.log(res);
+          // console.log(res);
         })
         .catch((err) => {
           console.log(err);setData((preData) => ({

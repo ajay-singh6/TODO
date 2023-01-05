@@ -24,7 +24,7 @@ function AddNewToDo({ flag }) {
         setData({ title: "", description: "", isComplete: false });
       })
       .catch((err) => {
-        console.log("Error couldn't create TODO");
+        // console.log("Error couldn't create TODO");
         console.log(err.message);
       });
   };

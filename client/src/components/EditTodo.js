@@ -24,7 +24,7 @@ function EditTodo({ currentTodo, setEdit, flag }) {
         });
       })
       .catch((err) => {
-        console.log("Failed to update the ToDo");
+        // console.log("Failed to update the ToDo");
         console.log(err.message);
       });
     flag(false);

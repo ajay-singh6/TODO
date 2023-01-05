@@ -54,7 +54,7 @@ export default function AddTodo() {
   };
 
   const addTodoCb = (e) => {
-    console.log(user)
+    // console.log(user)
     addTodo(todo, input, setTodo, user.id, setOpen);
     setInput({
       title: "",

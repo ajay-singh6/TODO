@@ -19,7 +19,7 @@ function Login( {isAuthenticated, setIsAuthenticated, data, setData} ) {
     if(isAuthenticated) {
       setData({ ...data });
 
-      console.log("useEffect : " + data);
+      // console.log("useEffect : " + data);
       navigate("/todo");
 
     }
@@ -41,7 +41,7 @@ function Login( {isAuthenticated, setIsAuthenticated, data, setData} ) {
 
     // Eamil validation
     if (!data.email.value) {
-      console.log("hello");
+      // console.log("hello");
       setData((preData) => ({
         ...preData,
         email: {
@@ -60,7 +60,7 @@ function Login( {isAuthenticated, setIsAuthenticated, data, setData} ) {
         },
       }));
     } else if (!data.password.value) {
-      console.log("hello");
+      // console.log("hello");
       setData((preData) => ({
         ...preData,
         password: {
@@ -82,7 +82,7 @@ function Login( {isAuthenticated, setIsAuthenticated, data, setData} ) {
     } else {
       setData({ ...data });
 
-      console.log("Login (data): " + data);
+      // console.log("Login (data): " + data);
       axios
         .post(`${endpoint.baseUrl}${endpoint.signIn}`, {
           email: data.email.value,
@@ -91,7 +91,7 @@ function Login( {isAuthenticated, setIsAuthenticated, data, setData} ) {
         .then((res) => {
           // setUser({ ...res.data });
           // console.log("Res.data : " + res.data);
-          console.log("Cookie : " + getCookie('jwt'));
+          // console.log("Cookie : " + getCookie('jwt'));
 
           setIsAuthenticated(true);
           localStorage.setItem("user", JSON.stringify(res.data));

@@ -65,7 +65,7 @@ function Signupform() {
     }
     // Eamil validation
     else if (!data.email.value) {
-      console.log("hello");
+      // console.log("hello");
       setData((preData) => ({
         ...preData,
         email: {
@@ -87,7 +87,7 @@ function Signupform() {
 
     // Passowrd Validation
     else if (!data.password.value) {
-      console.log("hello");
+      // console.log("hello");
       setData((preData) => ({
         ...preData,
         password: {

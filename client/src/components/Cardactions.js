@@ -19,7 +19,7 @@ export default function Cardactions({ addTodo, input, setInput, setEdit, id }) {
   const [value, setValue] = useState(0);
 
   const markComplete = () => {
-    console.log("Complete");
+    // console.log("Complete");
   };
 
   const deleteItem = () => {
@@ -57,7 +57,7 @@ export default function Cardactions({ addTodo, input, setInput, setEdit, id }) {
                 color="error"
                 onClick={() => {
                   setInput((pre) => ({ ...pre, "color": "red" }));
-                  console.log(input);
+                  // console.log(input);
                   setTodo((p) => [...p, input]);
                 }}
               />

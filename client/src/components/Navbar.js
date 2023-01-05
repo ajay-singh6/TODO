@@ -29,8 +29,8 @@ function Navbar({ user, isAuthenticated, setIsAuthenticated }) {
     setAnchorElUser(null);
   };
   const handleMenuItem = (e) => {
-    console.log(e.target.innerHTML)
-    console.log("User (authtd)" + isAuthenticated)
+    // console.log(e.target.innerHTML)
+    // console.log("User (authtd)" + isAuthenticated)
     switch (e.target.innerHTML) {
       case "Profile":
         navigate("/user");

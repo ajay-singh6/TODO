@@ -16,10 +16,10 @@ function Home({ isAuthenticated, setIsAuthenticated}) {
             setIsAuthenticated(false)
             navigate("/signin")
         }
-        console.log("Home : " + isAuthenticated);
+        // console.log("Home : " + isAuthenticated);
   }, [isAuthenticated, navigate, setIsAuthenticated]);
 
-  console.log("Home page rendered");
+  // console.log("Home page rendered");
   return (
     <>
     </>

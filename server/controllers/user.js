@@ -5,7 +5,7 @@ const User = require("../models/user");
 const getUserDetails = (req, res) => {
     User.findById({ "_id": req.body.id }, (err, user) => {
         if (err || !user) {
-            console.log(err);
+            // console.log(err);
             return res.status(500).json({
                 msg: "Internal Server Error",
             });
@@ -30,7 +30,7 @@ const updateUser = (req, res) => {
             isActive: true
         });
     }).catch(err => {
-        console.log(err);
+        // console.log(err);
         return res.status(500).json({
             msg: "Internal Server Error"
         });
@@ -55,7 +55,7 @@ const uploadImage = (req, res) => {
     return upload(req, res, (err) => {
 
         if (err) {
-            console.log(err);
+            // console.log(err);
             return res.status(400).json({
                 msg: "Couldn't upload"
             });
@@ -73,7 +73,7 @@ const uploadImage = (req, res) => {
                     isActive: true
                 });
             }).catch(err => {
-                console.log(err);
+                // console.log(err);
                 return res.status(500).json({
                     msg: "Internal Server Error"
                 });

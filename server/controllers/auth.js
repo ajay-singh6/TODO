@@ -20,7 +20,7 @@ const comparePassword = (plainPassword, hash) => {
 //signup controller
 const signUp = (req, res) => {
   const error = validationResult(req);
-  console.log(error);
+  // console.log(error);
   if (!error.isEmpty()) {
     return res.status(422).json({
       msg: error.array()[0].msg,
@@ -58,7 +58,7 @@ const signUp = (req, res) => {
           id: updatedUser._id,
         });
       }).catch(err => {
-        console.log(err);
+        // console.log(err);
         return res.status(500).json({
           msg: "Internal Server Error",
         });
@@ -89,7 +89,7 @@ const verify = (req, res) => {
   const email = req.body.email;
   return User.findOne({ email }, (err, user) => {
     if (err || !user) {
-      console.log(err);
+      // console.log(err);
       return res.status(400).json({
         msg: "Email address doesn't exist",
         param: "email",
@@ -106,7 +106,7 @@ const verify = (req, res) => {
               active: user.active,
             });
           } else {
-            console.log(err);
+            // console.log(err);
             return res.status(500).json({
               msg: "Internal Error",
             });
@@ -125,7 +125,7 @@ const verify = (req, res) => {
 const signIn = (req, res) => {
 
   const { email, password } = req.body;
-  //console.log(req.body);
+  // console.log(req.body);
 
   const error = validationResult(req);
   if (!error.isEmpty()) {
@@ -137,7 +137,7 @@ const signIn = (req, res) => {
 
   User.findOne({ email }, (err, user) => {
     if (err || !user || !user.active) {
-      console.log(err);
+      // console.log(err);
       return res.status(400).json({
         msg: "Email address doesn't exist",
         param: "email",
@@ -151,7 +151,7 @@ const signIn = (req, res) => {
       });
     }
 
-    //console.log(user);
+    // console.log(user);
 
     const token = jwt.sign({ id: user._id }, process.env.SECRET, { expiresIn: "1d" });
     res.cookie("jwt", token, { maxAge: 1000 * 60 * 60 * 24 });
@@ -170,7 +170,7 @@ const authenticateToken = (req, res, next) => {
 
   return jwt.verify(token, process.env.SECRET, (err, user) => {
     if (err) {
-      console.log(err);
+      // console.log(err);
       return res.status(403).json({
         msg: "Invalid Token"
       });

@@ -17,12 +17,12 @@ function Todolist( {isAuthenticated, setIsAuthenticated, user, setUser, todo, se
   // const { user, setUser } = useContext(UserContext);
   
  
-  console.log("Todo page rendered "+isAuthenticated);
+  // console.log("Todo page rendered "+isAuthenticated);
   useEffect(() => {
     if (isAuthenticated) {
     // const localUser = JSON.parse(localStorage.getItem("user"));
     const token = Cookies.get('jwt');
-    console.log("TodoList (authtd): "+ isAuthenticated)
+    // console.log("TodoList (authtd): "+ isAuthenticated)
       axios
         .get(
           `${endpoint.baseUrl}${endpoint.todo}`,
@@ -33,7 +33,7 @@ function Todolist( {isAuthenticated, setIsAuthenticated, user, setUser, todo, se
           }
           )
         .then((response) => {
-          console.log(response.body);
+          // console.log(response.body);
           setTodo([...response.data]);
         })
         .catch((err) => {

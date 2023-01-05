@@ -69,7 +69,7 @@ function Signup() {
     }
     // Eamil validation
     else if (!data.email.value) {
-      console.log("hello");
+      // console.log("hello");
       setData((preData) => ({
         ...preData,
         email: {
@@ -91,7 +91,7 @@ function Signup() {
 
     // Passowrd Validation
     else if (!data.password.value) {
-      console.log("hello");
+      // console.log("hello");
       setData((preData) => ({
         ...preData,
         password: {
@@ -119,7 +119,7 @@ function Signup() {
         })
         .then((res) => {
           // Todo : routing
-          console.log(res);
+          // console.log(res);
           // if (res.status >= 200 && res.status <= 210) {
           //   navigate("/signin");
           // }

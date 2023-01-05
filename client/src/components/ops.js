@@ -31,16 +31,16 @@ const addTodo = (todos, newTodo, setTodo, userId, setOpen) => {
           }
         )
         .then((response) => {
-          console.log("Something : ", response);
+          // console.log("Something : ", response);
           const { title, description, color, _id } = response.data;
           setTodo((pre) => [{ title, description, color, _id }, ...pre]);
         })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
         });
     } 
   }else {
-    console.log("hello");
+    // console.log("hello");
     setOpen(true);
   }
 };
@@ -66,7 +66,7 @@ const removeTodo = (todos, setTodo, TodoId) => {
 
 const editTodo = (todos, setTodo, TodoId, newValues) => {
   // const { token } = JSON.parse(localStorage.getItem("user"));
-  console.log(`${endpoint.baseUrl}${endpoint.todo}/${TodoId}`);
+  // console.log(`${endpoint.baseUrl}${endpoint.todo}/${TodoId}`);
 
   axios
     .put(
@@ -79,7 +79,7 @@ const editTodo = (todos, setTodo, TodoId, newValues) => {
           }
     )
     .then((res) => {
-      console.log(res);
+      // console.log(res);
       const newTodos = todos.map((t) =>
         t._id !== TodoId ? t : { TodoId, ...res.data.data }
       );
