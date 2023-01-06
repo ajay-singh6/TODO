@@ -29,8 +29,16 @@ function Signup() {
     });
   };
 
-  const verifyHandler = (e) => {
-      // e.preventDefault();
+  const resetData = () => {
+    setData( (preData) => ({
+      ...preData,
+      name: { value: "", err: false, errMsg: "" },
+      email: { value: "", err: false, errMsg: "" },
+      password: { value: "", err: false, errMsg: "" },
+      otp: { value: "", err: false, errMsg: "" }
+  }))}
+
+  const verifyHandler = () => {
       axios
         .post(`${endpoint.baseUrl}${endpoint.verify}`, {
           email: data.email.value,
@@ -40,6 +48,8 @@ function Signup() {
           // Todo : routing 
           
           if (res.status >= 200 && res.status <= 210) {
+            alert("Account added successfully!!")
+            resetData();
             setVerify(false); 
             navigate("/signin");
           } else {
@@ -47,7 +57,7 @@ function Signup() {
           }
         })
         .catch((err) => {
-          console.log(err.response.data.msg);
+          console.log(err.response.data.param);
           setData((preData) => ({
             ...preData,
             otp: {
@@ -83,7 +93,6 @@ function Signup() {
     }
     // Eamil validation
     else if (!data.email.value) {
-      // console.log("hello");
       setData((preData) => ({
         ...preData,
         email: {
@@ -105,7 +114,6 @@ function Signup() {
 
     // Passowrd Validation
     else if (!data.password.value) {
-      // console.log("hello");
       setData((preData) => ({
         ...preData,
         password: {
@@ -133,14 +141,9 @@ function Signup() {
         })
         .then((res) => {
           setVerify(true); 
-          // if (res.status >= 200 && res.status <= 210) {
-          //   navigate("/signin");
-          // } else {
-          //   console.log(res);
-          // }
         })
         .catch((err) => {
-          console.log(err.response.data.msg);
+          console.log(err);
           setData((preData) => ({
             ...preData,
             email: {
@@ -294,22 +297,37 @@ function Signup() {
               />
             </div>
               <Button
-              // type="submit"
-              onClick={() => {verifyHandler()}}
-              variant="contained"
-              size="medium"
-              style={style.button}
-              sx={{
-                width: "15vw",
-                bgcolor: "#7f7fd5",
-                color: "#FFF",
-                "&:hover": {
+                // type="submit"
+                onClick={() => {verifyHandler()}}
+                variant="contained"
+                size="medium"
+                style={style.button}
+                sx={{
+                  width: "15vw",
                   bgcolor: "#7f7fd5",
-                },
-              }}
-            >
-              Verify
-            </Button>
+                  color: "#FFF",
+                  "&:hover": {
+                    bgcolor: "#7f7fd5",
+                  },
+                }}
+              >
+                Verify
+              </Button>
+              <Button
+                onClick={() => {setVerify(false)}}
+                variant="contained"
+                size="medium"
+                style={style.button}
+                sx={{
+                  width: "15vw",
+                  bgcolor: "#7f7fd5",
+                  color: "#FFF",
+                  "&:hover": {
+                    bgcolor: "#7f7fd5",
+                  },
+                }}>
+                Go Back
+              </Button>
 
             </>
               }

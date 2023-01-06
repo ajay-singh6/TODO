@@ -20,13 +20,15 @@ const Profile = ( {isAuthenticated, setIsAuthenticated} ) => {
         password: "***",
         email: "",
     });
+    const [tData, settData] = useState({data
+    });
     
     useEffect(()=>{
         if(isAuthenticated) {
             // const localUser = JSON.parse(localStorage.getItem("user"));
             setData({...data, name: Cookies.get('name'), email: Cookies.get('email')})
         }
-    },[])
+    },[ ])
 
     
     
@@ -34,12 +36,12 @@ const Profile = ( {isAuthenticated, setIsAuthenticated} ) => {
     const [edit, setEdit] = useState(true);
 
     const inputHandler = (e) => {
-      setData({ ...data, [e.target.name]: e.target.value });
+      settData({ ...tData, [e.target.name]: e.target.value });
     };
 
     const saveDetails = () => {
         if(!edit) {
-            setData((data) => ({...data}))
+            setData({...tData})
         }
         setEdit(!edit)
     }

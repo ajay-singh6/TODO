@@ -1,8 +1,8 @@
-import cookie from "js-cookie";
+import Cookies from "js-cookie";
 
 
 const removeCookie = (cookieName) => {
-    cookie.remove(cookieName);
+    Cookies.remove(cookieName);
 }
 
 export { removeCookie };

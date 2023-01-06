@@ -36,7 +36,8 @@ const addTodo = (todos, newTodo, setTodo, userId, setOpen) => {
           setTodo((pre) => [{ title, description, color, _id }, ...pre]);
         })
         .catch((err) => {
-          // console.log(err);
+          console.log(err);
+          alert("Something's wrong! Check console")
         });
       } 
   }else {

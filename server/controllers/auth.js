@@ -189,7 +189,7 @@ const forgotPassword = (req, res) => {
   }
 
   return User.findOneAndUpdate({ email: req.body.email }, otp).then((user) => {
-    sendOtp(user.email, otp);
+    sendOtp(user.email, otp.otp);
     res.status(201).json({ msg: "OTP generated" });
   }).catch((err) => {
     res.status(400).json({ msg: "Email doesn't exist" });

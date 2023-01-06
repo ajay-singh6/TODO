@@ -17,6 +17,7 @@ import Profile from "./components/Profile";
 import PrivateRoute from "./utils/PrivateRoute";
 import Signinform from "./components/Signinform";
 import Cookies from "js-cookie";
+import ForgotPassword from "./components/ForgotPassword";
 const UserContext = createContext({});
 
 function App() {
@@ -61,10 +62,14 @@ function App() {
       element: <Login isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} data={data} setData={setData}/>,
     },
     { 
+      path: "/forgot-password", 
+      element: <ForgotPassword isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} /> 
+    },
+    { 
       path: "/signup", element: <Signup /> 
     },
     { 
-      path: "/user", element: <PrivateRoute isAuthenticated={isAuthenticated} />, 
+      path: "/user", element: <PrivateRoute isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />, 
         children:[{
           path: "/user", element: <Profile isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />
         }] 
