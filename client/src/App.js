@@ -1,6 +1,4 @@
 import "./App.css";
-
-import Navbar from "./components/Navbar";
 import Todolist, { AppContext } from "./components/TodoList";
 import { createContext, useEffect, useState } from "react";
 import {
@@ -24,20 +22,6 @@ function App() {
   const [user, setUser] = useState({});
   const [todo, setTodo] = useState([]);
   
-  const [data, setData] = useState( {
-    email: {
-      value: "",
-      err: false,
-      errMsg: "",
-    },
-  
-    password: {
-      value: "",
-      err: false,
-      errMsg: "",
-    }
-  });
-  
   //search for token
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
@@ -59,7 +43,7 @@ function App() {
     },
     {
       path: "/signin",
-      element: <Login isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} data={data} setData={setData}/>,
+      element: <Login isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />,
     },
     { 
       path: "/forgot-password", 

@@ -141,8 +141,7 @@ function ForgotPassword( isAuthenticated, setIsAuthenticated) {
     }
 
     const changePassword =(e) => {
-        const token = Cookies.get('jwt');
-
+        e.preventDefault();
         if (!data.password.value) {
             setData((preData) => ({
                 ...preData,
@@ -192,21 +191,24 @@ function ForgotPassword( isAuthenticated, setIsAuthenticated) {
                 },
             }));
         } else {
+            const token = Cookies.get('jwt')
+            console.log(token);
+            console.log(data);
             axios
-                .put(
-                    `${endpoint.baseUrl}${endpoint.changePassword}`, {
+                .put(`${endpoint.baseUrl}${endpoint.changePassword}`, {
                         password: data.password.value
                     },
                     {
                         headers: {
                             Authorization: `Bearer ${token}`,
                         },
-          }
+                    }
                 )
                 .then((res) => {
+                    navigate("/todo")
+                    console.log("Successfully changed password!");
                     setIsAuthenticated(true);
                     localStorage.setItem("user", JSON.stringify(res.data));
-                    navigate("/todo")
                 })
                 .catch((err) => {
                     setData((preData) => ({
@@ -256,7 +258,7 @@ function ForgotPassword( isAuthenticated, setIsAuthenticated) {
                 component="form"
                 noValidate
                 sx={{ mt: 4, width: "100%", textAlign: "center" }}
-                // onSubmit={verifyHandler}
+                // onSubmit={changePassword}
                 >
                 { changePW ? 
                     (<>
@@ -298,7 +300,8 @@ function ForgotPassword( isAuthenticated, setIsAuthenticated) {
                         </div>
                         <Button
                             style={style.button}
-                            onClick={(e) => {changePassword(e)}}
+                            type='submit'
+                            onClick={(e) => changePassword(e)}
                             variant="contained"
                             size="medium"
                             sx={{

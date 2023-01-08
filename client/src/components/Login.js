@@ -1,19 +1,32 @@
 import { Button, Grid, Paper, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import axios from "axios";
-import Cookies from "js-cookie";
-import React, { useContext, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../App";
 import { endpoint } from "../endpoints";
 
 axios.defaults.withCredentials = true;
 
-function Login( {isAuthenticated, setIsAuthenticated, data, setData} ) {
+function Login( {isAuthenticated, setIsAuthenticated} ) {
   const navigate = useNavigate();
 
   const emailRegx = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
   const passwordRegx = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]/;
+
+  const [data, setData] = useState( {
+    email: {
+      value: "",
+      err: false,
+      errMsg: "",
+    },
+  
+    password: {
+      value: "",
+      err: false,
+      errMsg: "",
+    }
+  });
 
   useEffect(()=> {
     if(isAuthenticated) {
@@ -39,7 +52,6 @@ function Login( {isAuthenticated, setIsAuthenticated, data, setData} ) {
 
     // Eamil validation
     if (!data.email.value) {
-      // console.log("hello");
       setData((preData) => ({
         ...preData,
         email: {
@@ -58,7 +70,6 @@ function Login( {isAuthenticated, setIsAuthenticated, data, setData} ) {
         },
       }));
     } else if (!data.password.value) {
-      // console.log("hello");
       setData((preData) => ({
         ...preData,
         password: {
@@ -79,8 +90,6 @@ function Login( {isAuthenticated, setIsAuthenticated, data, setData} ) {
       }));
     } else {
       setData({ ...data });
-
-      // console.log("Login (data): " + data);
       axios
         .post(`${endpoint.baseUrl}${endpoint.signIn}`, {
           email: data.email.value,
@@ -193,7 +202,7 @@ function Login( {isAuthenticated, setIsAuthenticated, data, setData} ) {
             </Box>
             <Grid container width="80%">
               <Grid item xs>
-                <Link href="#" variant="body2">
+                <Link href="#" to="/forgot-password" variant="body2">
                   Forgot password?
                 </Link>
               </Grid>

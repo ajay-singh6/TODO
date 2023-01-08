@@ -12,25 +12,23 @@ import Cookies from 'js-cookie';
 
 
 const Profile = ( {isAuthenticated, setIsAuthenticated} ) => {
-    // console.log("Profile" , UserContext);
-    const { user, setUser } = useContext(UserContext);
+    
     const {id} = useContext(UserContext)
+
+    
     const [data, setData] = useState({
         name: "",
         password: "***",
         email: "",
     });
-    const [tData, settData] = useState({data
-    });
+    const [tData, settData] = useState({data});
     
     useEffect(()=>{
         if(isAuthenticated) {
-            // const localUser = JSON.parse(localStorage.getItem("user"));
             setData({...data, name: Cookies.get('name'), email: Cookies.get('email')})
+            settData({...data})
         }
-    },[ ])
-
-    
+    },[isAuthenticated])
     
 
     const [edit, setEdit] = useState(true);
@@ -39,16 +37,35 @@ const Profile = ( {isAuthenticated, setIsAuthenticated} ) => {
       settData({ ...tData, [e.target.name]: e.target.value });
     };
 
+    const resetData = (e) => {
+        settData( (preData) => ({
+            ...preData,
+            name: "",
+            email: "",
+            password: "",
+        }))
+    }
+    
     const saveDetails = () => {
         if(!edit) {
             setData({...tData})
         }
         setEdit(!edit)
     }
+    
+    const changePassword = () => {
+        console.log("changePassword");
+        console.log("changePassword");
+    }
+
+    const restoreDetails = () => {
+        settData({...data})
+        setEdit(!edit)
+    }
 
   return (
     <>
-    <Navbar user={user} isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />
+    <Navbar isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />
     <Box  className='profile-container' >
             <Box className='profile-sidebar' >
                 <Box className='profile-image-set'>
@@ -71,8 +88,19 @@ const Profile = ( {isAuthenticated, setIsAuthenticated} ) => {
                     <Typography variant="p" fontWeight={"bold"} sx={{m: 1.6}} >Basics: </Typography>
                     <TextField  disabled={edit} sx={{m: 1.5}} placeholder={data.name} onChange={inputHandler} name='name'></TextField>
                     <TextField  disabled={edit} sx={{m: 1.5}} placeholder={data.email} onChange={inputHandler} name='email'></TextField>
-                    <TextField  disabled={edit} sx={{m: 1.5}} placeholder={data.password} onChange={inputHandler} name='password'></TextField>
-                    <Button variant="contained" sx={{m: 1.3, width: 'fit-content'}} onClick={saveDetails}> {edit ? "Edit" : "Save"}</Button>
+                    {/* <TextField  disabled={edit} sx={{m: 1.5}} placeholder={data.password} onChange={inputHandler} name='password'></TextField> */} 
+                    <Box>
+                        <Button variant="outlined" sx={{m: 1.3, width: 'fit-content'}} onClick={changePassword}> Change password</Button>
+                        {!edit ? 
+                            <>
+                                <Button variant="outlined" sx={{m: 1.3, width: 'fit-content'}} onClick={saveDetails}>Save</Button> 
+                                <Button variant="outlined" sx={{m: 1.3, width: 'fit-content'}} onClick={restoreDetails} color="error">Cancel</Button> 
+                            </> : 
+                            <>
+                                <Button variant="contained" sx={{m: 1.3, width: 'fit-content'}} onClick={() => setEdit(!edit)}>Edit details</Button>
+                            </>
+                        }
+                    </Box>
                 </Box>
 
             </Box>

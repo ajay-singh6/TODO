@@ -17,7 +17,6 @@ function Home({ isAuthenticated, setIsAuthenticated}) {
         }
   }, [isAuthenticated, navigate, setIsAuthenticated]);
 
-  // console.log("Home page rendered");
   return (
     <>
     </>

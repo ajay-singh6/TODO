@@ -1,18 +1,17 @@
 import { Grid } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import AddTodo from "./AddTodo";
 import TodoCard from "./ToDoCard";
 
 import Navbar from "./Navbar";
 import axios from "axios";
 import { endpoint } from "../endpoints";
-import { UserContext } from "../App";
 import Cookies from "js-cookie";
 
 const AppContext = createContext({});
 
-function Todolist( {isAuthenticated, setIsAuthenticated, user, setUser, todo, setTodo} ) {
+function Todolist( {isAuthenticated, setIsAuthenticated, todo, setTodo} ) {
   useEffect(() => {
     if (isAuthenticated) {
       const token = Cookies.get('jwt');
@@ -38,7 +37,7 @@ function Todolist( {isAuthenticated, setIsAuthenticated, user, setUser, todo, se
   return (
     <>
       
-        <Navbar user={user} isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />
+        <Navbar isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />
 
         <Box className="todo-container" style={{ height: "calc(100vh - 68.5px)" }}>
           <Grid
