@@ -231,6 +231,7 @@ const Profile = ( {isAuthenticated, setIsAuthenticated} ) => {
                 <Box className="profile-edit">
                     <label htmlFor="file" >
                         <i className="fas fa-camera"></i>
+                        
                     </label> 
                     <input type="file" id="file" accept="image/*"/>
                 </Box>
