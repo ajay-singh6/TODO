@@ -1,6 +1,6 @@
 import "./App.css";
 import Todolist, { AppContext } from "./components/TodoList";
-import { createContext, useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import {
   createBrowserRouter,
   RouterProvider,
@@ -12,6 +12,7 @@ import Signup from "./components/Signup";
 import Login from "./components/Login";
 import Home from "./components/Home";
 import Profile from "./components/Profile";
+import Temp from "./components/Profile copy";
 import PrivateRoute from "./utils/PrivateRoute";
 import Signinform from "./components/Signinform";
 import Cookies from "js-cookie";
@@ -51,6 +52,9 @@ function App() {
     },
     { 
       path: "/signup", element: <Signup /> 
+    },
+    {
+      path: "/devProfile", element: <Temp isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />
     },
     { 
       path: "/user", element: <PrivateRoute isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />, 

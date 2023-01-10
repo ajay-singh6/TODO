@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from 'react';
 import Box from "@mui/material/Box";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
@@ -25,11 +25,8 @@ export default function Cardactions({ addTodo, input, setInput, setEdit, id }) {
     removeTodo(todo, setTodo, id);
   };
 
-  useEffect(() => {
-    // console.log("Cardactions (todo): " + JSON.stringify(todo));
-  }, []);
-
   return (
+    <>
     <Box sx={{ width: "100%" }}>
       {addTodo && (
         <Typography
@@ -92,5 +89,6 @@ export default function Cardactions({ addTodo, input, setInput, setEdit, id }) {
         
       </BottomNavigation>
     </Box>
+    </>
   );
 }

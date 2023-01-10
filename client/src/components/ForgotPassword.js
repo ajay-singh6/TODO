@@ -9,7 +9,7 @@ import { endpoint } from "../endpoints";
 
 axios.defaults.withCredentials = true;
 
-function ForgotPassword( isAuthenticated, setIsAuthenticated) {
+function ForgotPassword( {isAuthenticated, setIsAuthenticated} ) {
     const navigate = useNavigate();
 
     const emailRegx = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
@@ -205,12 +205,12 @@ function ForgotPassword( isAuthenticated, setIsAuthenticated) {
                     }
                 )
                 .then((res) => {
-                    navigate("/todo")
-                    console.log("Successfully changed password!");
+                    localStorage.setItem("user", "Ok");
                     setIsAuthenticated(true);
-                    localStorage.setItem("user", JSON.stringify(res.data));
+                    navigate("/todo")
                 })
                 .catch((err) => {
+                    console.log(err);
                     setData((preData) => ({
                         ...preData,
                         [err.response.data.param]: {

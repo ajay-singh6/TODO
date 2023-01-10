@@ -32,7 +32,6 @@ function Login( {isAuthenticated, setIsAuthenticated} ) {
     if(isAuthenticated) {
       setData({ ...data });
       navigate("/todo");
-
     }
   }, [data, isAuthenticated, navigate, setData]);
 
