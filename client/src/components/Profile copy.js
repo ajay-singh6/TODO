@@ -8,6 +8,7 @@ import "../assets/css/profile.css";
 import Navbar from './Navbar';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import excludeVariablesFromRoot from '@mui/material/styles/excludeVariablesFromRoot';
 
 axios.defaults.withCredentials = true;
 
@@ -18,6 +19,11 @@ const Profile = ( {isAuthenticated, setIsAuthenticated} ) => {
     const emailRegx = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
     const passwordRegx = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]/;
 
+    const [userDetails, setUserDetails ] = useState({
+        name:"",
+        email:"",
+    });
+
     const [data, setData] = useState({
         name: { value: "", err: false, errMsg: "" },
         email: { value: "", err: false, errMsg: "" },
@@ -25,22 +31,84 @@ const Profile = ( {isAuthenticated, setIsAuthenticated} ) => {
         confirmPassword: { value: "", err: false, errMsg: "" }
     });
 
-    const [tData, settData] = useState({data});
+    const [tData, settData] = useState(data);
     
     useEffect(()=>{
-        if(isAuthenticated) {
-            setData({...data, 
-                name:{
-                    value: Cookies.get('name')
-                }, 
-                email:{
-                    value: Cookies.get('email')
-                }
+        const token = Cookies.get('jwt');
+        axios
+            .get(`${endpoint.baseUrl}${endpoint.user}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
             })
-            settData({...data})
-        }
-    },[isAuthenticated])
+            .then((res) => {
+                setData({...data, 
+                    name:{ value: res.data.name,err: false, errMsg: "" }, 
+                    email:{ value: res.data.email,err: false, errMsg: "" }
+                })
+                settData({...tData, 
+                    name:{ value: res.data.name,err: false, errMsg: "" }, 
+                    email:{ value: res.data.email,err: false, errMsg: "" }
+                })
+                setUserDetails({...userDetails, name: res.data.name, email: res.data.email
+                })
+                console.log("res : ", res);
+            })
+            .catch((err) => {
+                console.log("err : ", err);}
+            )
+
+
+    },[ ])
     
+    const saveDetails = () => {
+
+        if (!data.name.value) {
+            setData((preData) => ({
+                ...preData,
+                name: {
+                ...data.name,
+                err: true,
+                errMsg: "Name is required",
+                },
+            }));
+        } // Email validation
+        else if (!data.email.value) {
+            setData((preData) => ({
+                ...preData,
+                email: {
+                ...data.email,
+                err: true,
+                errMsg: "email is required",
+                },
+            }));
+        } else if (!emailRegx.test(data.email.value)) {
+            setData((preData) => ({
+                ...preData,
+                email: {
+                ...data.email,
+                err: true,
+                errMsg: "Invalid email",
+                },
+            }));
+        } else {
+            const token = Cookies.get('jwt');
+            axios
+                .put(`${endpoint.baseUrl}${endpoint.user}`, {
+                    name: tData.name.value,
+                    email: tData.email.value
+                }, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                })
+            setData({...tData})
+            setUserDetails({...userDetails, name: tData.name.value, email: tData.email.value})
+            alert("User Details Changed Successfully.!!")
+            setEdit(!edit)
+        }
+    }
 
     const [edit, setEdit] = useState(true);
 
@@ -50,12 +118,12 @@ const Profile = ( {isAuthenticated, setIsAuthenticated} ) => {
 
     const handleCancel = () => {
         setEdit(true);
-        restoreDetails();
+        settData({...data})
     }
 
     const inputHandler = (e) => {
-        setData({
-            ...data,
+        settData({
+            ...tData,
             [e.target.name]: {
                 value: e.target.value,
                 err: false,
@@ -63,23 +131,6 @@ const Profile = ( {isAuthenticated, setIsAuthenticated} ) => {
             },
         });
     };
-
-    const saveDetails = () => {
-        if(!edit) {
-            setData({...tData})
-        }
-        setEdit(!edit)
-    }
-
-    const resetData = () => {
-        setData( (preData) => ({
-            ...preData,
-            name: { value: "", err: false, errMsg: "" },
-            email: { value: "", err: false, errMsg: "" },
-            password: { value: "", err: false, errMsg: "" },
-            confirmPassword: { value: "", err: false, errMsg: "" }
-        }))
-    }    
     
     const changePassword =(e) => {
         e.preventDefault();
@@ -133,8 +184,6 @@ const Profile = ( {isAuthenticated, setIsAuthenticated} ) => {
             }));
         } else {
             const token = Cookies.get('jwt')
-            console.log(token);
-            console.log(data);
             axios
                 .put(`${endpoint.baseUrl}${endpoint.changePassword}`, {
                         password: data.password.value
@@ -165,10 +214,6 @@ const Profile = ( {isAuthenticated, setIsAuthenticated} ) => {
 
         }
     }
-
-    const restoreDetails = () => {
-        settData({...data})
-    }
     
     const [toggleState, setToggleState] = useState(1);
 
@@ -191,8 +236,8 @@ const Profile = ( {isAuthenticated, setIsAuthenticated} ) => {
                 </Box>
             </Box>
                 
-            <Typography align="center" sx={{mt: 1}} variant="h5" fontWeight={500} >{data.name.value}</Typography>
-            <Typography align="center" variant="subtitle1">{data.email.value}</Typography>
+            <Typography align="center" sx={{mt: 1}} variant="h5" fontWeight={500} >{userDetails.name}</Typography>
+            <Typography align="center" variant="subtitle1">{userDetails.email}</Typography>
             <Box className="bloc-tabs">
                 <Box
                 onClick={() => toggleTab(1)} 
@@ -201,16 +246,16 @@ const Profile = ( {isAuthenticated, setIsAuthenticated} ) => {
                 <Box 
                 onClick={() => toggleTab(2)} 
                 className={toggleState === 2 ? "tabs active-tabs" : "tabs" }
-                >Photo</Box>
-                <Box 
-                onClick={() => toggleTab(3)} 
-                className={toggleState === 3 ? "tabs active-tabs" : "tabs" }
                 >Password</Box>
             </Box>
 
         </Box>
         <Box className='profile-main' >
-            <Typography variant='h5' fontWeight={500} className='profile-header'>Public Profile</Typography>
+            <Typography variant='h5' fontWeight={500} className='profile-header'>
+
+                {toggleState === 1 ? "Public Profile" : "Password"}
+
+            </Typography>
             <hr />
             <Box className='profile-content'>
                 <Box className={toggleState === 1 ? "content active-content" : "content"}>
@@ -218,33 +263,33 @@ const Profile = ( {isAuthenticated, setIsAuthenticated} ) => {
                     <TextField  disabled={edit} sx={{m: 1.5}} 
                         placeholder={data.name.value} 
                         onChange={inputHandler} 
-                        error={data.name.err}
-                        helperText={data.name.errMsg}
-                        value={data.name.value}
+                        error={tData.name.err}
+                        helperText={tData.name.errMsg}
+                        value={tData.name.value}
                         name='name'
                     ></TextField>
                     <TextField  disabled={edit} sx={{m: 1.5}} 
                         placeholder={data.email.value} 
                         onChange={inputHandler} 
-                        error={data.email.err}
-                        helperText={data.email.errMsg}
-                        value={data.email.value}
+                        error={tData.email.err}
+                        helperText={tData.email.errMsg}
+                        value={tData.email.value}
                         name='email'
                     ></TextField>
 
                     <Box>
                         {!edit ? <>
-                        <Button variant="contained" sx={{m: 1.3, width: 'fit-content'}} onClick={toggleEdit}
-                        >Save</Button>
-                        <Button variant="outlined" color="error" onClick={handleCancel}>Cancel</Button> </>: <>
+                            <Button variant="contained" sx={{m: 1.3, width: 'fit-content'}} onClick={saveDetails}
+                            >Submit</Button>
+                            <Button variant="outlined" color="error" onClick={handleCancel}>Cancel</Button> </>
+                        : 
                             <Button variant="contained" sx={{m: 1.3, width: 'fit-content'}} onClick={toggleEdit}
-                        >Edit</Button>
-                        </>
+                            >Edit</Button>
                         }
                     </Box>
                 </Box>
                 
-                <Box className={toggleState === 2 ? "content active-content" : "content"}>
+                <Box className={toggleState === 3 ? "content active-content" : "content"}>
                     <h2>Content 2</h2>
                     <hr />
                     <p>
@@ -267,8 +312,8 @@ const Profile = ( {isAuthenticated, setIsAuthenticated} ) => {
                         Marathi
                     </p>
                 </Box>
-                <Box className={toggleState === 3 ? "content active-content" : "content"}>
-                    
+                <Box className={toggleState === 2 ? "content active-content" : "content"}>
+                    <Typography variant="p" fontWeight={"bold"} sx={{m: 1.6}} >Change Password: </Typography>
                     <TextField  sx={{m: 1.5}} 
                         placeholder={"Change Password"} 
                         onChange={inputHandler} 
