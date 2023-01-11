@@ -8,7 +8,6 @@ import "../assets/css/profile.css";
 import Navbar from './Navbar';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import excludeVariablesFromRoot from '@mui/material/styles/excludeVariablesFromRoot';
 
 axios.defaults.withCredentials = true;
 
@@ -60,7 +59,6 @@ const Profile = ( {isAuthenticated, setIsAuthenticated} ) => {
             .catch((err) => {
                 console.log("err : ", err);}
             )
-
 
     },[ ])
     
@@ -231,18 +229,21 @@ const Profile = ( {isAuthenticated, setIsAuthenticated} ) => {
 
     }
 
-    const handleAPI = () => {
-        
+    const handleAPI = async () => {
         const formData = new FormData();
         formData.append('userImage', image, image.name);
+        formData.append('name', "User image");
+
+        console.log(formData.get('userImage'));
 
         const token = Cookies.get('jwt');
-        axios
+        let response = await axios
             .post(`${endpoint.baseUrl}${endpoint.upload}`, {
-                image: formData,
+                image: formData.get('userImage'),
             }, {
                 headers: {
                     Authorization: `Bearer ${token}`,
+                    contentType: "multipart/form-data"
                 },
             })
             .then((res) => {
