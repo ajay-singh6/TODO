@@ -1,5 +1,9 @@
 const multer = require("multer");
 const bcrypt = require("bcryptjs");
+const { unlink } = require("node:fs");
+const path = require("path");
+
+const userHomeDir = path.dirname(process.mainModule.filename);
 
 const User = require("../models/user");
 
@@ -47,7 +51,7 @@ const Storage = multer.diskStorage({
 
 const upload = multer({
     storage: Storage
-}).single("testImage");
+}).single("userImage");
 
 const uploadImage = (req, res) => {
 
@@ -66,7 +70,11 @@ const uploadImage = (req, res) => {
                     data: req.file.filename,
                     contentType: "image/jpg"
                 }
-            }).then(user => {
+            }, { returnOriginal: false }).then(user => {
+                unlink(path.join(userHomeDir, "uploads", req.file.filename), (err) => {
+                    if (err) throw err;
+                    console.log('path/file.txt was deleted');
+                });
                 return res.status(200).json({
                     name: user.name,
                     email: user.email,
