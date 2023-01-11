@@ -28,6 +28,7 @@ const Profile = ( {isAuthenticated, setIsAuthenticated} ) => {
         name: { value: "", err: false, errMsg: "" },
         email: { value: "", err: false, errMsg: "" },
         password: { value: "", err: false, errMsg: "" },
+        image: { value: "", err: false, errMsg: "" },
         confirmPassword: { value: "", err: false, errMsg: "" }
     });
 
@@ -45,14 +46,15 @@ const Profile = ( {isAuthenticated, setIsAuthenticated} ) => {
             .then((res) => {
                 setData({...data, 
                     name:{ value: res.data.name,err: false, errMsg: "" }, 
-                    email:{ value: res.data.email,err: false, errMsg: "" }
+                    email:{ value: res.data.email,err: false, errMsg: "" },
+                    image:{ value: res.data.image, err: false, errMsg: "" }
                 })
                 settData({...tData, 
                     name:{ value: res.data.name,err: false, errMsg: "" }, 
-                    email:{ value: res.data.email,err: false, errMsg: "" }
+                    email:{ value: res.data.email,err: false, errMsg: "" },
+                    image:{ value: res.data.image, err: false, errMsg: "" }
                 })
-                setUserDetails({...userDetails, name: res.data.name, email: res.data.email
-                })
+                setUserDetails({...userDetails, name: res.data.name, email: res.data.email })
                 console.log("res : ", res);
             })
             .catch((err) => {
@@ -215,10 +217,38 @@ const Profile = ( {isAuthenticated, setIsAuthenticated} ) => {
         }
     }
     
-    const [toggleState, setToggleState] = useState(1);
+    const [toggleState, setToggleState] = useState(3);
 
     const toggleTab = (index) => {
         setToggleState(index)
+    }
+
+    const [image, setImage] = useState('')
+
+    const handleImage = (e) => {
+        console.log(e.target.files);
+        setImage(e.target.files[0]);
+
+    }
+
+    const handleAPI = () => {
+        
+        const formData = new FormData();
+        formData.append('userImage', image, image.name);
+
+        const token = Cookies.get('jwt');
+        axios
+            .post(`${endpoint.baseUrl}${endpoint.upload}`, {
+                image: formData,
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+            .then((res) => {
+                console.log("RES(img): ", res);
+            })
+            .catch((err) => {console.log(err);})
     }
     
   return (
@@ -233,7 +263,8 @@ const Profile = ( {isAuthenticated, setIsAuthenticated} ) => {
                         <i className="fas fa-camera"></i>
                         
                     </label> 
-                    <input type="file" id="file" accept="image/*"/>
+                    <input type="file" id="file" accept="image/*"
+                        onChange={handleImage}/>
                 </Box>
             </Box>
                 
@@ -248,6 +279,10 @@ const Profile = ( {isAuthenticated, setIsAuthenticated} ) => {
                 onClick={() => toggleTab(2)} 
                 className={toggleState === 2 ? "tabs active-tabs" : "tabs" }
                 >Password</Box>
+                <Box 
+                onClick={() => toggleTab(3)} 
+                className={toggleState === 3 ? "tabs active-tabs" : "tabs" }
+                >Photo</Box>
             </Box>
 
         </Box>
@@ -290,29 +325,6 @@ const Profile = ( {isAuthenticated, setIsAuthenticated} ) => {
                     </Box>
                 </Box>
                 
-                <Box className={toggleState === 3 ? "content active-content" : "content"}>
-                    <h2>Content 2</h2>
-                    <hr />
-                    <p>
-                        Explore Shows
-                        SET Shows
-                        SAB Shows
-                        Marathi Shows
-                        Kids
-                        Aath Shows
-                        English TV Shows
-                        Shows by Genres
-                        Drama
-                        Comedy
-                        Thriller
-                        Romantic
-                        Reality
-                        Movies by Language
-                        Hindi
-                        English Movies
-                        Marathi
-                    </p>
-                </Box>
                 <Box className={toggleState === 2 ? "content active-content" : "content"}>
                     <Typography variant="p" fontWeight={"bold"} sx={{m: 1.6}} >Change Password: </Typography>
                     <TextField  sx={{m: 1.5}} 
@@ -337,6 +349,17 @@ const Profile = ( {isAuthenticated, setIsAuthenticated} ) => {
                         >Change Password</Button>
                     </Box>
                     
+                </Box>
+                
+                <Box className={toggleState === 3 ? "content active-content" : "content"}>
+                    <h2>Content 2</h2>
+                    <hr />
+                    <label htmlFor="file" >
+                        <i className="fas fa-camera"></i> Upload Image
+                    </label> 
+                    <input type="file" id="file" accept="image/*"
+                        onChange={handleImage}/>
+                    <Button variant="outlined" sx={{m: 1.3, width: 'fit-content'}} onClick={handleAPI}>Submit</Button>
                 </Box>
 
             </Box>

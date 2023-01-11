@@ -29,7 +29,7 @@ router.put("/change-password", changePassword);
 router.put("/", updateUser);
 
 /*
- * @route POST api/user/upload-user-image
+ * @route POST api/user/upload
  * @description upload image of user
  * @access private  
 */
