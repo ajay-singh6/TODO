@@ -2,9 +2,8 @@ import { Button, Grid, Paper, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import axios from "axios";
 import Cookies from "js-cookie";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { UserContext } from "../App";
 import { endpoint } from "../endpoints";
 
 axios.defaults.withCredentials = true;

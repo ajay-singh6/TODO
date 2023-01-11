@@ -11,7 +11,7 @@ import Cookies from 'js-cookie';
 
 axios.defaults.withCredentials = true;
 
-const Profile = ( {isAuthenticated, setIsAuthenticated} ) => {
+const User = ( {isAuthenticated, setIsAuthenticated} ) => {
     
     const navigate = useNavigate();
 
@@ -215,7 +215,7 @@ const Profile = ( {isAuthenticated, setIsAuthenticated} ) => {
         }
     }
     
-    const [toggleState, setToggleState] = useState(3);
+    const [toggleState, setToggleState] = useState(1);
 
     const toggleTab = (index) => {
         setToggleState(index)
@@ -237,7 +237,7 @@ const Profile = ( {isAuthenticated, setIsAuthenticated} ) => {
         console.log(formData.get('userImage'));
 
         const token = Cookies.get('jwt');
-        let response = await axios
+        await axios
             .post(`${endpoint.baseUrl}${endpoint.upload}`, {
                 image: formData.get('userImage'),
             }, {
@@ -280,10 +280,6 @@ const Profile = ( {isAuthenticated, setIsAuthenticated} ) => {
                 onClick={() => toggleTab(2)} 
                 className={toggleState === 2 ? "tabs active-tabs" : "tabs" }
                 >Password</Box>
-                <Box 
-                onClick={() => toggleTab(3)} 
-                className={toggleState === 3 ? "tabs active-tabs" : "tabs" }
-                >Photo</Box>
             </Box>
 
         </Box>
@@ -371,4 +367,4 @@ const Profile = ( {isAuthenticated, setIsAuthenticated} ) => {
   )
 }
 
-export default Profile
+export default User

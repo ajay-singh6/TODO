@@ -1,6 +1,6 @@
 import { Grid } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useEffect } from "react";
 import AddTodo from "./AddTodo";
 import TodoCard from "./ToDoCard";
 

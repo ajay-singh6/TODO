@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie';
 import React, { useEffect } from 'react'
-import { Navigate, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 
 function Home({ isAuthenticated, setIsAuthenticated}) {

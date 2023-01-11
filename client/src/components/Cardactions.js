@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Box from "@mui/material/Box";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
@@ -7,11 +7,10 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CircleIcon from "@mui/icons-material/Circle";
 import { Typography } from "@mui/material";
-import "../assets/css/Formcontainer.css";
-import { Data } from "./AddTodo";
 import { AppContext } from "./TodoList";
 import { removeTodo } from "./ops";
 
+import "../assets/css/Formcontainer.css";
 
 export default function Cardactions({ addTodo, input, setInput, setEdit, id }) {
   const { todo, setTodo } = useContext(AppContext);

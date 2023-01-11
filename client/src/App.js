@@ -4,17 +4,12 @@ import React, { createContext, useEffect, useState } from "react";
 import {
   createBrowserRouter,
   RouterProvider,
-  BrowserRouter,
-  Routes,
-  Route,
 } from "react-router-dom";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
 import Home from "./components/Home";
-import Profile from "./components/Profile";
-import Temp from "./components/Profile copy";
+import User from "./components/User";
 import PrivateRoute from "./utils/PrivateRoute";
-import Signinform from "./components/Signinform";
 import Cookies from "js-cookie";
 import ForgotPassword from "./components/ForgotPassword";
 const UserContext = createContext({});
@@ -53,13 +48,10 @@ function App() {
     { 
       path: "/signup", element: <Signup /> 
     },
-    {
-      path: "/devProfile", element: <Temp isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />
-    },
     { 
       path: "/user", element: <PrivateRoute isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />, 
-        children:[{
-          path: "/user", element: <Profile isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />
+      children:[{
+          path: "/user", element: <User isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />
         }] 
     }
     
