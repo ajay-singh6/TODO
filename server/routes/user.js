@@ -13,19 +13,17 @@ router.use(authenticateToken);
 router.get("/", getUserDetails);
 
 /*
- * @route PUT api/user
- * @description update details of user
- * @access private  
-*/
-
-
-/*
- * @route POST api/user/change-password
+ * @route PUT api/user/change-password
  * @description change loggedIn user's password
  * @access private  
 */
 router.put("/change-password", changePassword);
 
+/*
+ * @route PUT api/user
+ * @description update details of user
+ * @access private  
+*/
 router.put("/", updateUser);
 
 /*
